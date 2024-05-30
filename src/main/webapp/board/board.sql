@@ -37,10 +37,32 @@ create table reply(
 desc reply;
 drop table reply;
 
+create table reReply(
+	reIdx int not null auto_increment,	/* 대댓글 고유번호 */
+	replyIdx int not null,							/* 원본 댓글의 고유번호 */
+	reMid varchar(10) not null,					/* 대댓글 작성자 아이디 */
+	reNickName varchar(10) not null,		/* 작성자 닉네임 */
+	reDate datetime default now(),			/* 작성일 */
+	reHostIp varchar(50) not null,			/* 작성자IP */
+	reContent text not null,						/* 대댓글 내용 */
+	reReport int default 0,							/* 신고(5번 신고하면...) */
+	primary key(reIdx),
+	foreign key(replyIdx) references reply(idx)
+	on update cascade
+	on delete restrict
+);
+desc reReply;
+drop table reReply;
+
 insert into reply values(default,'freeBoard',1,'admin','관리자',default,'172.30.1.24','댓글 서비스를 시작합니다.',default);
 insert into reply values(default,'freeBoard',2,'admin','관리자',default,'172.30.1.24','댓글 테스트',default);
 insert into reply values(default,'freeBoard',2,'admin','관리자',default,'172.30.1.24','댓글 테스트',default);
 insert into reply values(default,'freeBoard',2,'admin','관리자',default,'172.30.1.24','댓글 테스트',default);
+
+insert into reReply values(default,1,'admin','관리자',default,'172.30.1.24','대댓글 테스트',default);
+insert into reReply values(default,1,'admin','관리자',default,'172.30.1.24','대댓글 테스트',default);
+insert into reReply values(default,1,'admin','관리자',default,'172.30.1.24','대댓글 테스트',default);
+insert into reReply values(default,1,'admin','관리자',default,'172.30.1.24','대댓글 테스트',default);
 
 delete from reply where boardIdx=2;
 

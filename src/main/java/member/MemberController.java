@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import common.MainInterface;
 
@@ -20,6 +21,10 @@ public class MemberController extends HttpServlet {
 		
 		String com = request.getRequestURI();
 		com = com.substring(com.lastIndexOf("/"),com.lastIndexOf("."));
+		
+		// 인증 처리
+		HttpSession session = request.getSession();
+		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");
 		
 		if(com.equals("/MemberIdCheck")) {
 			command = new MemberIdCheckCommand();
@@ -43,6 +48,21 @@ public class MemberController extends HttpServlet {
 		}
 		else if(com.equals("/MemberJoinOk")) {
 			command = new MemberJoinOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(level > 2 || level < 0) {
+			request.setAttribute("message", "로그인 후 사용해 주세요.");
+			request.setAttribute("url", request.getContextPath()+"/MemberLogin.do");
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/PwdChangeOk")) {
+			command = new PwdChangeOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberUpdateOk")) {
+			command = new MemberUpdateOkCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}

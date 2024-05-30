@@ -34,10 +34,9 @@ public class MemberLoginOkCommand implements MainInterface {
 		String salt = vo.getPwd().substring(0,8);
 		SecurityUtil security = new SecurityUtil();
 		pwd = security.encryptSHA256(salt+pwd);
-		//System.out.println("salt : "+pwd);
 		if(!vo.getPwd().substring(8).equals(pwd)) {
 			request.setAttribute("message", "비밀번호를 확인하세요.");
-			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
+			request.setAttribute("url", request.getContextPath()+"/MemberLogin.do");
 			return;
 		}
 		

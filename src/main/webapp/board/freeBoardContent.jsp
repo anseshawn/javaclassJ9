@@ -13,6 +13,17 @@
 	<script>
 		'use strict';
 		
+		/*
+		$(function(){
+			let formId = "div.reReply";
+			let buttonId = "#reReplyOpen";
+			$("div.reReply").hide();
+			$(buttonId).on("click",function(){
+				$(formId).stop().slideToggle("fast");
+			});
+		});
+		*/
+		
 		function deleteCheck(){
 			let ans = confirm("현재 게시글을 삭제하시겠습니까?");
 			if(!ans) return false;
@@ -102,6 +113,8 @@
 			}
 			*/
 			//else {
+				
+			/*
 			let str='<div class="col-lg-10">';
 			str+='<hr/>';
 			str+='<form class="comment-form" name="replyEditForm" >';
@@ -123,6 +136,7 @@
 			str+='</div>';
 			
 			$("#reEditDemo"+idx).html(str);
+			*/
 			//editForm = 1;
 			//}
 		}
@@ -232,7 +246,7 @@
 												<h5 class="mb-1">${rVo.nickName}(${rVo.mid})</h5>
 												<span>${rVo.hostIp}</span>
 												<span class="date-comm mr-2">| ${rVo.date_diff == 0 ? fn:substring(rVo.rDate,11,19) : fn:substring(rVo.rDate,0,10) }</span>
-												<span class="comment-meta mr-2"><a href="#"><i class="icofont-reply mr-2 text-muted"></i>답글</a></span>
+												<span class="comment-meta mr-2"><a href="javascript:reReplyForm(${rVo.idx})" id="reReplyOpen${rVo.idx}"><i class="icofont-reply mr-2 text-muted"></i>답글</a></span>
 												<c:if test="${sLevel==0 || sMid == rVo.mid}">
 												 <span class="comment-meta mr-2"><a href="javascript:replyEdit('${rVo.idx}','${rVo.nickName}','${rVo.mid}','${rVo.content}')"><i class="icofont-edit mr-2 text-muted"></i>수정</a></span>
 												 <span class="comment-meta"><a href="javascript:replyDelete(${rVo.idx})"><i class="icofont-ui-delete mr-2 text-muted"></i>삭제</a></span>
@@ -241,35 +255,57 @@
 											<div class="comment-content mt-3">
 												${fn:replace(rVo.content,newLine,'<br/>')}
 											</div>
-											<div id="reEditDemo${rVo.idx}">
 											
+											<!-- 댓글 수정창 -->
+											<div id="reEditDemo${rVo.idx}">
+												<div class="col-lg-10">
+												<hr/>
+			<form class="comment-form" name="replyEditForm" >
+			<div class="row">
+			<div class="col-md-4">
+		<div class="form-group">
+			<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
+			<input class="form-control" type="text" name="nickName" value="'+nickName+'('+mid+')" readonly>
+			</c:if>
+			</div>
+			</div>
+			</div>
+			<textarea class="form-control mb-4" name="content" id="content'+idx+'" cols="30" rows="5" placeholder="Comment">'+content+'</textarea>
+			<div class="text-right">
+			<input class="btn btn-main-2 btn-icon-sm btn-round-full mr-2" type="button" onclick="replyEditCheck(idx)" value="수정하기"/>
+			<input class="btn btn-main btn-icon-sm btn-round-full" type="button" onclick="editFormClose(idx)" value="닫기"/>
+			</div>
+			</form>
+		</div>
 											</div>
+											<!-- 댓글 수정창 끝 -->
+											
+											<!-- 
+											<div class="reReply col-lg-10">
+												<form class="comment-form my-5" name="reReplyForm" >
+													<h4 class="mb-4">대댓글 쓰기</h4>
+													<div class="row">
+														<div class="col-md-4">
+															<div class="form-group">
+																<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
+																	<input class="form-control" type="text" name="reNickName" value="${sNickName}(${sMid})" readonly>
+																</c:if>
+																<c:if test="${sLevel==''}">
+																	<input class="form-control" type="text" name="reNickName" placeholder="Name:">
+																</c:if>
+															</div>
+														</div>
+													</div>
+													<textarea class="form-control mb-4" name="reContent" id="reContent" cols="30" rows="5" placeholder="Comment"></textarea>
+													<div class="text-right">
+														<input class="btn btn-main-2 btn-round-full" type="button" onclick="reReplyCheck()" value="댓글 작성"/>
+													</div>
+												</form>
+											</div>
+											-->
 										</div>
 									</li>
 								</c:forEach>
-								<!-- 
-								<li>
-									<div class="comment-area-box">
-										<div class="comment-thumb float-left">
-											<img alt="" src="images/blog/testimonial2.jpg" class="img-fluid">
-										</div>
-										<div class="comment-info">
-											<h5 class="mb-1">Philip W</h5>
-											<span>United Kingdom</span>
-											<span class="date-comm">| Posted June 7, 2019</span>
-										</div>
-				
-										<div class="comment-meta mt-2">
-											<a href="#"><i class="icofont-reply mr-2 text-muted"></i>Reply </a>
-										</div>
-				
-										<div class="comment-content mt-3">
-											<p>Some consultants are employed indirectly by the client via a consultancy staffing company, a company that provides consultants on an agency basis. </p>
-										</div>
-									</div>
-								</li>
-								-->
-								
 							</ul>
 						</div>
 					</div>
@@ -283,20 +319,11 @@
 										<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
 											<input class="form-control" type="text" name="nickName" value="${sNickName}(${sMid})" readonly>
 										</c:if>
-										<c:if test="${sLevel==''}">
+										<c:if test="${sLevel!=0 && sLevel!=1 && sLevel!=2}">
 											<input class="form-control" type="text" name="nickName" placeholder="Name:">
 										</c:if>
 									</div>
 								</div>
-								<!-- 
-								<c:if test="${sLevel!=0 && sLevel!=1 && sLevel!=2}">
-									<div class="col-md-6">
-										<div class="form-group">
-											<input class="form-control" type="text" name="email" id="email" placeholder="Email:">
-										</div>
-									</div>
-								</c:if>
-								 -->
 							</div>
 							<textarea class="form-control mb-4" name="content" id="content" cols="30" rows="5" placeholder="Comment"></textarea>
 							<div class="text-right">

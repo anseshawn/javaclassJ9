@@ -95,14 +95,14 @@
 		 let tel1 = myform.tel1.value;
 		 let tel2 = myform.tel2.value.trim();
 		 let tel3 = myform.tel3.value.trim();
-   	 let tel = tel1+"-"+tel2+"-"+tel3;
+   	 let phone = tel1+"-"+tel2+"-"+tel3;
    	 // 회사 연락처
 		 let tel4 = myform.tel4.value;
 		 let tel5 = myform.tel5.value.trim();
 		 let tel6 = myform.tel6.value.trim();
    	 let cTel = tel4+"-"+tel5+"-"+tel6;
    	 if(tel2 != "" || tel3 != ""){
-    	 if(!regTel.test(tel)) {
+    	 if(!regTel.test(phone)) {
     		 alert("연락처를 형식(000-0000-0000)에 맞도록 작성해주세요.");
     		 myform.tel2.focus();
     		 return false;
@@ -111,7 +111,7 @@
    	 else {
    		 tel2 = " ";
    		 tel3 = " ";
-   		 tel = tel1+"-"+tel2+"-"+tel3;
+			 phone = tel1+"-"+tel2+"-"+tel3;
    	 }
    	 if(tel5 != "" || tel6 != ""){
     	 if(!regTel.test(cTel)) {
@@ -123,7 +123,7 @@
    	 else {
    		 tel5 = " ";
    		 tel6 = " ";
-   		 tel = tel4+"-"+tel5+"-"+tel6;
+   		 cTel = tel4+"-"+tel5+"-"+tel6;
    	 }
    	
    	 // 개인 주소
@@ -151,7 +151,7 @@
    	 }
    	 else {
    		 myform.email.value = email; // email 결합
-   		 myform.tel.value = tel;
+   		 myform.phone.value = phone;
    		 myform.cTel.value = cTel;
    		 myform.address.value = address;
    		 myform.cAddress.value = cAddress;
@@ -459,7 +459,7 @@
 	    <button type="button" class="btn btn-main btn-round-full btn-icon" onclick="location.href='${ctp}/Main.do';">돌아가기</button>
     </div>
     <input type="hidden" name="email" />
-    <input type="hidden" name="tel" />
+    <input type="hidden" name="phone" />
     <input type="hidden" name="address" />
     <input type="hidden" name="cTel" />
     <input type="hidden" name="cAddress" />

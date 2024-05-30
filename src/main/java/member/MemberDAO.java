@@ -157,6 +157,60 @@ public class MemberDAO {
 		}
 		return res;
 	}
+
+	// 비밀번호 변경
+	public int setMemberPwdChange(String mid, String pwd) {
+		int res = 0;
+		try {
+			//conn.setAutoCommit(false);
+			sql = "update member set pwd=? where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, mid);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : "+e.getMessage());
+			/*
+			try {
+			
+				if(conn != null) conn.rollback();
+			} catch (Exception e2) {}
+			*/
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+
+	// 회원정보 수정
+	public int setMemberUpdateOk(MemberVO vo) {
+		int res = 0;
+		try {
+			sql = "update member set name=?,nickName=?,birthday=?,email=?,emailNews=?,"
+					+ "phone=?,address=?,mGroup=?,cName=?,cCategory=?,cAddress=?,cTel=?,purpose=? where mid=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getNickName());
+			pstmt.setString(3, vo.getBirthday());
+			pstmt.setString(4, vo.getEmail());
+			pstmt.setString(5, vo.getEmailNews());
+			pstmt.setString(6, vo.getPhone());
+			pstmt.setString(7, vo.getAddress());
+			pstmt.setString(8, vo.getmGroup());
+			pstmt.setString(9, vo.getcName());
+			pstmt.setString(10, vo.getcCategory());
+			pstmt.setString(11, vo.getcAddress());
+			pstmt.setString(12, vo.getcTel());
+			pstmt.setString(13, vo.getPurpose());
+			pstmt.setString(14, vo.getMid());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : "+e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
 	
 	
 }

@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import common.MainInterface;
 import common.SecurityUtil;
 
-public class MemberJoinOkCommand implements MainInterface {
+public class MemberUpdateOkCommand implements MainInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String name = request.getParameter("name")==null ? "" : request.getParameter("name");
 		String mid = request.getParameter("mid")==null ? "" : request.getParameter("mid");
-		String pwd = request.getParameter("pwd")==null ? "" : request.getParameter("pwd");
 		String nickName = request.getParameter("nickName")==null ? "" : request.getParameter("nickName");
 		String birthday = request.getParameter("birthday")==null ? "" : request.getParameter("birthday");
 		String email = request.getParameter("email")==null ? "" : request.getParameter("email");
@@ -55,49 +54,32 @@ public class MemberJoinOkCommand implements MainInterface {
     }
     */
 		
-		//System.out.println(request.getParameterValues("purpose"));
-		//System.out.println("purposes: "+purposes);
 		String purpose = "";
 		if(purposes.length != 0) {
 			for(String p : purposes) {
 				purpose += p + "/";
-				//System.out.println("purpose: "+purpose);
 			}
 		}
 		purpose = purpose.substring(0, purpose.lastIndexOf("/"));
 
 		// DB에 저장시킬 자료 중 not null 데이터는 BackEnd 체크 시켜준다...(추후에)
 		
-		// 아이디 / 닉네임 중복체크...
+		// 닉네임 중복체크...
 		MemberDAO dao = new MemberDAO();
-		MemberVO vo = dao.getMemberIdCheck(mid);
-		if(vo.getMid() != null) {
-			request.setAttribute("message", "이미 사용중인 아이디입니다.");
-			request.setAttribute("url", "/MemberJoin.mem");
-			return;
-		}
+		MemberVO vo = new MemberVO();
+		/*
 		vo = dao.getMemberNickCheck(nickName);
-		if(vo.getNickName() != null) {
+		if(vo.getMid() != mid && vo.getNickName() != null) { // 내가 아닌 사용자 중에서
 			request.setAttribute("message", "이미 사용중인 닉네임입니다.");
-			request.setAttribute("url", "/MemberJoin.mem");
+			request.setAttribute("url", "MemberUpdate.do");
 			return;
 		}
-		
-		
-		// 비밀번호 암호화(SHA-256) - salt키를 만든 후 암호화 시켜준다...(uuid코드 중 앞의 8자리와 같이 병행 처리 후 암호화)
-		UUID uuid = UUID.randomUUID();
-		String salt = uuid.toString().substring(0,8);
-		
-		SecurityUtil security = new SecurityUtil();
-		pwd = security.encryptSHA256(salt+pwd);
-		
-		pwd = salt + pwd; // DB에 따로 salt키 필드를 만들지 않고(만들면 보안에 취약) pwd에 합쳐서 저장
+		*/
 		
 		// 모든 체크가 끝난 자료는 vo에 담아서 DB에 저장처리한다.
 		vo = new MemberVO();
 		vo.setName(name);
 		vo.setMid(mid);
-		vo.setPwd(pwd); // vo.setPwd(salt+pwd); // 솔트키를 앞에 놓고 저장 후 나중에 앞의 여덟자리만 잘라서 비교
 		vo.setNickName(nickName);
 		vo.setBirthday(birthday);
 		vo.setEmail(email);
@@ -111,15 +93,15 @@ public class MemberJoinOkCommand implements MainInterface {
 		vo.setcTel(cTel);
 		vo.setPurpose(purpose);
 		
-		int res = dao.setMemberJoinOk(vo);
+		int res = dao.setMemberUpdateOk(vo);
 		
 		if(res != 0) {
-			request.setAttribute("message", "회원 가입이 완료되었습니다.\\n 다시 로그인 해 주세요.");
-			request.setAttribute("url", "MemberLogin.do");
+			request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
+			request.setAttribute("url", "Main.do");
 		}
 		else {
-			request.setAttribute("message", "회원 가입 실패");
-			request.setAttribute("url", "MemberJoin.do");
+			request.setAttribute("message", "회원정보 수정 실패");
+			request.setAttribute("url", "MemberUpdate.do");
 		}
 	}
 

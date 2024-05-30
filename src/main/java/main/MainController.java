@@ -15,6 +15,7 @@ import board.FreeBoardEditCommand;
 import board.FreeBoardInputOkCommand;
 import board.FreeBoardListCommand;
 import common.MainInterface;
+import member.MemberUpdateCommand;
 
 @WebServlet("*.do")
 public class MainController extends HttpServlet {
@@ -52,6 +53,12 @@ public class MainController extends HttpServlet {
 		else if(com.equals("/AboutUs")) {
 			viewPage += "/company/aboutUs.jsp";
 		}
+		else if(com.equals("/Service")) {
+			viewPage += "/service/serviceMain.jsp";
+		}
+		else if(com.equals("/Complaint")) {
+			viewPage += "/service/complaintMain.jsp";
+		}
 		else if(level > 2 || level < 0) {
 			request.setAttribute("message", "로그인 후 사용해 주세요.");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.do");
@@ -65,8 +72,13 @@ public class MainController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/board/freeBoardEdit.jsp";
 		}
-		else if(com.equals("/PasswordChange")) {
-			viewPage += "/include/message.jsp";
+		else if(com.equals("/PwdChange")) {
+			viewPage += "/mypage/pwdChange.jsp";
+		}
+		else if(com.equals("/MemberUpdate")) {
+			command = new MemberUpdateCommand();
+			command.execute(request, response);
+			viewPage += "/mypage/memberUpdate.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

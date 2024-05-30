@@ -12,7 +12,17 @@ public class ReplyVO {
 	private int report;
 	
 	private int hour_diff; // 업로드 24시간 경과유무 체크변수
-	private int date_diff; // 일자 경과유무 체크변수	
+	private int date_diff; // 일자 경과유무 체크변수
+	
+	// reReply 테이블
+	private int reIdx;
+	private int replyIdx;
+	private String reMid;
+	private String reNickName;
+	private String reDate;
+	private String reHostIp;
+	private String reContent;
+	private int reReport;
 	
 	public int getIdx() {
 		return idx;
@@ -80,11 +90,62 @@ public class ReplyVO {
 	public void setDate_diff(int date_diff) {
 		this.date_diff = date_diff;
 	}
+	//reReply
+	public int getReIdx() {
+		return reIdx;
+	}
+	public void setReIdx(int reIdx) {
+		this.reIdx = reIdx;
+	}
+	public int getReplyIdx() {
+		return replyIdx;
+	}
+	public void setReplyIdx(int replyIdx) {
+		this.replyIdx = replyIdx;
+	}
+	public String getReMid() {
+		return reMid;
+	}
+	public void setReMid(String reMid) {
+		this.reMid = reMid;
+	}
+	public String getReNickName() {
+		return reNickName;
+	}
+	public void setReNickName(String reNickName) {
+		this.reNickName = reNickName;
+	}
+	public String getReDate() {
+		return reDate;
+	}
+	public void setReDate(String reDate) {
+		this.reDate = reDate;
+	}
+	public String getReHostIp() {
+		return reHostIp;
+	}
+	public void setReHostIp(String reHostIp) {
+		this.reHostIp = reHostIp;
+	}
+	public String getReContent() {
+		return reContent;
+	}
+	public void setReContent(String reContent) {
+		this.reContent = reContent;
+	}
+	public int getReReport() {
+		return reReport;
+	}
+	public void setReReport(int reReport) {
+		this.reReport = reReport;
+	}
 	@Override
 	public String toString() {
 		return "ReplyVO [idx=" + idx + ", board=" + board + ", boardIdx=" + boardIdx + ", mid=" + mid + ", nickName="
 				+ nickName + ", rDate=" + rDate + ", hostIp=" + hostIp + ", content=" + content + ", report=" + report
-				+ ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + "]";
+				+ ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", reIdx=" + reIdx + ", replyIdx=" + replyIdx
+				+ ", reMid=" + reMid + ", reNickName=" + reNickName + ", reDate=" + reDate + ", reHostIp=" + reHostIp
+				+ ", reContent=" + reContent + ", reReport=" + reReport + "]";
 	}
-
+	
 }
