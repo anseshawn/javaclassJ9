@@ -17,6 +17,7 @@ import board.FreeBoardListCommand;
 import board.FreeBoardSearchCommand;
 import board.QuestionBoardCommand;
 import board.QuestionBoardContentCommand;
+import board.QuestionBoardEditCommand;
 import board.QuestionBoardInputCommand;
 import board.QuestionBoardSearchCommand;
 import common.MainInterface;
@@ -105,6 +106,11 @@ public class MainController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/board/questionBoardInput.jsp";
 		}
+		else if(com.equals("/QuestionBoardEdit")) {
+			command = new QuestionBoardEditCommand();
+			command.execute(request, response);
+			viewPage += "/board/questionBoardEdit.jsp";
+		}
 		else if(com.equals("/PwdChange")) {
 			viewPage += "/mypage/pwdChange.jsp";
 		}
@@ -112,6 +118,9 @@ public class MainController extends HttpServlet {
 			command = new MemberUpdateCommand();
 			command.execute(request, response);
 			viewPage += "/mypage/memberUpdate.jsp";
+		}
+		else if(com.equals("/MemberDelete")) {
+			viewPage += "/mypage/memberDelete.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

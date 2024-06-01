@@ -19,11 +19,11 @@
 		
 		function searchValue(){
 			if($("#search").val()=='part') {
-				$("#searchSelect").show();
+				$("#partSelect").show();
 				$("#searchString").hide();
 			}
 			else {
-				$("#searchSelect").hide();
+				$("#partSelect").hide();
 				$("#searchString").show();				
 			}
 		}
@@ -130,7 +130,7 @@
 						<option value="content">내용</option>
 						<option value="part">분류</option>
 					</select>
-					<select name="searchSelect" id="searchSelect" class="form-control mt-2" style="display:none;">
+					<select name="partSelect" id="partSelect" class="form-control mt-2" style="display:none;">
 						<option>실험방법</option>
 						<option>실험장비</option>
 						<option>법규</option>

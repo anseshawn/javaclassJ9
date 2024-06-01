@@ -17,9 +17,9 @@ public class QuestionBoardSearchCommand implements MainInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String search = request.getParameter("search")==null ? "" : request.getParameter("search");
 		String searchString = request.getParameter("searchString")==null ? "" : request.getParameter("searchString");
-		String searchSelect = request.getParameter("searchSelect")==null ? "" : request.getParameter("searchSelect");
+		String partSelect = request.getParameter("partSelect")==null ? "" : request.getParameter("partSelect");
 		if(search.equals("part")) {
-			search += "/"+searchSelect;			
+			search += "/"+partSelect;	
 		}
 		else search += "/"+searchString;
 		

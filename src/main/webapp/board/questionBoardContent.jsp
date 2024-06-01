@@ -41,11 +41,11 @@
 		function deleteCheck(){
 			let ans = confirm("현재 게시글을 삭제하시겠습니까?");
 			if(!ans) return false;
-			else if(${vo.replyCnt} != 0) {
+			else if(${sLevel}!=0 && ${vo.replyCnt} != 0) {
 				alert("답변이 달린 게시글은 삭제할 수 없습니다.");
 				return false;
 			}
-			else location.href="QuestionBoardDelete.bo?idx="+${vo.idx};
+			else location.href="QuestionBoardDelete.bo?idx=${vo.idx}";
 		}
 		
 		// 좋아요 수 (중복 불허)
@@ -240,7 +240,7 @@
 							<div class="blog-item-content mt-2">
 								<div class="blog-item-meta mb-3">
 									<div style="color:#223a66; font-size:1.2rem;">
-										<a href="QuestionBoardSearch.do?pag=1&pageSize=${pageSize}&search=part&searchString=${vo.part}"><i class="icofont-ui-folder mr-2"></i>${vo.part}</a>
+										<a href="QuestionBoardSearch.do?pag=1&pageSize=${pageSize}&search=part&partSelect=${vo.part}"><i class="icofont-ui-folder mr-2"></i>${vo.part}</a>
 									</div>
 								</div>
 								<div class="blog-item-meta mb-3">

@@ -10,7 +10,7 @@
 					<div class="logo mb-4">
 						<img src="images/logo.png" alt="" class="img-fluid">
 					</div>
-					<p>다가올 미래시대가 요구하는 진보된 분석시스템의<br/> 개발과 보급에 지속적으로 매진할 것을 약속드립니다.</p>
+					<p>다가올 미래시대가 요구하는 진보된 분석시스템의 개발과 보급에 지속적으로 매진할 것을 약속드립니다.</p>
 
 					<ul class="list-inline footer-socials mt-4">
 						<li class="list-inline-item"><a href="https://www.facebook.com/themefisher"><i class="icofont-facebook"></i></a></li>

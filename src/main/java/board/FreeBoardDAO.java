@@ -100,7 +100,7 @@ public class FreeBoardDAO {
 			else {		// 검색어가 들어왔을 때
 				if(contentsShow.equals("adminOK")) {
 					sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
-							+ " (select count(*) from boardReply where boardIdx = b.idx) as replyCnt"
+							+ " (select count(*) from boardReply where board='freeBoard' and  boardIdx = b.idx) as replyCnt"
 							+ " from freeBoard b where "+search+" like ? order by idx desc limit ?,?";
 				}
 				else {
@@ -215,12 +215,14 @@ public class FreeBoardDAO {
 	public int setFreeBoardEdit(FreeBoardVO vo) {
 		int res = 0;
 		try {
-			sql="update freeBoard set title=?,content=?,hostIp=?,wDate=now() where idx=?";
+			sql="update freeBoard set mid=?,nickName=?,title=?,content=?,hostIp=?,wDate=now() where idx=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getTitle());
-			pstmt.setString(2, vo.getContent());
-			pstmt.setString(3, vo.getHostIp());
-			pstmt.setInt(4, vo.getIdx());
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getNickName());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getContent());
+			pstmt.setString(5, vo.getHostIp());
+			pstmt.setInt(6, vo.getIdx());
 			
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {

@@ -53,7 +53,7 @@ public class QuestionBoardDAO {
 					pstmt = conn.prepareStatement(sql);
 				}				
 			}
-			else if(search.equals("분류")){
+			else if(search.equals("part")){
 				if(contentsShow.equals("adminOK")) {
 					sql = "select count(*) as cnt from questionBoard where "+search+" = '"+searchString+"'";
 					pstmt = conn.prepareStatement(sql);
@@ -109,23 +109,26 @@ public class QuestionBoardDAO {
 				pstmt.setInt(1, startIndexNo);
 				pstmt.setInt(2, pageSize);
 			}
-			else if(search.equals("분류")){		// 검색을 분류로 했을 때
+			else if(search.equals("part")){		// 검색을 분류로 했을 때
 				if(contentsShow.equals("adminOK")) {
 					sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
-							+ " (select count(*) from boardReply where boardIdx = b.idx) as replyCnt"
-							+ " from questionBoard b where "+search+" = '"+searchString+"' order by idx desc limit ?,?";
+							+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
+							+ " from questionBoard b where part='"+searchString+"' order by idx desc limit ?,?";
 				}
 				else {
 					sql = "select *, datediff(wDate, now()) as date_diff,"
 							+ " timestampdiff(hour, wDate, now()) as hour_diff,"
 							+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
-							+ " from questionBoard b where report < 5 and "+search+" = '"+searchString+"' order by idx desc limit ?,?";
+							+ " from questionBoard b where report < 5 and part='"+searchString+"' order by idx desc limit ?,?";
 				}
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, startIndexNo);
+				pstmt.setInt(2, pageSize);
 			}
 			else {		// 검색어가 들어왔을 때
 				if(contentsShow.equals("adminOK")) {
 					sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
-							+ " (select count(*) from boardReply where boardIdx = b.idx) as replyCnt"
+							+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
 							+ " from questionBoard b where "+search+" like ? order by idx desc limit ?,?";
 				}
 				else {
@@ -261,13 +264,22 @@ public class QuestionBoardDAO {
 	}
 
 	// 게시글 삭제(댓글 삭제안됨)
-	public int setQuestionBoardDelete(int idx) {
+	public int setQuestionBoardDelete(int idx, String contentsShow) {
 		int res = 0;
 		try {
-			sql="delete from questionBoard where idx=?";
+			sql="select count(*) as cnt from reply where board='questionBoard' and boardIdx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
-			res = pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("cnt");
+			if(cnt==0 || contentsShow.equals("adminOK")) {
+				pstmtClose();
+				sql="delete from questionBoard where idx=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, idx);
+				res = pstmt.executeUpdate();				
+			}
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : "+e.getMessage());
 		} finally {

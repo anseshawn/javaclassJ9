@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.MainInterface;
 
-public class FreeBoardEditOkCommand implements MainInterface {
+public class QuestionBoardEditOkCommand implements MainInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,21 +21,23 @@ public class FreeBoardEditOkCommand implements MainInterface {
 		String title = request.getParameter("title")==null ? "" : request.getParameter("title");
 		String content = request.getParameter("content")==null ? "" : request.getParameter("content");
 		String hostIp = request.getParameter("hostIp")==null ? "" : request.getParameter("hostIp");
+		String part = request.getParameter("part")==null ? "" : request.getParameter("part");
 		
 		title = title.replace("<", "&lt;");
 		title = title.replace(">", "&gt;");
 		
-		FreeBoardVO vo = new FreeBoardVO();
+		QuestionBoardVO vo = new QuestionBoardVO();
 		vo.setIdx(idx);
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setHostIp(hostIp);
+		vo.setPart(part);
 		
-		FreeBoardDAO dao = new FreeBoardDAO();
+		QuestionBoardDAO dao = new QuestionBoardDAO();
 		
-		int res = dao.setFreeBoardEdit(vo);
+		int res = dao.setQuestionBoardEdit(vo);
 		
 		if(res != 0) {
 			request.setAttribute("message", "게시글이 수정되었습니다.");
@@ -43,7 +45,7 @@ public class FreeBoardEditOkCommand implements MainInterface {
 		else {
 			request.setAttribute("message", "게시글 수정 실패");
 		}
-		request.setAttribute("url", "FreeBoardContent.do?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);			
+		request.setAttribute("url", "QuestionBoardContent.do?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);		
 	}
 
 }

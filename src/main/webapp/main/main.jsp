@@ -26,7 +26,7 @@
 					<span class="text-uppercase text-sm letter-spacing ">실험실에 대한 모든 것</span>
 					<h1 class="mb-3 mt-3">Your most trusted partner</h1>
 					
-					<p class="mb-4 pr-5">우리 엔지니어링은 실험실 전반에 대한 기기와 소모품을 다루고 있습니다.<br/>항상 고객과의 소통을 추구하여 세계로 나아가는 그린 엔지니어링이 되겠습니다.</p>
+					<p class="mb-4 pr-5">우리 엔지니어링은 실험실 전반에 대한 기기와 소모품을 다루고 있습니다. 항상 고객과의 소통을 추구하여 세계로 나아가는 그린 엔지니어링이 되겠습니다.</p>
 					<div class="btn-container ">
 						<a href="appoinment.html" target="_blank" class="btn btn-main-3 btn-icon btn-round-full">견적문의 <i class="icofont-simple-right ml-2  "></i></a>
 					</div>

@@ -398,6 +398,7 @@
     <input type="hidden" name="cTel" />
     <input type="hidden" name="cAddress" />
   </form>
+  <div class="text-muted text-right mt-3"><a href="MemberDelete.do">탈퇴하기</a></div>
 </div>
 </div>
 </div>
