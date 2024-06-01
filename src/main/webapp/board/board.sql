@@ -21,6 +21,22 @@ drop table freeBoard;
 insert into freeBoard values (default,'admin','관리자','자유게시판 서비스를 시작합니다.','많은 이용 부탁드립니다.','172.30.1.24',default,default,default,default);
 select * from freeBoard;
 
+create table questionBoard(
+	idx int not null auto_increment,	/* 게시글 고유번호 */
+	mid varchar(10) not null,					/* 작성자 아이디 */
+	nickName varchar(10) not null,		/* 작성자 닉네임 */
+	title varchar(50) not null,				/* 게시글 제목 */
+	content text not null,						/* 게시글 내용 */
+	hostIp varchar(40) not null,			/* 작성자 아이피 */
+	readNum int default 0,						/* 조회수 */
+	wDate datetime default now(),			/* 작성일 */
+	good int default 0,								/* 좋아요 */
+	report int default 0,							/* 신고(5번 신고하면 리스트에서 블라인드) */
+	primary key(idx),
+	foreign key(mid) references member(mid)
+);
+insert into questionBoard values (default,'admin','관리자','질문 게시판입니다.','많은 이용 부탁드립니다.','172.30.1.24',default,default,default,default);
+
 create table reply(
 	idx int not null auto_increment,	/* 댓글 고유번호 */
 	board varchar(20) not null,				/* 게시판 종류 */

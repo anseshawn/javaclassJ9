@@ -34,7 +34,15 @@ public class FreeBoardContentCommand implements MainInterface {
 		}
 		session.setAttribute("sContentIdx", contentReadNum);
 		
-		// 좋아요 중복불허
+		// 좋아요(내가 한적 있는지)(중복 불허)
+		ArrayList<String> contentGood = (ArrayList<String>)session.getAttribute("sContentGood");
+		if(contentGood==null) contentGood = new ArrayList<String>();
+		String imsiContentGood = "freeBoardGood"+idx;
+		String good = "0";
+		if(!contentGood.contains(imsiContentGood)) {
+			good = "1";
+		}
+		request.setAttribute("good", good);
 		
 		FreeBoardVO vo = dao.getFreeBoardContent(idx);
 		request.setAttribute("vo", vo);

@@ -47,7 +47,7 @@
 						<span>실험실 기초장비</span>
 						<h4 class="mb-3">중고기기 확인하기</h4>
 						<p class="mb-4">분석에 도움이 되어드리겠습니다. 실험에 필요한 장비들을 합리적인 가격에 제공합니다.</p>
-						<a href="appoinment.html" class="btn btn-main btn-round-full">장비리스트 보기</a>
+						<a href="#" class="btn btn-main btn-round-full">장비리스트 보기</a>
 					</div>
 				
 					<div class="feature-item mb-5 mb-lg-0">
@@ -56,20 +56,18 @@
 						</div>
 						<span>실험에 필요한 정보</span>
 						<h4 class="mb-3">다른 연구원과 소통하기</h4>
-						<ul class="w-hours list-unstyled">
-              <li class="d-flex justify-content-between">Sun - Wed : <span>8:00 - 17:00</span></li>
-              <li class="d-flex justify-content-between">Thu - Fri : <span>9:00 - 17:00</span></li>
-              <li class="d-flex justify-content-between">Sat - sun : <span>10:00 - 17:00</span></li>
-            </ul>
+						<p class="mb-4">실험에 어려움이 있습니까? 다른 연구원들에게 도움을 요청해보세요.</p>
+						<a href="QuestionBoard.do" class="btn btn-main btn-round-full">Q&A 게시판</a>
 					</div>
 				
 					<div class="feature-item mb-5 mb-lg-0">
 						<div class="feature-icon mb-4">
 							<i class="icofont-support"></i>
 						</div>
-						<span>Emegency Cases</span>
-						<h4 class="mb-3">1-800-700-6200</h4>
-						<p>Get ALl time support for emergency.We have introduced the principle of family medicine.Get Conneted with us for any urgency .</p>
+						<span>온라인 상담</span>
+						<h4 class="mb-3">support@email.com</h4>
+						<p class="mb-4">제품 관련 문의, A/S 신청, 사이트 이용 중 발생하는 불편사항이 있다면 문의를 남겨주세요.</p>
+						<a href="Service.do" class="btn btn-main btn-round-full">상담내용 보내기</a>
 					</div>
 				</div>
 			</div>

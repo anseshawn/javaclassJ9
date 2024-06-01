@@ -14,6 +14,7 @@ import board.FreeBoardContentCommand;
 import board.FreeBoardEditCommand;
 import board.FreeBoardInputOkCommand;
 import board.FreeBoardListCommand;
+import board.QuestionBoardCommand;
 import common.MainInterface;
 import member.MemberUpdateCommand;
 
@@ -49,6 +50,11 @@ public class MainController extends HttpServlet {
 			command = new FreeBoardContentCommand();
 			command.execute(request, response);
 			viewPage += "/board/freeBoardContent.jsp";
+		}
+		else if(com.equals("/QuestionBoard")) {
+			command = new QuestionBoardCommand();
+			command.execute(request, response);
+			viewPage += "/board/questionBoard.jsp";
 		}
 		else if(com.equals("/AboutUs")) {
 			viewPage += "/company/aboutUs.jsp";

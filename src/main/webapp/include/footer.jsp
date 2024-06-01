@@ -10,7 +10,7 @@
 					<div class="logo mb-4">
 						<img src="images/logo.png" alt="" class="img-fluid">
 					</div>
-					<p>Tempora dolorem voluptatum nam vero assumenda voluptate, facilis ad eos obcaecati tenetur veritatis eveniet distinctio possimus.</p>
+					<p>다가올 미래시대가 요구하는 진보된 분석시스템의<br/> 개발과 보급에 지속적으로 매진할 것을 약속드립니다.</p>
 
 					<ul class="list-inline footer-socials mt-4">
 						<li class="list-inline-item"><a href="https://www.facebook.com/themefisher"><i class="icofont-facebook"></i></a></li>
@@ -22,30 +22,30 @@
 
 			<div class="col-lg-2 col-md-6 col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
-					<h4 class="text-capitalize mb-3">Department</h4>
+					<h4 class="text-capitalize mb-3">사이트 메뉴</h4>
 					<div class="divider mb-4"></div>
 
 					<ul class="list-unstyled footer-menu lh-35">
-						<li><a href="#">Surgery </a></li>
-						<li><a href="#">Wome's Health</a></li>
-						<li><a href="#">Radiology</a></li>
-						<li><a href="#">Cardioc</a></li>
-						<li><a href="#">Medicine</a></li>
+						<li><a href="#">분석장비</a></li>
+						<li><a href="#">소모품</a></li>
+						<li><a href="#">A/S신청</a></li>
+						<li><a href="QuestionBoard.do">Q/A게시판</a></li>
+						<li><a href="FreeBoard.do">자유게시판</a></li>
 					</ul>
 				</div>
 			</div>
 
 			<div class="col-lg-2 col-md-6 col-sm-6">
 				<div class="widget mb-5 mb-lg-0">
-					<h4 class="text-capitalize mb-3">Support</h4>
+					<h4 class="text-capitalize mb-3">연관사이트</h4>
 					<div class="divider mb-4"></div>
 
 					<ul class="list-unstyled footer-menu lh-35">
-						<li><a href="#">Terms & Conditions</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Company Support </a></li>
-						<li><a href="#">FAQuestions</a></li>
-						<li><a href="#">Company Licence</a></li>
+						<li><a href="https://www.agilent.com" target="_blank">Agilent</a></li>
+						<li><a href="https://www.ktl.re.kr" target="_blank">KTL</a></li>
+						<li><a href="https://www.thermofisher.com" target="_blank">ThermoFisher</a></li>
+						<li><a href="https://www.shimadzu.co.kr" target="_blank">SHIMADZU</a></li>
+						<li><a href="https://sigmaaldrich.com" target="_blank">Sigma Aldrich</a></li>
 					</ul>
 				</div>
 			</div>

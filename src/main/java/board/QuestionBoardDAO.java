@@ -11,13 +11,14 @@ import com.mysql.fabric.xmlrpc.base.Array;
 
 import common.GetConn;
 
-public class FreeBoardDAO {
+public class QuestionBoardDAO {
 
 	private Connection conn = GetConn.getConn();
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 	
 	private String sql = "";
+	QuestionBoardVO vo = null;
 	
 	public void pstmtClose() {
 		if(pstmt != null) {
@@ -44,22 +45,22 @@ public class FreeBoardDAO {
 		try {
 			if(search==null || search.equals("")) {
 				if(contentsShow.equals("adminOK")) {
-					sql = "select count(*) as cnt from freeBoard";
+					sql = "select count(*) as cnt from questionBoard";
 					pstmt = conn.prepareStatement(sql);
 				}
 				else {
-					sql = "select count(*) as cnt from freeBoard where report < 5";
+					sql = "select count(*) as cnt from questionBoard where report < 5";
 					pstmt = conn.prepareStatement(sql);
 				}				
 			}
 			else {
 				if(contentsShow.equals("adminOK")) {
-					sql = "select count(*) as cnt from freeBoard where "+search+" like ?";
+					sql = "select count(*) as cnt from questionBoard where "+search+" like ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
 				}
 				else {
-					sql = "select count(*) as cnt from (select count(*) as cnt from freeBoard"
+					sql = "select count(*) as cnt from (select count(*) as cnt from questionBoard"
 							+ " where report < 5 and "+search+" like ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
@@ -77,21 +78,21 @@ public class FreeBoardDAO {
 	}
 
 	// 게시판 전체 리스트 (검색어의 경우 포함)
-	public List<FreeBoardVO> getFreeBoardList(int startIndexNo, int pageSize, String contentsShow, String search,	String searchString) {
-		List<FreeBoardVO> vos = new ArrayList<FreeBoardVO>();
+	public List<QuestionBoardVO> getQuestionBoardList(int startIndexNo, int pageSize, String contentsShow, String search,	String searchString) {
+		List<QuestionBoardVO> vos = new ArrayList<QuestionBoardVO>();
 		try {
 			if(search  == null || search.equals("")) {		// 검색어가 들어오지 않았을 때(전체 리스트)
 				if(contentsShow.equals("adminOK")) {
 					sql = "select *, datediff(wDate, now()) as date_diff,"
 							+ " timestampdiff(hour, wDate, now()) as hour_diff,"
-							+ " (select count(*) from reply where board='freeBoard' and boardIdx = b.idx) as replyCnt"
-							+ " from freeBoard b order by idx desc limit ?,?";
+							+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
+							+ " from questionBoard b order by idx desc limit ?,?";
 				}
 				else {
 					sql = "select *, datediff(wDate, now()) as date_diff,"
 							+ " timestampdiff(hour, wDate, now()) as hour_diff,"
-							+ " (select count(*) from reply where board='freeBoard' and boardIdx = b.idx) as replyCnt"
-							+ " from freeBoard b where report < 5 order by idx desc limit ?,?";
+							+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
+							+ " from questionBoard b where report < 5 order by idx desc limit ?,?";
 				}
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, startIndexNo);
@@ -101,13 +102,13 @@ public class FreeBoardDAO {
 				if(contentsShow.equals("adminOK")) {
 					sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
 							+ " (select count(*) from boardReply where boardIdx = b.idx) as replyCnt"
-							+ " from freeBoard b where "+search+" like ? order by idx desc limit ?,?";
+							+ " from questionBoard b where "+search+" like ? order by idx desc limit ?,?";
 				}
 				else {
 					sql = "select *, datediff(wDate, now()) as date_diff,"
 							+ " timestampdiff(hour, wDate, now()) as hour_diff,"
-							+ " (select count(*) from reply where board='freeBoard' and boardIdx = b.idx) as replyCnt"
-							+ " from freeBoard b where report < 5 and "+search+" like ? order by idx desc limit ?,?";
+							+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
+							+ " from questionBoard b where report < 5 and "+search+" like ? order by idx desc limit ?,?";
 				}			
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setString(1, "%"+searchString+"%");
@@ -117,7 +118,7 @@ public class FreeBoardDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				FreeBoardVO vo = new FreeBoardVO();
+				vo = new QuestionBoardVO();
 				vo.setIdx(rs.getInt("idx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
@@ -144,10 +145,10 @@ public class FreeBoardDAO {
 	}
 
 	// 자유게시판: 게시글 등록하기
-	public int setFreeBoardInput(FreeBoardVO vo) {
+	public int setQuestionBoardInput(QuestionBoardVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into freeBoard values(default,?,?,?,?,?,default,default,default,default)";
+			sql = "insert into questionBoard values(default,?,?,?,?,?,default,default,default,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getNickName());
@@ -164,9 +165,9 @@ public class FreeBoardDAO {
 	}
 
 	// 게시글 조회수 증가시키기
-	public void setFreeBoardReadNumPlus(int idx) {
+	public void setQuestionBoardReadNumPlus(int idx) {
 		try {
-			sql="update freeBoard set readNum = readNum+1 where idx=?";
+			sql="update questionBoard set readNum = readNum+1 where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			pstmt.executeUpdate();
@@ -178,12 +179,12 @@ public class FreeBoardDAO {
 	}
 
 	// 게시글 하나의 내용 불러오기
-	public FreeBoardVO getFreeBoardContent(int idx) {
-		FreeBoardVO vo = new FreeBoardVO();
+	public QuestionBoardVO getQuestionBoardContent(int idx) {
+		vo = new QuestionBoardVO();
 		try {
 			sql="select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
-					+ " (select count(*) from reply where board='freeBoard' and boardIdx = b.idx) as replyCnt"
-					+ " from freeBoard b where idx=?";
+					+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
+					+ " from questionBoard b where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
@@ -212,10 +213,10 @@ public class FreeBoardDAO {
 	}
 
 	// 게시글 수정하기
-	public int setFreeBoardEdit(FreeBoardVO vo) {
+	public int setQuestionBoardEdit(QuestionBoardVO vo) {
 		int res = 0;
 		try {
-			sql="update freeBoard set title=?,content=?,hostIp=?,wDate=now() where idx=?";
+			sql="update questionBoard set title=?,content=?,hostIp=?,wDate=now() where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContent());
@@ -232,10 +233,10 @@ public class FreeBoardDAO {
 	}
 
 	// 게시글 삭제(댓글이 있다면 댓글도 함께 삭제할것)
-	public int setFreeBoardDelete(int idx) {
+	public int setQuestionBoardDelete(int idx) {
 		int res = 0;
 		try {
-			sql="delete from freeBoard where idx=?";
+			sql="delete from questionBoard where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			res = pstmt.executeUpdate();
@@ -248,16 +249,16 @@ public class FreeBoardDAO {
 	}
 
 	// 인기 게시글 리스트 가져오기
-	public ArrayList<FreeBoardVO> getBestFreeBoard() {
-		ArrayList<FreeBoardVO> vos = new ArrayList<FreeBoardVO>();
+	public ArrayList<QuestionBoardVO> getBestQuestionBoard() {
+		ArrayList<QuestionBoardVO> vos = new ArrayList<QuestionBoardVO>();
 		try {
 			sql="select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
-					+ " (select count(*) from reply where board='freeBoard' and boardIdx = b.idx) as replyCnt"
-					+ " from freeBoard b where report < 5 order by good desc limit 3";
+					+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
+					+ " from questionBoard b where report < 5 order by good desc limit 3";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				FreeBoardVO vo = new FreeBoardVO();
+				vo = new QuestionBoardVO();
 				vo.setIdx(rs.getInt("idx"));
 				vo.setMid(rs.getString("mid"));
 				vo.setNickName(rs.getString("nickName"));
@@ -283,9 +284,9 @@ public class FreeBoardDAO {
 	}
 
 	// 게시판 글 좋아요 수 증가
-	public void setFreeBoardGoodCheck(int idx) {
+	public void setQuestionBoardGoodCheck(int idx) {
 		try {
-			sql = "update freeBoard set good = good+1 where idx=?";
+			sql = "update questionBoard set good = good+1 where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			pstmt.executeUpdate();

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import board.FreeBoardDAO;
 import board.FreeBoardVO;
+import board.QuestionBoardDAO;
+import board.QuestionBoardVO;
 
 public class Pagination {
 
@@ -13,12 +15,16 @@ public class Pagination {
 	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {
 		// 사용하는 vo가 각각 다르기에 하나의 DAO를 사용하는 것보다 각각 생성하는 편이 낫다
 		FreeBoardDAO fBoardDao = new FreeBoardDAO();
-		//PdsDAO pdsDao = new PdsDAO();
+		QuestionBoardDAO qBoardDao = new QuestionBoardDAO();
 		
 		// part - 검색: search/searchString의 값이 넘어올 경우(검색 분류 / 검색어)
 		String search = "", searchString = "";
 		if(part != null && !part.equals("")) {
 			if(section.equals("freeBoard")) {
+				search = part.split("/")[0];
+				searchString = part.split("/")[1];
+			}
+			else if(section.equals("questionBoard")) {
 				search = part.split("/")[0];
 				searchString = part.split("/")[1];
 			}
@@ -34,8 +40,13 @@ public class Pagination {
 				totRecCnt = fBoardDao.getTotRecCnt(contentsShow,search,searchString); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK/일반유저:아이디 구별)				
 			}
 		}
-		else if(section.equals("pds")) {
-			//totRecCnt = pdsDao.getTotRecCnt(part); // 자료실의 전체 레코드수 구하기						
+		else if(section.equals("questionBoard")) {
+			if(part==null || part.equals("")) {
+				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,"",""); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK)
+			}
+			else {
+				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,search,searchString); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK/일반유저:아이디 구별)				
+			}
 		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize)+1;
@@ -48,7 +59,7 @@ public class Pagination {
 		int lastBlock = (totPage - 1) / blockSize;
 		
 		List<FreeBoardVO> fBoardVos = null;
-		//List<PdsVO> pdsVos = null;
+		List<QuestionBoardVO> qBoardVos = null;
 		if(section.equals("freeBoard")) {
 			if(part==null || part.equals("")) {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
@@ -58,8 +69,14 @@ public class Pagination {
 			}
 			request.setAttribute("vos", fBoardVos);
 		}
-		else if(section.equals("pds")) {
-			
+		else if(section.equals("questionBoard")) {
+			if(part==null || part.equals("")) {
+				qBoardVos = qBoardDao.getQuestionBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
+			}
+			else {
+				qBoardVos = qBoardDao.getQuestionBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
+			}
+			request.setAttribute("vos", qBoardVos);
 		}
 		
 		request.setAttribute("pag", pag);
@@ -81,13 +98,16 @@ public class Pagination {
 			request.setAttribute("searchString", searchString);			
 			request.setAttribute("searchCount", totRecCnt);
 		}
-		else if(section.equals("pds")) {
-			request.setAttribute("part", part);
+		else if(section.equals("questionBoard")) {
+			String searchTitle = "";
+			if(search.equals("title")) searchTitle = "제목";
+			else if(search.equals("nickName")) searchTitle = "작성자";
+			else if(search.equals("content")) searchTitle = "내용";
+			request.setAttribute("searchTitle", searchTitle);
+			request.setAttribute("search", search);
+			request.setAttribute("searchString", searchString);			
+			request.setAttribute("searchCount", totRecCnt);
 		}
 	}
-	
-//	public static void pageChange(HttpServletRequest request, int pag, int pageSize, int totRecCnt) {
-//		
-//	} 
 
 }
