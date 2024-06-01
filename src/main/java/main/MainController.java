@@ -14,7 +14,11 @@ import board.FreeBoardContentCommand;
 import board.FreeBoardEditCommand;
 import board.FreeBoardInputOkCommand;
 import board.FreeBoardListCommand;
+import board.FreeBoardSearchCommand;
 import board.QuestionBoardCommand;
+import board.QuestionBoardContentCommand;
+import board.QuestionBoardInputCommand;
+import board.QuestionBoardSearchCommand;
 import common.MainInterface;
 import member.MemberUpdateCommand;
 
@@ -51,10 +55,25 @@ public class MainController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/board/freeBoardContent.jsp";
 		}
+		else if(com.equals("/FreeBoardSearch")) {
+			command = new FreeBoardSearchCommand();
+			command.execute(request, response);
+			viewPage += "/board/freeBoardSearch.jsp";
+		}
 		else if(com.equals("/QuestionBoard")) {
 			command = new QuestionBoardCommand();
 			command.execute(request, response);
 			viewPage += "/board/questionBoard.jsp";
+		}
+		else if(com.equals("/QuestionBoardContent")) {
+			command = new QuestionBoardContentCommand();
+			command.execute(request, response);
+			viewPage += "/board/questionBoardContent.jsp";
+		}
+		else if(com.equals("/QuestionBoardSearch")) {
+			command = new QuestionBoardSearchCommand();
+			command.execute(request, response);
+			viewPage += "/board/questionBoardSearch.jsp";
 		}
 		else if(com.equals("/AboutUs")) {
 			viewPage += "/company/aboutUs.jsp";
@@ -64,6 +83,9 @@ public class MainController extends HttpServlet {
 		}
 		else if(com.equals("/Complaint")) {
 			viewPage += "/service/complaintMain.jsp";
+		}
+		else if(com.equals("/Product")) {
+			viewPage += "/product/product.jsp";
 		}
 		else if(level > 2 || level < 0) {
 			request.setAttribute("message", "로그인 후 사용해 주세요.");
@@ -77,6 +99,11 @@ public class MainController extends HttpServlet {
 			command = new FreeBoardEditCommand();
 			command.execute(request, response);
 			viewPage += "/board/freeBoardEdit.jsp";
+		}
+		else if(com.equals("/QuestionBoardInput")) {
+			command = new QuestionBoardInputCommand();
+			command.execute(request, response);
+			viewPage += "/board/questionBoardInput.jsp";
 		}
 		else if(com.equals("/PwdChange")) {
 			viewPage += "/mypage/pwdChange.jsp";

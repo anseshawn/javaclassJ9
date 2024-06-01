@@ -14,7 +14,7 @@
 		
 		function pageSizeCheck(){
 			let pageSize = $("#pageSize").val();
-			location.href = "QuestionBoard.do?pageSize="+pageSize;
+			location.href = "QuestionBoard.do?search=${search}&searchString=${searchString}&pageSize="+pageSize;
 		}
 		
 		function searchValue(){
@@ -58,6 +58,13 @@
 
 <section class="section blog-wrap">
 	<div class="container">
+	
+		<div class="row">
+			<div class="col-lg-12"><h2>검색결과</h2></div>
+			<br/>
+			<div class="col-lg-12" style="font-size:1.2rem;"><p>${searchTitle}(으)로 '${searchString}'(을)를 검색한 결과 <b>${searchCount}</b> 건의 게시글이 검색되었습니다.</p></div>
+		</div>
+	
 		<div class="row mb-3">
 			<div class="col-sm-9 search text-right">
 				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()">
@@ -82,7 +89,7 @@
 				<c:forEach var="vo" items="${vos}" varStatus="st">
 					<tr>
 						<td>${curScrStartNo}</td>
-						<td class="text-left"><a href="QuestionBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a></td>
+						<td class="text-left"><a href="QuestionBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}">${vo.title}</a></td>
 						<td>${vo.nickName}</td>
 						<td>${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10)}</td>
 						<td>${vo.readNum}</td>
@@ -98,14 +105,14 @@
       <div class="col-lg-9">
         <nav class="pagination py-2 d-inline-block">
           <div class="nav-links">
-	          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=1&pageSize=${pageSize}"><i class="icofont-thin-double-left"></i></a></c:if>
-	          <c:if test="${curBlock > 0}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${(curBlock-1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-left"></i></a></c:if>
+	          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=1&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-double-left"></i></a></c:if>
+	          <c:if test="${curBlock > 0}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${(curBlock-1)*blockSize+1}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-left"></i></a></c:if>
 						<c:forEach var="i" begin="${(curBlock*blockSize+1)}" end="${(curBlock)*blockSize+blockSize}" varStatus="st">
 							<c:if test="${i <= totPage && i == pag}"><span aria-current="page" class="page-numbers current">${i}</span></c:if>
-							<c:if test="${i <= totPage && i != pag}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${i}&pageSize=${pageSize}">${i}</a></c:if>
+							<c:if test="${i <= totPage && i != pag}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${i}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}">${i}</a></c:if>
 						</c:forEach>
-						<c:if test="${curBlock < lastBlock}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-right"></i></a></c:if>
-						<c:if test="${pag < totPage}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${totPage}&pageSize=${pageSize}"><i class="icofont-thin-double-right"></i></a></c:if>
+						<c:if test="${curBlock < lastBlock}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-right"></i></a></c:if>
+						<c:if test="${pag < totPage}"><a class="page-numbers" href="${ctp}/QuestionBoard.do?pag=${totPage}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-double-right"></i></a></c:if>
         	</div>
       	</nav>
 			</div>
@@ -158,11 +165,6 @@
 		</div>
 	</div>
 </section>
-<ul class="w-hours list-unstyled">
-  <li class="d-flex justify-content-between">Sun - Wed : <span>8:00 - 17:00</span></li>
-  <li class="d-flex justify-content-between">Thu - Fri : <span>9:00 - 17:00</span></li>
-  <li class="d-flex justify-content-between">Sat - sun : <span>10:00 - 17:00</span></li>
-</ul>
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />

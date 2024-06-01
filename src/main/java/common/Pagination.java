@@ -12,36 +12,35 @@ import board.QuestionBoardVO;
 public class Pagination {
 
 	// 항상 사용하는 메소드: static
-	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String section, String part) {
-		// 사용하는 vo가 각각 다르기에 하나의 DAO를 사용하는 것보다 각각 생성하는 편이 낫다
+	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String board, String searchKey) {
 		FreeBoardDAO fBoardDao = new FreeBoardDAO();
 		QuestionBoardDAO qBoardDao = new QuestionBoardDAO();
 		
 		// part - 검색: search/searchString의 값이 넘어올 경우(검색 분류 / 검색어)
 		String search = "", searchString = "";
-		if(part != null && !part.equals("")) {
-			if(section.equals("freeBoard")) {
-				search = part.split("/")[0];
-				searchString = part.split("/")[1];
+		if(searchKey != null && !searchKey.equals("")) {
+			if(board.equals("freeBoard")) {
+				search = searchKey.split("/")[0];
+				searchString = searchKey.split("/")[1];
 			}
-			else if(section.equals("questionBoard")) {
-				search = part.split("/")[0];
-				searchString = part.split("/")[1];
+			else if(board.equals("questionBoard")) {
+				search = searchKey.split("/")[0];
+				searchString = searchKey.split("/")[1];
 			}
 		}
 
 		int totRecCnt = 0;
 		
-		if(section.equals("freeBoard")) {
-			if(part==null || part.equals("")) {
+		if(board.equals("freeBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
 				totRecCnt = fBoardDao.getTotRecCnt(contentsShow,"",""); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK)
 			}
 			else {
 				totRecCnt = fBoardDao.getTotRecCnt(contentsShow,search,searchString); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK/일반유저:아이디 구별)				
 			}
 		}
-		else if(section.equals("questionBoard")) {
-			if(part==null || part.equals("")) {
+		else if(board.equals("questionBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
 				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,"",""); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK)
 			}
 			else {
@@ -60,8 +59,8 @@ public class Pagination {
 		
 		List<FreeBoardVO> fBoardVos = null;
 		List<QuestionBoardVO> qBoardVos = null;
-		if(section.equals("freeBoard")) {
-			if(part==null || part.equals("")) {
+		if(board.equals("freeBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
 			}
 			else {
@@ -69,8 +68,8 @@ public class Pagination {
 			}
 			request.setAttribute("vos", fBoardVos);
 		}
-		else if(section.equals("questionBoard")) {
-			if(part==null || part.equals("")) {
+		else if(board.equals("questionBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
 				qBoardVos = qBoardDao.getQuestionBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
 			}
 			else {
@@ -88,21 +87,19 @@ public class Pagination {
 		request.setAttribute("curBlock", curBlock);
 		request.setAttribute("lastBlock", lastBlock);
 		
-		if(section.equals("freeBoard") && part != null && !part.equals("")) {
-			String searchTitle = "";
-			if(search.equals("title")) searchTitle = "제목";
-			else if(search.equals("nickName")) searchTitle = "작성자";
-			else if(search.equals("content")) searchTitle = "내용";
+		String searchTitle = "";
+		if(search.equals("title")) searchTitle = "제목";
+		else if(search.equals("nickName")) searchTitle = "작성자";
+		else if(search.equals("content")) searchTitle = "내용";
+		else if(search.equals("part")) searchTitle = "분류";
+		
+		if(board.equals("freeBoard") && searchKey != null && !searchKey.equals("")) {
 			request.setAttribute("searchTitle", searchTitle);
 			request.setAttribute("search", search);
 			request.setAttribute("searchString", searchString);			
 			request.setAttribute("searchCount", totRecCnt);
 		}
-		else if(section.equals("questionBoard")) {
-			String searchTitle = "";
-			if(search.equals("title")) searchTitle = "제목";
-			else if(search.equals("nickName")) searchTitle = "작성자";
-			else if(search.equals("content")) searchTitle = "내용";
+		else if(board.equals("questionBoard")) {
 			request.setAttribute("searchTitle", searchTitle);
 			request.setAttribute("search", search);
 			request.setAttribute("searchString", searchString);			

@@ -9,12 +9,14 @@ public class QuestionBoardVO {
 	private String hostIp;
 	private int readNum;
 	private String wDate;
+	private String part;
 	private int good;
 	private int report;
 	
 	private int hour_diff; // 게시글 업로드 24시간 경과유무 체크변수
 	private int date_diff; // 게시글 일자 경과유무 체크변수	
 	private int replyCnt; // 부모글의 댓글 수 저장하는 변수
+	
 	
 	public int getIdx() {
 		return idx;
@@ -64,6 +66,12 @@ public class QuestionBoardVO {
 	public void setwDate(String wDate) {
 		this.wDate = wDate;
 	}
+	public String getPart() {
+		return part;
+	}
+	public void setPart(String part) {
+		this.part = part;
+	}
 	public int getGood() {
 		return good;
 	}
@@ -96,9 +104,9 @@ public class QuestionBoardVO {
 	}
 	@Override
 	public String toString() {
-		return "FreeBoardVO [idx=" + idx + ", mid=" + mid + ", nickName=" + nickName + ", title=" + title + ", content="
-				+ content + ", hostIp=" + hostIp + ", readNum=" + readNum + ", wDate=" + wDate + ", good=" + good + ", report="
-				+ report + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", replyCnt=" + replyCnt + "]";
+		return "QuestionBoardVO [idx=" + idx + ", mid=" + mid + ", nickName=" + nickName + ", title=" + title + ", content="
+				+ content + ", hostIp=" + hostIp + ", readNum=" + readNum + ", wDate=" + wDate + ", part=" + part + ", good="
+				+ good + ", report=" + report + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", replyCnt="
+				+ replyCnt + "]";
 	}
-	
 }

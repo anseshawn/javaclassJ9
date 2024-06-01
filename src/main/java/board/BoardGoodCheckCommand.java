@@ -18,6 +18,7 @@ public class BoardGoodCheckCommand implements MainInterface {
 		String board = request.getParameter("board")==null ? "" : request.getParameter("board");
 		
 		FreeBoardDAO fbDao = null;
+		QuestionBoardDAO qbDao = null;
 		String sw = "0";
 		HttpSession session = request.getSession();
 		ArrayList<String> contentGood = (ArrayList<String>)session.getAttribute("sContentGood");
@@ -28,6 +29,16 @@ public class BoardGoodCheckCommand implements MainInterface {
 			imsicontentGood = "freeBoardGood"+idx;
 			if(!contentGood.contains(imsicontentGood)) {
 				fbDao.setFreeBoardGoodCheck(idx);
+				contentGood.add(imsicontentGood);
+				sw = "1";
+			}
+		}
+		else if(board.equals("questionBoard")) {
+			qbDao = new QuestionBoardDAO();
+			if(contentGood == null) contentGood = new ArrayList<String>();
+			imsicontentGood = "questionBoardGood"+idx;
+			if(!contentGood.contains(imsicontentGood)) {
+				qbDao.setQuestionBoardGoodCheck(idx);
 				contentGood.add(imsicontentGood);
 				sw = "1";
 			}

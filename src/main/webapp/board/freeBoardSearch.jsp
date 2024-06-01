@@ -41,26 +41,17 @@
 
 <section class="section blog-wrap">
 	<div class="container">
+	
+		<div class="row">
+			<div class="col-lg-12"><h2>검색결과</h2></div>
+			<br/>
+			<div class="col-lg-12" style="font-size:1.2rem;"><p>${searchTitle}(으)로 '${searchString}'(을)를 검색한 결과 <b>${searchCount}</b> 건의 게시글이 검색되었습니다.</p></div>
+		</div>
+		
 		<div class="row">
  			<div class="col-lg-8">
+ 			
 				<div class="row">
-				
-					<div class="col-lg-12 col-md-12 mb-3">
-						<div class="blog-item">
-							<div class="blog-item-content">
-								<div class="blog-item-meta mb-3 mt-4">
-									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>5 Comments</span>
-									<span class="text-black text-capitalize mr-3"><i class="icofont-calendar mr-1"></i> 28th January</span>
-								</div> 
-								<h2 class="mt-3 mb-3"><a href="#">작업중...</a></h2>
-								<!-- <p class="mb-4">[에너지데일리 조남준 기자] 환경부 소속 국립환경과학원(원장 김동진)은 대기오염물질 배출시설의 시료채취 및 분석방법 등 최신 기술동향을 반영해 제·개정한 대기오염공정시험기준을 국립환경과학원 누리집(nier.go.kr)에 4일 공개한다.</p>
-								<a href="blog-single.html" target="_blank" class="btn btn-main btn-icon btn-round-full">게시글 보기<i class="icofont-simple-right ml-2  "></i></a> -->
-							</div>
-						</div>
-						<hr/>
-					</div>
-					<hr/>
-
 					<c:set var="curScrStartNo" value="${curScrStartNo}"/>
 					<c:forEach var="vo" items="${vos}" varStatus="st">
 						<div class="col-lg-12 col-md-12 mb-3">
@@ -75,7 +66,7 @@
 										<span class="text-muted text-capitalize mr-3"><i class="icofont-user mr-2"></i>${vo.nickName}</span>										
 									</div> 
 									<div class="title mt-3 mb-3">
-										<a href="FreeBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
+										<a href="FreeBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}">${vo.title}</a>
 									</div>
 									<p class="mb-4">
 										<a href="FreeBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}" target="_blank" class="btn btn-main btn-icon-sm btn-round-full">새창으로 보기<i class="icofont-simple-right ml-2  "></i></a>
@@ -92,14 +83,14 @@
 		      <div class="col-lg-8">
 		        <nav class="pagination py-2 d-inline-block">
 		          <div class="nav-links">
-			          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/FreeBoard.do?pag=1&pageSize=${pageSize}"><i class="icofont-thin-double-left"></i></a></c:if>
-			          <c:if test="${curBlock > 0}"><a class="page-numbers" href="${ctp}/FreeBoard.do?pag=${(curBlock-1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-left"></i></a></c:if>
+			          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/FreeBoardSearch.do?search=${search}&searchString=${searchString}&pag=1&pageSize=${pageSize}"><i class="icofont-thin-double-left"></i></a></c:if>
+			          <c:if test="${curBlock > 0}"><a class="page-numbers" href="${ctp}/FreeBoardSearch.do?search=${search}&searchString=${searchString}&pag=${(curBlock-1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-left"></i></a></c:if>
 								<c:forEach var="i" begin="${(curBlock*blockSize+1)}" end="${(curBlock)*blockSize+blockSize}" varStatus="st">
 									<c:if test="${i <= totPage && i == pag}"><span aria-current="page" class="page-numbers current">${i}</span></c:if>
-									<c:if test="${i <= totPage && i != pag}"><a class="page-numbers" href="${ctp}/FreeBoard.do?pag=${i}&pageSize=${pageSize}">${i}</a></c:if>
+									<c:if test="${i <= totPage && i != pag}"><a class="page-numbers" href="${ctp}/FreeBoardSearch.do?search=${search}&searchString=${searchString}&pag=${i}&pageSize=${pageSize}">${i}</a></c:if>
 								</c:forEach>
-								<c:if test="${curBlock < lastBlock}"><a class="page-numbers" href="${ctp}/FreeBoard.do?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-right"></i></a></c:if>
-								<c:if test="${pag < totPage}"><a class="page-numbers" href="${ctp}/FreeBoard.do?pag=${totPage}&pageSize=${pageSize}"><i class="icofont-thin-double-right"></i></a></c:if>
+								<c:if test="${curBlock < lastBlock}"><a class="page-numbers" href="${ctp}/FreeBoardSearch.do?search=${search}&searchString=${searchString}&pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-right"></i></a></c:if>
+								<c:if test="${pag < totPage}"><a class="page-numbers" href="${ctp}/FreeBoardSearch.do?search=${search}&searchString=${searchString}&pag=${totPage}&pageSize=${pageSize}"><i class="icofont-thin-double-right"></i></a></c:if>
 		        	</div>
 		      	</nav>
 					</div>

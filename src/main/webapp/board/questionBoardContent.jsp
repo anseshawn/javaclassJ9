@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>자유게시판 - ${vo.title}</title>
+  <title>질문게시판 - ${vo.title}</title>
 	<jsp:include page="/include/bs4.jsp" />
 	<script>
 		'use strict';
@@ -23,15 +23,29 @@
 			});
 		});
 		*/
+		function searchValue(){
+			if($("#search").val()=='part') {
+				$("#searchSelect").show();
+				$("#searchString").hide();
+			}
+			else {
+				$("#searchSelect").hide();
+				$("#searchString").show();				
+			}
+		}
+		
+		function searchEnter(){
+			searchForm.submit();
+		}
 		
 		function deleteCheck(){
 			let ans = confirm("현재 게시글을 삭제하시겠습니까?");
 			if(!ans) return false;
 			else if(${vo.replyCnt} != 0) {
-				ans = confirm("현재 게시글을 삭제하면 다른 회원의 댓글까지 모두 삭제됩니다.\n정말 삭제하시겠습니까?");
-				if(!ans) return false;
+				alert("답변이 달린 게시글은 삭제할 수 없습니다.");
+				return false;
 			}
-			location.href="FreeBoardDelete.bo?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt};
+			else location.href="QuestionBoardDelete.bo?idx="+${vo.idx};
 		}
 		
 		// 좋아요 수 (중복 불허)
@@ -40,7 +54,7 @@
 				url: "BoardGoodCheck.bo",
 				type: "post",
 				data: {
-					board:"freeBoard",
+					board:"questionBoard",
 					idx:${vo.idx}
 				},
 				success: function(res){
@@ -70,7 +84,7 @@
 			if(rpContent=='기타') rpContent += "/"+$("#reportTxt").val();
 			
 			let query = {
-					board: 'freeBoard',
+					board: 'questionBoard',
 					boardIdx: ${vo.idx},
 					rpMid: '${sMid}',
 					rpContent: rpContent 
@@ -115,7 +129,7 @@
 				return false;
 			}
 			let query = {
-					board: "freeBoard",
+					board: "questionBoard",
 					boardIdx: ${vo.idx},
 					mid: reMid,
 					nickName: reNickName,
@@ -202,14 +216,14 @@
 </header>
 <p><br/></p>
 <div class="container">
-<section class="page-title bg-1">
+<section class="page-title bg-3">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block text-center">
-          <span class="text-white">다양한 이야기를 올려주세요</span>
-	      	<h1 class="text-capitalize mb-5 text-lg"><a href="FreeBoard.do" style="color: #fff;">자유게시판</a></h1>
+          <span class="text-white">실험에 관한 질문을 올려주세요</span>
+          <h1 class="text-capitalize text-lg"><a href="QuestionBoard.do" style="color: #fff;">Q & A</a></h1>
         </div>
       </div>
     </div>
@@ -219,11 +233,16 @@
 <section class="section blog-wrap">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="col-lg-9">
 				<div class="row">
 					<div class="col-lg-12 mb-5">
 						<div class="single-blog-item">
 							<div class="blog-item-content mt-2">
+								<div class="blog-item-meta mb-3">
+									<div style="color:#223a66; font-size:1.2rem;">
+										<a href="QuestionBoardSearch.do?pag=1&pageSize=${pageSize}&search=part&searchString=${vo.part}"><i class="icofont-ui-folder mr-2"></i>${vo.part}</a>
+									</div>
+								</div>
 								<div class="blog-item-meta mb-3">
 									<span class="text-muted text-capitalize mr-3"><i class="fa-solid fa-eye mr-2"></i>${vo.readNum}</span>
 									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt} Comments</span>
@@ -234,7 +253,7 @@
 								<div class="nav-item lead mb-4 font-weight-normal text-black">${vo.nickName}(${vo.mid})</div>
 								<c:if test="${sLevel==0 || sMid==vo.mid}">
 									<div class="text-right">
-										<input type="button" value="수정하기" onclick="location.href='FreeBoardEdit.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}';" class="btn btn-main-2 btn-icon-sm btn-round-full mr-2" >
+										<input type="button" value="수정하기" onclick="location.href='QuestionBoardEdit.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}';" class="btn btn-main-2 btn-icon-sm btn-round-full mr-2" >
 										<input type="button" value="삭제하기" onclick="deleteCheck()" class="btn btn-main btn-icon-sm btn-round-full" >
 									</div>
 								</c:if>
@@ -369,52 +388,53 @@
 					<div class="col-lg-12 text-center">
 						<div class="mt-5">
 							<hr/>
-							<c:if test="${empty flag}"><a href="FreeBoard.do?pag=${pag}&pageSize=${pageSize}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
-							<c:if test="${!empty flag}"><a href="FreeBoardSearch.do?pag=${pag}&pageSize=${pageSize}&search=${search}&searchString=${searchString}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
+							<c:if test="${empty flag}"><a href="QuestionBoard.do?pag=${pag}&pageSize=${pageSize}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
+							<c:if test="${!empty flag}"><a href="QuestionBoardSearch.do?pag=${pag}&pageSize=${pageSize}&search=${search}&searchString=${searchString}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
 						</div>
 					</div>
 				</div>
 			</div>
-      <div class="col-lg-4">
+			<div class="col-lg-3">
 				<div class="sidebar-wrap pl-lg-4 mt-5 mt-lg-0">
-					<!-- 검색창 -->
-					<div class="sidebar-widget search mb-3 ">
-						<h5>게시판 검색</h5>
-						<form name="search-form" method="post" action="BoardSearchList.bo">
-							<select name="search" id="search" class="form-control">
-								<option value="title">제목</option>
-								<option value="nickName">작성자</option>
-								<option value="content">내용</option>
-							</select>
-							<div class="input-group mb-1">
-								<input type="text" name="searchString" id="searchString" class="form-control mt-2" placeholder="검색어를 입력하세요." required />
-								<i class="ti-search"></i>
-								<div class="input-group-append">
-									<input type="submit" value="  search  " class="btn btn-main btn-icon-sm btn-round mt-2"/>
-								</div>
-							</div>
-						</form>
+				<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
+					<div class="sidebar-widget write text-center mb-5 ">
+						<a href="QuestionBoardInput.do" class="btn btn-main btn-icon btn-round" style="width:80%;">질문하기</a>
 					</div>
-					<!-- 검색창 끝 -->
-					<div class="sidebar-widget latest-post mb-3">
-						<h5>인기 게시글</h5>
-						<c:forEach var="gVo" items="${gVos}" varStatus="st">
-	        		<div class="py-2">
-		        		<span class="text-sm text-muted">${gVo.date_diff == 0 ? fn:substring(gVo.wDate,11,19) : fn:substring(gVo.wDate,0,10) }</span>
-		            <h6 class="my-2"><a href="FreeBoardContent.do?idx=${gVo.idx}&pag=${pag}&pageSize=${pageSize}">${gVo.title}</a></h6>
-	        		</div>
-        		</c:forEach>
-					</div>
-	
-					<div class="sidebar-widget tags mb-3">
-						<h5 class="mb-4">Tags</h5>
-						<a href="#">Doctors</a>
-						<a href="#">agency</a>
-						<a href="#">company</a>
-						<a href="#">medicine</a>
-					</div>
+				</c:if>	
+				<!-- 검색창 -->
+				<div class="sidebar-widget search mb-3 ">
+					<h5>질문 검색</h5>
+					<form name="searchForm" method="post" action="QuestionBoardSearch.do">
+						<select name="search" id="search" class="form-control" onchange="searchValue()">
+							<option value="title">제목</option>
+							<option value="nickName">작성자</option>
+							<option value="content">내용</option>
+							<option value="part">분류</option>
+						</select>
+						<select name="searchSelect" id="searchSelect" class="form-control mt-2" style="display:none;">
+							<option>전체</option>
+							<option>실험방법</option>
+							<option>실험장비</option>
+							<option>법규</option>
+							<option>기타</option>
+						</select>
+						<input type="text" name="searchString" id="searchString" class="form-control mt-2" placeholder="검색어를 입력하세요." required />
+						<i class="ti-search"></i>
+						<div class="text-right"><a href="javascript:searchEnter()" class="btn btn-main btn-icon-sm btn-round mt-2"><i class="icofont-search-2"></i> 검색</a></div>
+					</form>
 				</div>
-    	</div>   
+				<!-- 검색창 끝 -->
+				<div class="sidebar-widget latest-post mb-2">
+					<h5>최근 댓글</h5>
+					<c:forEach var="qVo" items="${qVos}" varStatus="st">
+		     		<div class="py-1">
+		      		<span class="text-sm text-muted">${qVo.date_diff == 0 ? fn:substring(qVo.wDate,11,19) : fn:substring(qVo.wDate,0,10) }</span>
+		          <h6 class="my-1"><a href="QuestionBoardContent.do?idx=${qVo.idx}&pag=${pag}&pageSize=${pageSize}">${qVo.title}</a></h6>
+		     		</div>
+			    </c:forEach>
+				</div>
+				</div>
+	    </div>   
 		</div>
 	</div>
 </section>

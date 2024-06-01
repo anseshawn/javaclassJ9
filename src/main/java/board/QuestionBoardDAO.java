@@ -53,6 +53,17 @@ public class QuestionBoardDAO {
 					pstmt = conn.prepareStatement(sql);
 				}				
 			}
+			else if(search.equals("분류")){
+				if(contentsShow.equals("adminOK")) {
+					sql = "select count(*) as cnt from questionBoard where "+search+" = '"+searchString+"'";
+					pstmt = conn.prepareStatement(sql);
+				}
+				else {
+					sql = "select count(*) as cnt from questionBoard"
+							+ " where report < 5 and "+search+" = '"+searchString+"'";
+					pstmt = conn.prepareStatement(sql);
+				}
+			}
 			else {
 				if(contentsShow.equals("adminOK")) {
 					sql = "select count(*) as cnt from questionBoard where "+search+" like ?";
@@ -60,7 +71,7 @@ public class QuestionBoardDAO {
 					pstmt.setString(1, "%"+searchString+"%");
 				}
 				else {
-					sql = "select count(*) as cnt from (select count(*) as cnt from questionBoard"
+					sql = "select count(*) as cnt from questionBoard"
 							+ " where report < 5 and "+search+" like ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
@@ -98,6 +109,19 @@ public class QuestionBoardDAO {
 				pstmt.setInt(1, startIndexNo);
 				pstmt.setInt(2, pageSize);
 			}
+			else if(search.equals("분류")){		// 검색을 분류로 했을 때
+				if(contentsShow.equals("adminOK")) {
+					sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
+							+ " (select count(*) from boardReply where boardIdx = b.idx) as replyCnt"
+							+ " from questionBoard b where "+search+" = '"+searchString+"' order by idx desc limit ?,?";
+				}
+				else {
+					sql = "select *, datediff(wDate, now()) as date_diff,"
+							+ " timestampdiff(hour, wDate, now()) as hour_diff,"
+							+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt"
+							+ " from questionBoard b where report < 5 and "+search+" = '"+searchString+"' order by idx desc limit ?,?";
+				}
+			}
 			else {		// 검색어가 들어왔을 때
 				if(contentsShow.equals("adminOK")) {
 					sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
@@ -127,6 +151,7 @@ public class QuestionBoardDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.setReadNum(rs.getInt("readNum"));
 				vo.setwDate(rs.getString("wDate"));
+				vo.setPart(rs.getString("part"));
 				vo.setGood(rs.getInt("good"));
 				vo.setReport(rs.getInt("report"));
 				
@@ -144,17 +169,18 @@ public class QuestionBoardDAO {
 		return vos;
 	}
 
-	// 자유게시판: 게시글 등록하기
+	// 질문게시판: 게시글 등록하기
 	public int setQuestionBoardInput(QuestionBoardVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into questionBoard values(default,?,?,?,?,?,default,default,default,default)";
+			sql = "insert into questionBoard values(default,?,?,?,?,?,default,default,?,default,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getMid());
 			pstmt.setString(2, vo.getNickName());
 			pstmt.setString(3, vo.getTitle());
 			pstmt.setString(4, vo.getContent());
 			pstmt.setString(5, vo.getHostIp());
+			pstmt.setString(6, vo.getPart());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL오류: "+e.getMessage());
@@ -197,6 +223,7 @@ public class QuestionBoardDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.setReadNum(rs.getInt("readNum"));
 				vo.setwDate(rs.getString("wDate"));
+				vo.setPart(rs.getString("part"));
 				vo.setGood(rs.getInt("good"));
 				vo.setReport(rs.getInt("report"));
 				
@@ -216,12 +243,13 @@ public class QuestionBoardDAO {
 	public int setQuestionBoardEdit(QuestionBoardVO vo) {
 		int res = 0;
 		try {
-			sql="update questionBoard set title=?,content=?,hostIp=?,wDate=now() where idx=?";
+			sql="update questionBoard set title=?,content=?,hostIp=?,wDate=now(),part=? where idx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContent());
 			pstmt.setString(3, vo.getHostIp());
-			pstmt.setInt(4, vo.getIdx());
+			pstmt.setString(4, vo.getPart());
+			pstmt.setInt(5, vo.getIdx());
 			
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -232,7 +260,7 @@ public class QuestionBoardDAO {
 		return res;
 	}
 
-	// 게시글 삭제(댓글이 있다면 댓글도 함께 삭제할것)
+	// 게시글 삭제(댓글 삭제안됨)
 	public int setQuestionBoardDelete(int idx) {
 		int res = 0;
 		try {
@@ -267,6 +295,7 @@ public class QuestionBoardDAO {
 				vo.setHostIp(rs.getString("hostIp"));
 				vo.setReadNum(rs.getInt("readNum"));
 				vo.setwDate(rs.getString("wDate"));
+				vo.setPart(rs.getString("part"));
 				vo.setGood(rs.getInt("good"));
 				vo.setReport(rs.getInt("report"));
 				
@@ -295,6 +324,43 @@ public class QuestionBoardDAO {
 		} finally {
 			pstmtClose();
 		}
+	}
+
+	// 최근 댓글 포스트
+	public ArrayList<QuestionBoardVO> getRecentQuestionBoard() {
+		ArrayList<QuestionBoardVO> vos = new ArrayList<QuestionBoardVO>();
+		try {
+			sql="select b.*, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
+					+ " (select count(*) from reply where board='questionBoard' and boardIdx = b.idx) as replyCnt,"
+					+ " r.rDate from questionBoard b, reply r where b.idx=r.boardIdx and b.report < 5"
+					+ " group by b.idx order by r.rDate desc limit 5";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new QuestionBoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setReadNum(rs.getInt("readNum"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setPart(rs.getString("part"));
+				vo.setGood(rs.getInt("good"));
+				vo.setReport(rs.getInt("report"));
+				
+				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				vo.setReplyCnt(rs.getInt("replyCnt"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : "+e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
 	}
 	
 	

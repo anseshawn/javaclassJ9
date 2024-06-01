@@ -32,7 +32,7 @@
 			<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">제품문의<i class="icofont-thin-down"></i></a>
 			<ul class="dropdown-menu" aria-labelledby="dropdown02">
-				<li><a class="dropdown-item" href="#">분석장비</a></li>
+				<li><a class="dropdown-item" href="Product.do">분석장비</a></li>
 				<li><a class="dropdown-item" href="#">소모품</a></li>
 				<li><a class="dropdown-item" href="#">A/S 신청</a></li>
 			</ul>

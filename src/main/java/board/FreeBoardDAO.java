@@ -59,7 +59,7 @@ public class FreeBoardDAO {
 					pstmt.setString(1, "%"+searchString+"%");
 				}
 				else {
-					sql = "select count(*) as cnt from (select count(*) as cnt from freeBoard"
+					sql = "select count(*) as cnt from freeBoard"
 							+ " where report < 5 and "+search+" like ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, "%"+searchString+"%");
