@@ -38,10 +38,30 @@ public class BoardController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+		else if(com.equals("/ReReplyDelete")) {
+			command = new ReReplyDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
 		else if(com.equals("/ReplyEditOk")) {
 			command = new ReplyEditOkCommand();
 			command.execute(request, response);
 			return;
+		}
+		else if(com.equals("/ReReplyEditOk")) {
+			command = new ReReplyEditOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ReReplyInputOk")) {
+			command = new ReReplyInputOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(level > 2 || level < 0) {
+			request.setAttribute("message", "로그인 후 사용해 주세요.");
+			request.setAttribute("url", request.getContextPath()+"/MemberLogin.do");
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/FreeBoardInputOk")) {
 			command = new FreeBoardInputOkCommand();

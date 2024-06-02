@@ -13,17 +13,6 @@
 	<script>
 		'use strict';
 		
-		/*
-		$(function(){
-			let formId = "div.reReply";
-			let buttonId = "#reReplyOpen";
-			$("div.reReply").hide();
-			$(buttonId).on("click",function(){
-				$(formId).stop().slideToggle("fast");
-			});
-		});
-		*/
-		
 		function deleteCheck(){
 			let ans = confirm("현재 게시글을 삭제하시겠습니까?");
 			if(!ans) return false;
@@ -95,32 +84,32 @@
 		
 		// 댓글 기능
 		function replyCheck(){
-			let reMid = "";
-			let reNickName = "";
-			let reContent = replyForm.content.value;
+			let mid = "";
+			let nickName = "";
+			let content = replyForm.content.value;
 			if('${sLevel}'=='') {
-				reMid = "guest";
-				reNickName = replyForm.nickName.value;
-				if(reNickName.trim()=="") {
+				mid = "guest";
+				nickName = replyForm.nickName.value;
+				if(nickName.trim()=="") {
 					alert("댓글 작성자를 입력해주세요.");
 					return false;
 				}
 			}
 			else {
-				reMid = "${sMid}"
-				reNickName = "${sNickName}";
+				mid = "${sMid}";
+				nickName = "${sNickName}";
 			}
-			if(reContent.trim()=="") {
+			if(content.trim()=="") {
 				alert("내용을 입력해주세요.");
 				return false;
 			}
 			let query = {
 					board: "freeBoard",
 					boardIdx: ${vo.idx},
-					mid: reMid,
-					nickName: reNickName,
+					mid: mid,
+					nickName: nickName,
 					hostIp: "${pageContext.request.remoteAddr}",
-					content: reContent
+					content: content
 			}
 			$.ajax({
 				url: "ReplyInputOk.bo",
@@ -141,31 +130,42 @@
 			});
 		}
 		
-		function replyDelete(reIdx) {
+		function replyDelete(idx) {
 			let ans = confirm("현재 댓글을 삭제하시겠습니까?");
 			if(!ans) return false;
 			
 			$.ajax({
 				url: "ReplyDelete.bo",
 				type: "post",
-				data: {idx : reIdx},
+				data: {idx : idx},
 				success: function(res){
 					if(res != 0){
 						alert("댓글을 삭제했습니다.");
 						location.reload();
 					}
-					else alert("댓글 삭제 실패");
+					else alert("답글이 달린 댓글은 삭제할 수 없습니다.");
 				},
 				error: function(){
 					alert("전송오류");
 				}
 			});
 		}
-		
+		// 댓글 수정창 토글
 		function replyEdit(idx){
-			$("#reEditDemo"+idx).toggle();
+			$(".reReplyDemo").hide();
+			let replyDisplay = window.getComputedStyle(document.getElementById("#reEditDemo"+idx)).display;
+			if(replyDisplay=='none') {
+				$(".reEditDemo").hide();
+				$("#reEditDemo"+idx).show();
+			}
+			else {
+				$("#reEditDemo"+idx).toggle();				
+			}
 		}
-		
+		function editFormClose(idx){
+			$("#reEditDemo"+idx).hide();
+		}
+		// 댓글 수정
 		function replyEditCheck(idx) {
 			let content = $("#content"+idx).val();
 			
@@ -186,12 +186,125 @@
 				}
 			});
 		}
-		function editFormClose(idx){
-			$("#reEditDemo"+idx).hide();
-		}
-		// 대댓글?
+		
+		// 대댓글 영역
+		// 대댓글 입력창 토글
 		function reReplyForm(idx){
+			$(".reEditDemo").hide();
+			let reReplyDisplay = window.getComputedStyle(document.getElementById("#reReplyDemo"+idx)).display;
+			if(reReplyDisplay=='none') {
+				$(".reReplyDemo").hide();
+				$("#reReplyDemo"+idx).show();
+			}
+			else {
+				$("#reReplyDemo"+idx).toggle();				
+			}
+		}
+		function reReplyFormClose(idx){
+			$("#reReplyDemo"+idx).hide();
+		}
+		// 대댓글 입력
+		function reReplyInput(idx){
+			let reMid = "";
+			let reNickName = "";
+			let reContent = $("#reContent"+idx).val();
+			if('${sLevel}'=='') {
+				reMid = "guest";
+				reNickName = reReplyForm.reNickName.value;
+				if(reNickName.trim()=="") {
+					alert("작성자를 입력해주세요.");
+					return false;
+				}
+			}
+			else {
+				reMid = "${sMid}"
+				reNickName = "${sNickName}";
+			}
+			if(reContent.trim()=="") {
+				alert("내용을 입력해주세요.");
+				return false;
+			}
+			let query = {
+					replyIdx: idx,
+					mid: reMid,
+					nickName: reNickName,
+					hostIp: "${pageContext.request.remoteAddr}",
+					content: reContent
+			}
+			$.ajax({
+				url: "ReReplyInputOk.bo",
+				type: "post",
+				data: query,
+				success: function(res){
+					if(res != 0) {
+						alert("답글이 등록되었습니다."); 
+						location.reload();
+					}
+					else {
+						alert("답글 등록 실패");
+					}
+				},
+				error: function(){
+					alert("전송오류");
+				}
+			});
+		}
+		//대댓글삭제
+		function reReplyDelete(reIdx) {
+			let ans = confirm("현재 답글을 삭제하시겠습니까?");
+			if(!ans) return false;
 			
+			$.ajax({
+				url: "ReReplyDelete.bo",
+				type: "post",
+				data: {reIdx : reIdx},
+				success: function(res){
+					if(res != 0){
+						alert("답글을 삭제했습니다.");
+						location.reload();
+					}
+					else alert("답글 삭제 실패");
+				},
+				error: function(){
+					alert("전송오류");
+				}
+			});
+		}
+		// 대댓글 수정창 토글
+		function reReplyEdit(reIdx){
+			$(".reReEditDemo").hide();
+			let reReplyEditDisplay = window.getComputedStyle(document.getElementById("reReEditDemo"+reIdx)).display;
+			if(reReplyEditDisplay=='none') {
+				$(".reReEditDemo").hide();
+				$("#reReEditDemo"+reIdx).show();
+			}
+			else {
+				$("#reReEditDemo"+reIdx).toggle();				
+			}
+		}
+		function reEditFormClose(reIdx){
+			$("#reReEditDemo"+reIdx).hide();
+		}
+		// 대댓글 수정
+		function reReplyEditCheck(reIdx) {
+			let reContent = $("#reContent"+reIdx).val();
+			
+			$.ajax({
+				url: "ReReplyEditOk.bo",
+				type: "post",
+				data: {
+					reIdx:reIdx,
+					reContent:reContent
+				},
+				success:function(res) {
+					if(res != 0) {
+						location.reload();
+					}
+				},
+				error: function(){
+					alert("전송 오류");
+				}
+			});
 		}
 	</script>
 </head>
@@ -272,11 +385,16 @@
 
 					<div class="col-lg-12">
 						<div class="comment-area mt-4 mb-5">
+							<c:set var="rVo" value="${replyVos}"/>
+							<c:set var="cnt" value="${vo.replyCnt}"></c:set>
 							<h4 class="mb-5">${vo.replyCnt} 개의 댓글</h4>
 							<ul class="comment-tree list-unstyled">
+							
+								<c:set var="imsiIdx" value="0"/>
 								<c:forEach var="rVo" items="${replyVos}" varStatus="st">
 									<li class="mb-5">
 										<div class="comment-area-box">
+										<c:if test="${imsiIdx != rVo.idx}">
 											<div class="comment-info">
 												<h5 class="mb-1">${rVo.nickName}(${rVo.mid})</h5>
 												<span>${rVo.hostIp}</span>
@@ -292,7 +410,7 @@
 											</div>
 											
 											<!-- 댓글 수정창 -->
-											<div id="reEditDemo${rVo.idx}" style="display:none;">
+											<div class="reEditDemo" id="reEditDemo${rVo.idx}" style="display:none;">
 												<div class="col-lg-10">
 												<hr/>
 												<form class="comment-form" name="replyEditForm" >
@@ -313,12 +431,54 @@
 												</form>
 												</div>
 											</div>
+											</c:if>
+											<c:set var="imsiIdx" value="${rVo.idx}"/>
 											<!-- 댓글 수정창 끝 -->
-											
-											<!-- 대댓글 입력창
-											<div class="reReply col-lg-10">
-												<form class="comment-form my-5" name="reReplyForm" >
-													<h4 class="mb-4">대댓글 쓰기</h4>
+											<!-- 대댓글 창 -->
+											<c:if test="${!empty rVo.reContent}">
+											<hr/>
+												<div class="col-lg-8">
+												<div class="comment-info">
+													<h5 class="mb-1">${rVo.reNickName}(${rVo.reMid})</h5>
+													<span>${rVo.reHostIp}</span>
+													<span class="date-comm mr-2">| ${rVo.date_diff == 0 ? fn:substring(rVo.reDate,11,19) : fn:substring(rVo.reDate,0,10) }</span>
+													<c:if test="${sLevel==0 || sMid == rVo.reMid}">
+													 <span class="comment-meta mr-2"><a href="javascript:reReplyEdit(${rVo.reIdx})"><i class="icofont-edit mr-2 text-muted"></i>수정</a></span>
+													 <span class="comment-meta"><a href="javascript:reReplyDelete(${rVo.reIdx})"><i class="icofont-ui-delete mr-2 text-muted"></i>삭제</a></span>
+													</c:if>
+												</div>
+												<div class="comment-content mt-3">
+													${fn:replace(rVo.reContent,newLine,'<br/>')}
+												</div>
+												</div>
+											</c:if>
+											<!-- 대댓글 창 끝 -->
+											<!-- 대댓글 수정창 -->
+											<div class="reReEditDemo" id="reReEditDemo${rVo.idx}" style="display:none;">
+												<div class="col-lg-10">
+												<hr/>
+												<form class="comment-form" name="reReplyEditForm" >
+													<div class="row">
+														<div class="col-md-4">
+															<div class="form-group">
+																<input class="form-control" type="text" name="reNickName" value="${rVo.reNickName}(${rVo.reMid})" readonly>
+															</div>
+														</div>
+													</div>
+													<textarea class="form-control mb-4" name="reContent" id="reContent${rVo.reIdx}" cols="30" rows="5">${rVo.reContent}</textarea>
+													<div class="text-right">
+														<input class="btn btn-main-2 btn-icon-sm btn-round-full mr-2" type="button" onclick="reReplyEditCheck(${rVo.reIdx})" value="수정하기"/>
+														<input class="btn btn-main btn-icon-sm btn-round-full" type="button" onclick="reEditFormClose(${rVo.reIdx})" value="닫기"/>
+													</div>
+												</form>
+												</div>
+											</div>
+											<!-- 대댓글 수정창 끝 -->
+											<!-- 대댓글 입력창 -->
+											<div class="reReplyDemo" id="reReplyDemo${rVo.idx}" style="display:none;">
+												<div class="col-lg-10">
+												<hr/>
+												<form class="comment-form" name="reReplyForm" >
 													<div class="row">
 														<div class="col-md-4">
 															<div class="form-group">
@@ -331,13 +491,15 @@
 															</div>
 														</div>
 													</div>
-													<textarea class="form-control mb-4" name="reContent" id="reContent" cols="30" rows="5" placeholder="Comment"></textarea>
+													<textarea class="form-control mb-4" name="content" id="reContent${rVo.idx}" cols="30" rows="5"></textarea>
 													<div class="text-right">
-														<input class="btn btn-main-2 btn-round-full" type="button" onclick="reReplyCheck()" value="댓글 작성"/>
+														<input class="btn btn-main-2 btn-icon-sm btn-round-full mr-2" type="button" onclick="reReplyInput(${rVo.idx})" value="등록하기"/>
+														<input class="btn btn-main btn-icon-sm btn-round-full" type="button" onclick="reReplyFormClose(${rVo.idx})" value="닫기"/>
 													</div>
 												</form>
+												</div>
 											</div>
-											대댓글 입력창 끝 -->
+											<!-- 대댓글 입력창 끝 -->
 										</div>
 									</li>
 								</c:forEach>

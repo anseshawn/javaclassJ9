@@ -211,6 +211,46 @@ public class MemberDAO {
 		}
 		return res;
 	}
+
+	// 이름으로 멤버 검색
+	public MemberVO getMemberNameCheck(String name) {
+		MemberVO vo = new MemberVO();
+		try {
+			sql = "select * from member where name=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo.setIdx(rs.getInt("idx"));
+				vo.setName(rs.getString("name"));
+				vo.setMid(rs.getString("mid"));
+				vo.setPwd(rs.getString("pwd"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setBirthday(rs.getString("birthday"));
+				vo.setEmail(rs.getString("email"));
+				vo.setEmailNews(rs.getString("emailNews"));
+				vo.setPhone(rs.getString("phone"));
+				vo.setAddress(rs.getString("address"));
+				vo.setmGroup(rs.getString("mGroup"));
+				vo.setcName(rs.getString("cName"));
+				vo.setcCategory(rs.getString("cCategory"));
+				vo.setcAddress(rs.getString("cAddress"));
+				vo.setcTel(rs.getString("cTel"));
+				vo.setPurpose(rs.getString("purpose"));
+				vo.setLevel(rs.getInt("level"));
+				vo.setPoint(rs.getInt("point"));
+				vo.setUserDel(rs.getString("userDel"));
+				vo.setStartDate(rs.getString("startDate"));
+				vo.setLastDate(rs.getString("lastDate"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL오류 : "+e.getMessage());
+		}
+		finally {
+			rsClose();
+		}
+		return vo;
+	}
 	
 	
 }

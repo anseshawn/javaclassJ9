@@ -73,7 +73,7 @@
 	</div>
 	<div class="divider2 mx-auto my-4" style="width:80%;"></div>
 	<div class="row justify-content-center mb-5">
-		<div class="col-lg-8" style="border:1px solid #eee; color:black;">
+		<div class="col-lg-8 col-lg-offset-2" style="border:1px solid #eee; color:black;">
 			<ul>
 				<li class="mb-4">
 				회원 탈퇴 시 회원님의 계정 및 프로필이 삭제됩니다. 삭제된 정보는 어떠한 경우에도 복구할 수 없으며,
@@ -86,7 +86,7 @@
 		</div>
 	</div>
 	<div class="row justify-content-center mb-5">
-		<div class="col-lg-8">
+		<div class="col-lg-8 col-lg-offset-2">
 			<form name="myform" method="post" action="#">
 				<p>탈퇴하는 이유를 말씀해주세요. 사이트 개선에 중요 자료로 활용하겠습니다.</p>
 				<div class="mb-2">
@@ -123,13 +123,9 @@
 				<h4>현재 비밀번호</h4>
 				<input type="password" class="form-control" name="pwd" id="pwd" placeholder="비밀번호" required/>
 				<div class="text-right" style="font-size:12px;"><a href="#">비밀번호를 잊으셨습니까?</a></div>
+				<a href="MemberUpdate.do" class="btn btn-main btn-icon-sm float-left mt-5">뒤로</a>
+				<a href="javascript:MemberDeleteOk()" class="btn btn-main-2 btn-icon-sm float-right mt-5">탈퇴하기</a>
 			</form>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-8 mt-3">
-			<a href="MemberUpdate.do" class="btn btn-main btn-icon-sm float-left">뒤로</a>
-			<a href="javascript:MemberDeleteOk()" class="btn btn-main-2 btn-icon-sm float-right">탈퇴하기</a>
 		</div>
 	</div>
 </div>

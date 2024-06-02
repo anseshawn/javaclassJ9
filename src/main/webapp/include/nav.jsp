@@ -43,7 +43,7 @@
 			<ul class="dropdown-menu" aria-labelledby="dropdown03">
 				<li><a class="dropdown-item" href="QuestionBoard.do">Q&A</a></li>
 				<li><a class="dropdown-item" href="FreeBoard.do">자유게시판</a></li>
-				<li><a class="dropdown-item" href="#">채용공고</a></li>
+				<li><a class="dropdown-item" href="RecruitBoard.do">채용공고</a></li>
 			</ul>
 			</li>
 

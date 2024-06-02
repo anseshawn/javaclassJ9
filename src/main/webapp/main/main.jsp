@@ -75,7 +75,7 @@
 	</div>
 </section>
 
-
+<!-- 
 <section class="section about">
 	<div class="container">
 		<div class="row align-items-center">
@@ -101,30 +101,32 @@
 		</div>
 	</div>
 </section>
-<section class="cta-section ">
+ -->
+<!-- 
+<section class="cta-section mt-5">
 	<div class="container">
 		<div class="cta position-relative">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
 						<i class="icofont-doctor"></i>
-						<span class="h3">58</span>k
-						<p>Happy People</p>
+						<span class="h3">58</span>개
+						<p>납품 업체 현황</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
 						<i class="icofont-flag"></i>
-						<span class="h3">700</span>+
-						<p>Surgery Comepleted</p>
+						<span class="h3">12</span>대
+						<p>올해 판매 기기</p>
 					</div>
 				</div>
 				
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="counter-stat">
 						<i class="icofont-badge"></i>
-						<span class="h3">40</span>+
-						<p>Expert Doctors</p>
+						<span class="h3">10</span>+
+						<p>임직원수</p>
 					</div>
 				</div>
 				<div class="col-lg-3 col-md-6 col-sm-6">
@@ -138,14 +140,17 @@
 		</div>
 	</div>
 </section>
+ -->
+ 
 <section class="section service gray-bg">
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-lg-7 text-center">
 				<div class="section-title">
-					<h2>Award winning patient care</h2>
+					<h2>Green Engineering</h2>
 					<div class="divider mx-auto my-4"></div>
-					<p>Lets know moreel necessitatibus dolor asperiores illum possimus sint voluptates incidunt molestias nostrum laudantium. Maiores porro cumque quaerat.</p>
+					<p>그린 엔지니어링은 바이오 제약, 임상 연구, 에너지 및 화학, 환경, 식품, 재료 테스트 및 연구, 병리학 등 다양한 분야의
+					실험실을 지원하고 있습니다.</p>
 				</div>
 			</div>
 		</div>
@@ -155,7 +160,7 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-laboratory text-lg"></i>
-						<h4 class="mt-3 mb-3">Laboratory services</h4>
+						<h4 class="mt-3 mb-3">화학</h4>
 					</div>
 
 					<div class="content">
@@ -167,8 +172,8 @@
 			<div class="col-lg-4 col-md-6 col-sm-6">
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
-						<i class="icofont-heart-beat-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">Heart Disease</h4>
+						<i class="icofont-fast-food text-lg"></i>
+						<h4 class="mt-3 mb-3">식품 및 음료</h4>
 					</div>
 					<div class="content">
 						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
@@ -179,8 +184,8 @@
 			<div class="col-lg-4 col-md-6 col-sm-6">
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
-						<i class="icofont-tooth text-lg"></i>
-						<h4 class="mt-3 mb-3">Dental Care</h4>
+						<i class="icofont-medicine text-lg"></i>
+						<h4 class="mt-3 mb-3">임상연구</h4>
 					</div>
 					<div class="content">
 						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
@@ -192,8 +197,8 @@
 			<div class="col-lg-4 col-md-6 col-sm-6">
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
-						<i class="icofont-crutch text-lg"></i>
-						<h4 class="mt-3 mb-3">Body Surgery</h4>
+						<i class="fa-solid fa-recycle text-lg"></i>
+						<h4 class="mt-3 mb-3">재료 테스트</h4>
 					</div>
 
 					<div class="content">
@@ -205,8 +210,8 @@
 			<div class="col-lg-4 col-md-6 col-sm-6">
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
-						<i class="icofont-brain-alt text-lg"></i>
-						<h4 class="mt-3 mb-3">Neurology Sargery</h4>
+						<i class="fa-solid fa-seedling text-lg"></i>
+						<h4 class="mt-3 mb-3">환경</h4>
 					</div>
 					<div class="content">
 						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
@@ -218,7 +223,7 @@
 				<div class="service-item mb-4">
 					<div class="icon d-flex align-items-center">
 						<i class="icofont-dna-alt-1 text-lg"></i>
-						<h4 class="mt-3 mb-3">Gynecology</h4>
+						<h4 class="mt-3 mb-3">바이오 / 제약</h4>
 					</div>
 					<div class="content">
 						<p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
@@ -233,9 +238,9 @@
 		<div class="row align-items-center">
 			<div class="col-lg-6 ">
 				<div class="appoinment-content">
-					<img src="images/about/img-3.jpg" alt="" class="img-fluid">
+					<img src="images/bg/lab3.jpg" alt="" class="img-fluid">
 					<div class="emergency">
-						<h2 class="text-lg"><i class="icofont-phone-circle text-lg"></i>+23 345 67980</h2>
+						<h2 class="text-lg"><i class="icofont-phone-circle text-lg"></i>043	123 4567</h2>
 					</div>
 				</div>
 			</div>

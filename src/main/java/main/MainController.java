@@ -22,6 +22,7 @@ import board.QuestionBoardInputCommand;
 import board.QuestionBoardSearchCommand;
 import common.MainInterface;
 import member.MemberUpdateCommand;
+import member.MidSearchResultCommand;
 
 @WebServlet("*.do")
 public class MainController extends HttpServlet {
@@ -45,6 +46,17 @@ public class MainController extends HttpServlet {
 		}
 		else if(com.equals("/MemberLogin")) {
 			viewPage += "/member/memberLogin.jsp";
+		}
+		else if(com.equals("/PwdSearch")) {
+			viewPage += "/member/pwdSearch.jsp";
+		}
+		else if(com.equals("/MidSearch")) {
+			viewPage += "/member/midSearch.jsp";
+		}
+		else if(com.equals("/MidSearchResult")) {
+			command = new MidSearchResultCommand();
+			command.execute(request, response);
+			viewPage += "/member/midSearchResult.jsp";
 		}
 		else if(com.equals("/FreeBoard")) {
 			command = new FreeBoardListCommand();
@@ -75,6 +87,11 @@ public class MainController extends HttpServlet {
 			command = new QuestionBoardSearchCommand();
 			command.execute(request, response);
 			viewPage += "/board/questionBoardSearch.jsp";
+		}
+		else if(com.equals("/RecruitBoard")) {
+			command = new QuestionBoardCommand();
+			command.execute(request, response);
+			viewPage += "/board/recruitBoard.jsp";
 		}
 		else if(com.equals("/AboutUs")) {
 			viewPage += "/company/aboutUs.jsp";

@@ -77,7 +77,7 @@
 	       </div>
 	       <div class="d-flex flex-wrap justify-content-between bottom-content">
 	         <div></div>
-	         <a href="#">비밀번호를 잊으셨습니까?</a>
+	         <a href="PwdSearch.do">비밀번호를 잊으셨습니까?</a>
 	       </div>
 	       <hr/>
 	       <div class="button text-center">

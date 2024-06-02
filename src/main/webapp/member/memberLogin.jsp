@@ -82,7 +82,9 @@
 		           <input type="checkbox" class="form-check-input width-auto" id="idSave" name="idSave" />
 		           <label class="form-check-label">아이디 저장하기</label>
 		         </div>
-		         <a href="#">비밀번호를 잊으셨습니까?</a>
+		         <div>
+		         <a href="MidSearch.do">아이디 찾기</a> │ <a href="PwdSearch.do">비밀번호 찾기</a>
+		         </div>
 		       </div>
 		       <hr/>
 		       <div class="button text-center">
