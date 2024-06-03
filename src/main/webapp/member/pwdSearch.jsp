@@ -60,12 +60,19 @@
 	       </div>
 	       <div class="d-flex flex-wrap justify-content-between bottom-content">
 	         <div></div>
-	         <div><a href="MidSearch.do">아이디 찾기</a></div>
+	         <c:if test="${sLevel!=0 && sLevel!=1 && sLevel!=2}">
+		         <div><a href="MidSearch.do">아이디 찾기</a></div>
+	         </c:if>
 	       </div>
 	       <hr/>
 	       <div class="button text-center">
 	         <input type="button" onclick="fCheck()" class="btn btn-main-2 mr-3" value="비밀번호 찾기" />
-	         <a class="btn btn-main" href="MemberJoin.do">회원가입</a>
+	         <c:if test="${sLevel!=0 && sLevel!=1 && sLevel!=2}">
+	         	<a class="btn btn-main" href="MemberJoin.do">회원가입</a>
+	         </c:if>
+	         <c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
+	         	<a class="btn btn-main" href="Main.do">메인으로</a>
+	         </c:if>
 	       </div>
 	      </div>
 	    </form>

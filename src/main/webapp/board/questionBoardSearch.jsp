@@ -14,7 +14,12 @@
 		
 		function pageSizeCheck(){
 			let pageSize = $("#pageSize").val();
-			location.href = "QuestionBoard.do?search=${search}&searchString=${searchString}&pageSize="+pageSize;
+			if('${search}'=='part') {
+				location.href = "QuestionBoardSearch.do?search=${search}&partSelect=${searchString}&pageSize="+pageSize;
+			}
+			else {
+				location.href = "QuestionBoardSearch.do?search=${search}&searchString=${searchString}&pageSize="+pageSize;
+			}
 		}
 		
 		function searchValue(){
@@ -60,13 +65,17 @@
 	<div class="container">
 	
 		<div class="row">
-			<div class="col-lg-12"><h2>검색결과</h2></div>
+			<div class="col-lg-9"><h2>검색결과</h2></div>
 			<br/>
-			<div class="col-lg-12" style="font-size:1.2rem;"><p>${searchTitle}(으)로 '${searchString}'(을)를 검색한 결과 <b>${searchCount}</b> 건의 게시글이 검색되었습니다.</p></div>
+			<div class="col-lg-9" style="font-size:1.2rem;"><p>${searchTitle}(으)로 '${searchString}'(을)를 검색한 결과 <b>${searchCount}</b> 건의 게시글이 검색되었습니다.</p></div>
 		</div>
-	
-		<div class="row mb-3">
-			<div class="col-sm-9 search text-right">
+		<div class="row mb-2">
+			<div class="col-lg-9 text-right">
+				<a href="QuestionBoard.do" class="btn btn-main btn-icon-sm btn-round">전체목록으로</a>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col-lg-9 search text-right">
 				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()">
 					<option value="5" ${pageSize==5 ? "selected" : ""}>5개 보기</option>
 					<option value="10" ${pageSize==10 ? "selected" : ""}>10개 보기</option>

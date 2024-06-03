@@ -28,7 +28,7 @@
 					
 					<p class="mb-4 pr-5">우리 엔지니어링은 실험실 전반에 대한 기기와 소모품을 다루고 있습니다. 항상 고객과의 소통을 추구하여 세계로 나아가는 그린 엔지니어링이 되겠습니다.</p>
 					<div class="btn-container ">
-						<a href="appoinment.html" target="_blank" class="btn btn-main-3 btn-icon btn-round-full">견적문의 <i class="icofont-simple-right ml-2  "></i></a>
+						<a href="#" target="_blank" class="btn btn-main-3 btn-icon btn-round-full">견적문의 <i class="icofont-simple-right ml-2  "></i></a>
 					</div>
 				</div>
 			</div>
@@ -253,14 +253,12 @@
 	             	<div class="col-lg-6">
 	              	<div class="form-group">
 	                	<select class="form-control" id="exampleFormControlSelect1">
-	                    <option>Choose Department</option>
-	                    <option>Software Design</option>
-	                    <option>Development cycle</option>
-	                    <option>Software Development</option>
-	                    <option>Maintenance</option>
-	                    <option>Process Query</option>
-	                    <option>Cost and Duration</option>
-	                    <option>Modal Delivery</option>
+	                    <option>카테고리</option>
+	                    <option>제품 문의</option>
+	                    <option>견적 문의</option>
+	                    <option>A/S 신청</option>
+	                    <option>회원계정</option>
+	                    <option>기타</option>
 	                  </select>
 	                </div>
 	              </div>
@@ -306,7 +304,7 @@
 								<textarea name="message" id="message" class="form-control" rows="6" placeholder="Your Message"></textarea>
 							</div>
 			
-			    	<a class="btn btn-main btn-round-full" href="appoinment.html" >Make Appoinment <i class="icofont-simple-right ml-2  "></i></a>
+			    	<a class="btn btn-main btn-round-full" href="#" >문의하기 <i class="icofont-simple-right ml-2  "></i></a>
 			  	</form>
 				</div>
 			</div>

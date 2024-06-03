@@ -20,6 +20,8 @@ import board.QuestionBoardContentCommand;
 import board.QuestionBoardEditCommand;
 import board.QuestionBoardInputCommand;
 import board.QuestionBoardSearchCommand;
+import board.RecruitBoardCommand;
+import board.RecruitBoardContentCommand;
 import common.MainInterface;
 import member.MemberUpdateCommand;
 import member.MidSearchResultCommand;
@@ -89,9 +91,14 @@ public class MainController extends HttpServlet {
 			viewPage += "/board/questionBoardSearch.jsp";
 		}
 		else if(com.equals("/RecruitBoard")) {
-			command = new QuestionBoardCommand();
+			command = new RecruitBoardCommand();
 			command.execute(request, response);
 			viewPage += "/board/recruitBoard.jsp";
+		}
+		else if(com.equals("/RecruitBoardContent")) {
+			command = new RecruitBoardContentCommand();
+			command.execute(request, response);
+			viewPage += "/board/recruitBoardContent.jsp";
 		}
 		else if(com.equals("/AboutUs")) {
 			viewPage += "/company/aboutUs.jsp";
@@ -138,6 +145,9 @@ public class MainController extends HttpServlet {
 		}
 		else if(com.equals("/MemberDelete")) {
 			viewPage += "/mypage/memberDelete.jsp";
+		}
+		else if(com.equals("/RecruitBoardInput")) {
+			viewPage += "/board/recruitBoardInput.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

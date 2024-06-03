@@ -66,6 +66,11 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/MemberDeleteOk")) {
+			command = new MemberDeleteOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

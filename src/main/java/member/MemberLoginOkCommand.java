@@ -26,7 +26,7 @@ public class MemberLoginOkCommand implements MainInterface {
 		// 아래로 회원 인증 처리
 		if(vo.getPwd() == null || vo.getUserDel().equals("OK")) {
 			request.setAttribute("message", "입력하신 회원 정보가 없습니다. \\n아이디 혹은 비밀번호를 확인하세요.");
-			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
+			request.setAttribute("url", "MemberLogin.do");
 			return;
 		}
 		

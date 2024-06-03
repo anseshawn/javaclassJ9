@@ -23,7 +23,11 @@ public class MidSearchResultCommand implements MainInterface {
 		}
 		else {
 			String mid = "";
-			int ran = (int)(Math.random()*4+1-2)+2;
+			//int ran = (int)(Math.random()*4+1-2)+2;
+			int ran = 0;
+			if(vo.getMid().length()<=5) ran=2;
+			else if(vo.getMid().length()<=7) ran=3;
+			else ran=4;
 			for(int i=0; i<vo.getMid().length(); i++) {
 				if(i < ran) {
 					mid += vo.getMid().charAt(i);					

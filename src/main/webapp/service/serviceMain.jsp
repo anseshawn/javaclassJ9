@@ -78,37 +78,38 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12">
-				<form name="myform" id="contact-form" class="contact__form " method="post" action="SendMessage.sv">
+				<form name="myform" id="contact-form" class="contact__form " method="post" action="SendMessage.ad">
 					<!-- form message -->
 
 						<div class="row">
 							<div class="col-lg-6">
 								<div class="form-group">
-									<input name="name" id="name" type="text" class="form-control" placeholder="이름을 적어주세요" >
+									<input name="name" id="name" type="text" class="form-control" placeholder="이름을 적어주세요" required />
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-									<input name="email" id="email" type="email" class="form-control" placeholder="메일 주소를 입력해주세요">
+									<input name="email" id="email" type="email" class="form-control" placeholder="메일 주소를 입력해주세요" required/>
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-									<input name="title" id="title" type="text" class="form-control" placeholder="주제">
+									<input name="title" id="title" type="text" class="form-control" placeholder="주제"/>
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-									<input name="phone" id="phone" type="text" class="form-control" placeholder="휴대폰 번호">
+									<input name="phone" id="phone" type="text" class="form-control" placeholder="휴대폰 번호"/>
 								</div>
 							</div>
 						</div>
 						<div class="form-group-2 mb-4">
-							<textarea name="content" id="content" class="form-control" rows="8" placeholder="상담내용"></textarea>
+							<textarea name="content" id="content" class="form-control" rows="8" placeholder="상담내용" required></textarea>
 						</div>
 						<div class="text-center">
 							<input class="btn btn-main btn-round-full" name="submit" type="submit" value="상담 요청 보내기"></input>
 						</div>
+						<input type="hidden" name="msgType" value="askService"/>
       		</form>
     		</div>
   	</div>

@@ -31,6 +31,8 @@
 		}
 		
 		function MemberDeleteOk(){
+			let deleteReason = myform.deleteReason.value;
+			
 			if(!$("input[type=radio][name=deleteReason]:checked").is(':checked')) {
 				alert("탈퇴 사유를 선택하세요.");
 				return false;
@@ -39,23 +41,11 @@
 				alert("기타 사유를 입력하세요.");
 				return false;
 			}
-			let deleteReason = myform.deleteReason.value;
+			
 			if(deleteReason=='6') deleteReason += "/"+$("#resonTxt").val();
 			
-			let query={
-					
-			}
-			$.ajax({
-				url: "",
-				type: "post",
-				data: query,
-				success: function(res) {
-					
-				},
-				error: function(){
-					alert("전송 오류");
-				}
-			});
+			myform.submit();
+			
 		}
 	</script>
 </head>
@@ -85,13 +75,13 @@
 			</ul>
 		</div>
 	</div>
+<form name="myform" method="post" action="MemberDeleteOk.mem">
 	<div class="row justify-content-center mb-5">
 		<div class="col-lg-8 col-lg-offset-2">
-			<form name="myform" method="post" action="#">
 				<p>탈퇴하는 이유를 말씀해주세요. 사이트 개선에 중요 자료로 활용하겠습니다.</p>
 				<div class="mb-2">
 					<input type="radio" id="reason1" value="1" name="deleteReason" onclick="etcHide()">
-	        <label for="reason1">기록 삭제 목적</label>
+	        <label for="reason1">찾는 제품이 없어서</label>
         </div>
         <div class="mb-2">
 					<input type="radio" id="reason2" value="2" name="deleteReason" onclick="etcHide()">
@@ -114,20 +104,18 @@
 	        <label for="reason6">기타</label>
 				</div>
         <div id="etc"><textarea rows="2" id="resonTxt" class="form-control" style="display:none"></textarea></div>
-			</form>
 		</div>
 	</div>
 	<div class="row justify-content-center mt-3 mb-3">
 		<div class="col-lg-8">
-			<form name="enterPwd">
 				<h4>현재 비밀번호</h4>
 				<input type="password" class="form-control" name="pwd" id="pwd" placeholder="비밀번호" required/>
-				<div class="text-right" style="font-size:12px;"><a href="#">비밀번호를 잊으셨습니까?</a></div>
+				<div class="text-right" style="font-size:12px;"><a href="PwdSearch.do">비밀번호를 잊으셨습니까?</a></div>
 				<a href="MemberUpdate.do" class="btn btn-main btn-icon-sm float-left mt-5">뒤로</a>
 				<a href="javascript:MemberDeleteOk()" class="btn btn-main-2 btn-icon-sm float-right mt-5">탈퇴하기</a>
-			</form>
 		</div>
 	</div>
+</form>
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />

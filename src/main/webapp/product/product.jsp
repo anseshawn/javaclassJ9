@@ -43,8 +43,12 @@
                 </div>
             </div>
         </div>
-
-      <div class="col-12 text-center  mb-5">
+        <c:if test="${sLevel==0}">
+					<div class="col-12 text-right mb-5">
+						<input type="button" value="장비 등록하기" class="btn btn-main btn-icon btn-round" />
+					</div>
+				</c:if>
+      	<div class="col-12 text-center  mb-5">
 	        <div class="btn-group btn-group-toggle " data-toggle="buttons">
 	          <label class="btn active ">
 	            <input type="radio" name="shuffle-filter" value="all" checked="checked" />전체상품
@@ -71,7 +75,7 @@
       </div>
 
     <div class="row shuffle-wrapper portfolio-gallery">
-      	<div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat1&quot;,&quot;cat2&quot;]">
+      	<div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat1','cat2']">
 	      	<div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 	               <div class="doctor-img">
@@ -85,7 +89,7 @@
 	      	</div>
       	</div>
 
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat2&quot;]">
+      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat2']">
         	<div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 		        	<div class="doctor-img">
@@ -99,7 +103,7 @@
 	      	</div>
       </div>
 
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat3&quot;]">
+      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat3']">
         	<div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 		        	<div class="doctor-img">
@@ -113,7 +117,7 @@
 	      	</div>
       </div>
 
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat3&quot;,&quot;cat4&quot;]">
+      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat3','cat4']">
         	<div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 		        	<div class="doctor-img">
@@ -127,103 +131,62 @@
 	      	</div>
       </div>
 
-      	<div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat5&quot;]">
+      	<div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat5']">
         	<div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 		        	<div class="doctor-img">
-		               <img src="images/team/1.jpg" alt="doctor-image" class="img-fluid w-100">
+		               <img src="images/product/APK950.png" alt="doctor-image" class="img-fluid w-100">
 		            </div>
 	            </div>
                 <div class="content mt-3">
-                	<h4 class="mb-0"><a href="doctor-single.html">Thomas Henry</a></h4>
-                	<p>Neurology</p>
+                	<h4 class="mb-0"><a href="doctor-single.html">APK950</a></h4>
+                	<p>(2022년) 화학, 환경</p>
                 </div> 
 	      	</div>
       	</div>
 
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat6&quot;]">
+      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat6']">
        		 <div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 		        	<div class="doctor-img">
-		               <img src="images/team/3.jpg" alt="doctor-image" class="img-fluid w-100">
+		               <img src="images/product/gc1.png" alt="doctor-image" class="img-fluid w-100">
 		            </div>
 	            </div>
                 <div class="content mt-3">
-                	<h4 class="mb-0"><a href="doctor-single.html">Henry samuel</a></h4>
-                	<p>Palmology</p>
+                	<h4 class="mb-0"><a href="doctor-single.html">Agilent</a></h4>
+                	<p>(2018년) 화학, 환경, 생명, 식품</p>
                 </div> 
 	      	</div>
       </div>
 
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat4&quot;]">
+      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat4']">
         	<div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 		        	<div class="doctor-img">
-		               <img src="images/team/1.jpg" alt="doctor-image" class="img-fluid w-100">
+		               <img src="images/product/glassReactor.jpg" alt="doctor-image" class="img-fluid w-100">
 		            </div>
 	            </div>
                 <div class="content mt-3">
-                	<h4 class="mb-0"><a href="doctor-single.html">Thomas alexandar</a></h4>
-                	<p>Cardiology</p>
+                	<h4 class="mb-0"><a href="doctor-single.html">Glass Reactor</a></h4>
+                	<p>(2018년) 화학, 환경, 생명</p>
                 </div> 
 	        </div>
       </div>
 
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat5&quot;,&quot;cat6&quot;,&quot;cat1&quot;]">
+      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="['cat5','cat6','cat1']">
         	<div class="position-relative doctor-inner-box">
 		        <div class="doctor-profile">
 		        	<div class="doctor-img">
-		               <img src="images/team/3.jpg" alt="doctor-image" class="img-fluid w-100">
+		               <img src="images/product/lc1.jpg" alt="doctor-image" class="img-fluid w-100">
 		             </div>
 	             </div>
                 <div class="content mt-3">
-                	<h4 class="mb-0"><a href="doctor-single.html">HarissonThomas </a></h4>
-                	<p>Traumatology</p>
+                	<h4 class="mb-0"><a href="doctor-single.html">Ultimate 3000</a></h4>
+                	<p>(2012년) 화학, 환경, 생명, 식품</p>
                 </div> 
 	      	</div>
       </div>
 
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item illustration" data-groups="[&quot;cat2&quot;]">
-        	<div class="position-relative doctor-inner-box">
-		        <div class="doctor-profile">
-		        	<div class="doctor-img">
-		               <img src="images/team/4.jpg" alt="doctor-image" class="img-fluid w-100">
-		            </div>
-	            </div>
-                <div class="content mt-3">
-                	<h4 class="mb-0"><a href="doctor-single.html">Jonas Thomson</a></h4>
-                	<p>Cardiology</p>
-                </div> 
-	      	</div>
-        </div>
-
-         <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item" data-groups="[&quot;cat5&quot;,&quot;cat6&quot;,&quot;cat1&quot;]">
-        	<div class="position-relative doctor-inner-box">
-		        <div class="doctor-profile">
-		        	<div class="doctor-img">
-		               <img src="images/team/3.jpg" alt="doctor-image" class="img-fluid w-100">
-		            </div>
-	            </div>
-                <div class="content mt-3">
-                	<h4 class="mb-0"><a href="doctor-single.html">Henry Forth</a></h4>
-                	<p>hematology</p>
-                </div> 
-	      	</div>
-      </div>
-
-      <div class="col-lg-3 col-sm-6 col-md-6 mb-4 shuffle-item illustration" data-groups="[&quot;cat2&quot;]">
-        	<div class="position-relative doctor-inner-box">
-		        <div class="doctor-profile">
-		        	<div class="doctor-img">
-		               <img src="images/team/4.jpg" alt="doctor-image" class="img-fluid w-100">
-		             </div>
-	             </div>
-                <div class="content mt-3">
-                	<h4 class="mb-0"><a href="doctor-single.html">Thomas Henry</a></h4>
-                	<p>Dental</p>
-                </div> 
-	      	</div>
-        </div>
     </div>
   </div>
 </section>

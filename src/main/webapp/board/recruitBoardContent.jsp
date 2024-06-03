@@ -10,19 +10,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>질문게시판 - ${vo.title}</title>
 	<jsp:include page="/include/bs4.jsp" />
+	<style>
+		ul {
+		  display: block;
+		  list-style-type: decimal;
+		  margin-block-start: 1em;
+		  margin-block-end: 1em;
+		  margin-inline-start: 20px;
+		  margin-inline-end: 20px;
+		  padding-inline-start: 40px;
+		  padding-inline-end: 20px;
+		}
+	</style>
 	<script>
 		'use strict';
 
-		/*
-		$(function(){
-			let formId = "div.reReply";
-			let buttonId = "#reReplyOpen";
-			$("div.reReply").hide();
-			$(buttonId).on("click",function(){
-				$(formId).stop().slideToggle("fast");
-			});
-		});
-		*/
 		function searchValue(){
 			if($("#search").val()=='part') {
 				$("#searchSelect").show();
@@ -45,7 +47,7 @@
 				alert("답변이 달린 게시글은 삭제할 수 없습니다.");
 				return false;
 			}
-			else location.href="QuestionBoardDelete.bo?idx=${vo.idx}";
+			else location.href="RecruitBoardDelete.bo?idx=${vo.idx}";
 		}
 		
 		// 좋아요 수 (중복 불허)
@@ -54,7 +56,7 @@
 				url: "BoardGoodCheck.bo",
 				type: "post",
 				data: {
-					board:"questionBoard",
+					board:"recruitBoard",
 					idx:${vo.idx}
 				},
 				success: function(res){
@@ -84,7 +86,7 @@
 			if(rpContent=='기타') rpContent += "/"+$("#reportTxt").val();
 			
 			let query = {
-					board: 'questionBoard',
+					board: 'recruitBoard',
 					boardIdx: ${vo.idx},
 					rpMid: '${sMid}',
 					rpContent: rpContent 
@@ -129,7 +131,7 @@
 				return false;
 			}
 			let query = {
-					board: "questionBoard",
+					board: "recruitBoard",
 					boardIdx: ${vo.idx},
 					mid: reMid,
 					nickName: reNickName,
@@ -338,19 +340,22 @@
 </header>
 <p><br/></p>
 <div class="container">
-<section class="page-title bg-3">
+<section class="page-title bg-1">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block text-center">
-          <span class="text-white">실험에 관한 질문을 올려주세요</span>
-          <h1 class="text-capitalize text-lg"><a href="QuestionBoard.do" style="color: #fff;">Q & A</a></h1>
+          <span class="text-white">진행 중인 공고를 올려주세요</span>
+          <h1 class="text-capitalize mb-5 text-lg"><a href="RecruitBoard.do" style="color: #fff;">채용공고</a></h1>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<c:set var="rcfNames" value="${fn:split(vo.rcfName,'/')}"/>
+<c:set var="rcfSNames" value="${fn:split(vo.rcfSName,'/')}"/>
 
 <section class="section blog-wrap">
 	<div class="container">
@@ -362,7 +367,7 @@
 							<div class="blog-item-content mt-2">
 								<div class="blog-item-meta mb-3">
 									<div style="color:#223a66; font-size:1.2rem;">
-										<a href="QuestionBoardSearch.do?pag=1&pageSize=${pageSize}&search=part&partSelect=${vo.part}"><i class="icofont-ui-folder mr-2"></i>${vo.part}</a>
+										<a href="RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&search=part&partSelect=${vo.part}"><i class="icofont-ui-folder mr-2"></i>${vo.part}</a>
 									</div>
 								</div>
 								<div class="blog-item-meta mb-3">
@@ -375,13 +380,36 @@
 								<div class="nav-item lead mb-4 font-weight-normal text-black">${vo.nickName}(${vo.mid})</div>
 								<c:if test="${sLevel==0 || sMid==vo.mid}">
 									<div class="text-right">
-										<input type="button" value="수정하기" onclick="location.href='QuestionBoardEdit.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}';" class="btn btn-main-2 btn-icon-sm btn-round-full mr-2" >
+										<input type="button" value="수정하기" onclick="location.href='RecruitBoardEdit.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}';" class="btn btn-main-2 btn-icon-sm btn-round-full mr-2" >
 										<input type="button" value="삭제하기" onclick="deleteCheck()" class="btn btn-main btn-icon-sm btn-round-full" >
 									</div>
 								</c:if>
 								<hr/>
+								
+								<br/>
+								<div class="mb-3">
+									<ul class="w-hours list-unstyled ">
+									  <li class="d-flex justify-content-between mb-2">채용일정 : <span>${fn:substring(vo.startDate,0,10)} - ${fn:substring(vo.endDate,0,10)}</span></li>
+									  <li class="d-flex justify-content-between mb-2">근무지역 : <span>${vo.location}</span></li>
+									  <li class="d-flex justify-content-between mb-2">유의사항 : <span>${vo.etcContent}</span></li>
+									</ul>
+								</div>
+								<br/>
+								
+								<div class="text-center mt-3 mb=3">
+									<c:forEach var="rcfSName" items="${rcfSNames}" varStatus="st">
+										<c:set var="len" value="${fn:length(rcfSName)}"/>
+										<c:set var="ext" value="${fn:substring(rcfSName,len-3,len)}"/>
+										<c:set var="extLower" value="${fn:toLowerCase(ext)}"/>
+										<c:if test="${extLower == 'jpg' || extLower == 'gif' || extLower == 'png'}">
+											<img src="${ctp}/images/board/${rcfSName}" width="85%"/>
+										</c:if>
+										<br/><br/>
+									</c:forEach>
+								</div>
+								
 								<p>${fn:replace(vo.content,newLine,'<br/>')}</p>
-				
+	
 								<div class="mt-5 clearfix">
 							    <ul class="float-left list-inline tag-option">
 							    	<c:if test="${vo.mid != sMid}">
@@ -407,6 +435,18 @@
 						        <li class="list-inline-item"><a href="#" target="_blank"><i class="icofont-linkedin" aria-hidden="true"></i></a></li>
 							  	</ul>
 							  </div>
+							</div>
+							<div class="mt-5 clearfix" style="border:1px solid #eee; color:black;">
+								<ul style="list-style-type: none;">
+									<li>첨부파일 목록</li>								
+								</ul>
+								<ul>
+									<c:forEach var="rcfName" items="${rcfNames}" varStatus="st">
+										<li>
+											<a href="${ctp}/images/board/${rcfNames[st.index]}" download="${rcfName}"> ${rcfName} </a>
+										</li> 
+									</c:forEach>
+								</ul>
 							</div>
 						</div>
 					</div>
@@ -556,35 +596,28 @@
 					<div class="col-lg-12 text-center">
 						<div class="mt-5">
 							<hr/>
-							<c:if test="${empty flag}"><a href="QuestionBoard.do?pag=${pag}&pageSize=${pageSize}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
-							<c:if test="${!empty flag}"><a href="QuestionBoardSearch.do?pag=${pag}&pageSize=${pageSize}&search=${search}&searchString=${searchString}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
+							<c:if test="${empty flag}"><a href="RecruitBoard.do?pag=${pag}&pageSize=${pageSize}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
+							<c:if test="${!empty flag}"><a href="RecruitBoardSearch.do?pag=${pag}&pageSize=${pageSize}&search=${search}&searchString=${searchString}" class="btn btn-main btn-icon" style="padding: .4rem 1.2rem;">목록으로</a></c:if>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-3">
+			<div class="col-lg-4">
 				<div class="sidebar-wrap pl-lg-4 mt-5 mt-lg-0">
 				<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
-					<div class="sidebar-widget write text-center mb-5 ">
-						<a href="QuestionBoardInput.do" class="btn btn-main btn-icon btn-round" style="width:80%;">질문하기</a>
+					<div class="sidebar-widget write mb-3 ">
+						<a href="RecruitBoardInput.do" class="btn btn-main-2 btn-icon btn-round-full" style="width:300px; margin:8px;">글쓰기</a>
 					</div>
-				</c:if>	
+				</c:if>
+				
 				<!-- 검색창 -->
 				<div class="sidebar-widget search mb-3 ">
-					<h5>질문 검색</h5>
-					<form name="searchForm" method="post" action="QuestionBoardSearch.do">
+					<h5>공고 검색</h5>
+					<form name="searchForm" method="post" action="RecruitBoardSearch.do">
 						<select name="search" id="search" class="form-control" onchange="searchValue()">
 							<option value="title">제목</option>
 							<option value="nickName">작성자</option>
 							<option value="content">내용</option>
-							<option value="part">분류</option>
-						</select>
-						<select name="searchSelect" id="searchSelect" class="form-control mt-2" style="display:none;">
-							<option>전체</option>
-							<option>실험방법</option>
-							<option>실험장비</option>
-							<option>법규</option>
-							<option>기타</option>
 						</select>
 						<input type="text" name="searchString" id="searchString" class="form-control mt-2" placeholder="검색어를 입력하세요." required />
 						<i class="ti-search"></i>
@@ -592,15 +625,29 @@
 					</form>
 				</div>
 				<!-- 검색창 끝 -->
-				<div class="sidebar-widget latest-post mb-2">
-					<h5>최근 댓글</h5>
-					<c:forEach var="qVo" items="${qVos}" varStatus="st">
-		     		<div class="py-1">
-		      		<span class="text-sm text-muted">${qVo.date_diff == 0 ? fn:substring(qVo.wDate,11,19) : fn:substring(qVo.wDate,0,10) }</span>
-		          <h6 class="my-1"><a href="QuestionBoardContent.do?idx=${qVo.idx}&pag=${pag}&pageSize=${pageSize}">${qVo.title}</a></h6>
-		     		</div>
-			    </c:forEach>
+				
+				<div class="sidebar-widget category mb-3">
+					<h5 class="mb-4">분류</h5>
+					<ul class="list-unstyled">
+					  <li class="align-items-center">
+					    <a href="#">신입</a>
+					    <span>(14)</span>
+					  </li>
+					  <li class="align-items-center">
+					    <a href="#">경력</a>
+					    <span>(2)</span>
+					  </li>
+					  <li class="align-items-center">
+					    <a href="#">경력무관</a>
+					    <span>(10)</span>
+					  </li>
+					  <li class="align-items-center">
+					    <a href="#">인턴</a>
+					    <span>(5)</span>
+					  </li>
+					</ul>
 				</div>
+				
 				</div>
 	    </div>   
 		</div>

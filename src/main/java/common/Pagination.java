@@ -8,6 +8,8 @@ import board.FreeBoardDAO;
 import board.FreeBoardVO;
 import board.QuestionBoardDAO;
 import board.QuestionBoardVO;
+import board.RecruitBoardDAO;
+import board.RecruitBoardVO;
 
 public class Pagination {
 
@@ -15,7 +17,7 @@ public class Pagination {
 	public static void pageChange(HttpServletRequest request, int pag, int pageSize, String contentsShow, String board, String searchKey) {
 		FreeBoardDAO fBoardDao = new FreeBoardDAO();
 		QuestionBoardDAO qBoardDao = new QuestionBoardDAO();
-		
+		RecruitBoardDAO rcBoardDao = new RecruitBoardDAO();
 		// part - 검색: search/searchString의 값이 넘어올 경우(검색 분류 / 검색어)
 		String search = "", searchString = "";
 		if(searchKey != null && !searchKey.equals("")) {
@@ -24,6 +26,10 @@ public class Pagination {
 				searchString = searchKey.split("/")[1];
 			}
 			else if(board.equals("questionBoard")) {
+				search = searchKey.split("/")[0];
+				searchString = searchKey.split("/")[1];
+			}
+			else if(board.equals("recruitBoard")) {
 				search = searchKey.split("/")[0];
 				searchString = searchKey.split("/")[1];
 			}
@@ -47,6 +53,14 @@ public class Pagination {
 				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,search,searchString); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK/일반유저:아이디 구별)				
 			}
 		}
+		else if(board.equals("recruitBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
+				totRecCnt = rcBoardDao.getTotRecCnt(contentsShow,"",""); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK)
+			}
+			else {
+				totRecCnt = rcBoardDao.getTotRecCnt(contentsShow,search,searchString); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK/일반유저:아이디 구별)				
+			}
+		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize)+1;
 		if(pag > totPage) pag = 1;
@@ -59,6 +73,7 @@ public class Pagination {
 		
 		List<FreeBoardVO> fBoardVos = null;
 		List<QuestionBoardVO> qBoardVos = null;
+		List<RecruitBoardVO> rcBoardVos = null;
 		if(board.equals("freeBoard")) {
 			if(searchKey==null || searchKey.equals("")) {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
@@ -76,6 +91,15 @@ public class Pagination {
 				qBoardVos = qBoardDao.getQuestionBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
 			}
 			request.setAttribute("vos", qBoardVos);
+		}
+		else if(board.equals("recruitBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
+				rcBoardVos = rcBoardDao.getRecruitBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
+			}
+			else {
+				rcBoardVos = rcBoardDao.getRecruitBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
+			}
+			request.setAttribute("vos", rcBoardVos);
 		}
 		
 		request.setAttribute("pag", pag);

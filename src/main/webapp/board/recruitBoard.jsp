@@ -16,6 +16,13 @@
 		  font-size: 30px;
 		}
 	</style>
+	<script>
+		'use strict';
+		
+		function searchEnter(){
+			searchForm.submit();
+		}
+	</script>
 </head>
 <body id="top">
 <header>
@@ -50,20 +57,27 @@
 						<div class="col-lg-12 col-md-12 mb-3">
 							<div class="blog-item">
 								<div class="blog-item-content">
-									<div class="blog-item-meta mb-3 mt-4">
+									<div class="blog-item-meta mb-2 mt-4">
 										<span class="text-muted text-capitalize mr-3"><i class="fa-solid fa-eye mr-2"></i>${vo.readNum}</span>
 										<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt} Comments</span>
 										<span class="text-black text-capitalize mr-3">
 											<i class="icofont-calendar mr-2"></i> ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10) }
 										</span>
 										<span class="text-muted text-capitalize mr-3"><i class="icofont-user mr-2"></i>${vo.nickName}</span>										
-									</div> 
-									<div class="title mt-3 mb-3">
-										<a href="RecruitBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
 									</div>
-									<p class="mb-4">
-										<a href="RecruitBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}" target="_blank" class="btn btn-main btn-icon-sm btn-round-full">새창으로 보기<i class="icofont-simple-right ml-2  "></i></a>
-									</p>
+									<div class="blog-item-meta mb-3">
+										<span class="text-muted text-capitalize mr-3"><i class="icofont-clock-time mr-2"></i>${fn:substring(vo.startDate,0,10)} ~ ${fn:substring(vo.endDate,0,10)}</span>
+									</div>
+									<c:if test="${today <= fn:substring(vo.endDate,0,10)}">
+										<div class="title mt-3 mb-3">
+											<a href="RecruitBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
+										</div>
+									</c:if>
+									<c:if test="${today > fn:substring(vo.endDate,0,10)}">
+										<div class="title mt-3 mb-3">
+											<div>${vo.title}(종료)</div>
+										</div>
+									</c:if>
 								</div>
 							</div>
 							<hr/>			
@@ -72,8 +86,8 @@
 				</div>
 				
 				<!-- 블록페이지 시작(목록 아래 딱 붙어 나오도록) -->	
-		    <div class="row mt-2 text-right">
-		      <div class="col-lg-8">
+		    <div class="row mt-2 text-center">
+		      <div class="col-lg-12">
 		        <nav class="pagination py-2 d-inline-block">
 		          <div class="nav-links">
 			          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/RecruitBoard.do?pag=1&pageSize=${pageSize}"><i class="icofont-thin-double-left"></i></a></c:if>
@@ -98,71 +112,53 @@
 						<a href="RecruitBoardInput.do" class="btn btn-main-2 btn-icon btn-round-full" style="width:300px; margin:8px;">글쓰기</a>
 					</div>
 				</c:if>	
-					<!-- 검색창 -->
-					<div class="sidebar-widget search mb-3 ">
-						<h5>게시판 검색</h5>
-						<form name="search-form" method="post" action="RecruitBoardSearch.do">
-							<select name="search" id="search" class="form-control">
-								<option value="title">제목</option>
-								<option value="nickName">작성자</option>
-								<option value="content">내용</option>
-							</select>
-							<div class="input-group mb-1">
-								<input type="text" name="searchString" id="searchString" class="form-control mt-2" placeholder="검색어를 입력하세요." required />
-								<i class="ti-search"></i>
-								<div class="input-group-append">
-									<input type="submit" value="  search  " class="btn btn-main btn-icon-sm btn-round mt-2"/>
-								</div>
-							</div>
-						</form>
-					</div>
-					<!-- 검색창 끝 -->
+				<!-- 검색창 -->
+				<div class="sidebar-widget search mb-3 ">
+					<h5>공고 검색</h5>
+					<form name="searchForm" method="post" action="RecruitBoardSearch.do">
+						<select name="search" id="search" class="form-control" onchange="searchValue()">
+							<option value="title">제목</option>
+							<option value="nickName">작성자</option>
+							<option value="content">내용</option>
+						</select>
+						<input type="text" name="searchString" id="searchString" class="form-control mt-2" placeholder="검색어를 입력하세요." required />
+						<i class="ti-search"></i>
+						<div class="text-right"><a href="javascript:searchEnter()" class="btn btn-main btn-icon-sm btn-round mt-2"><i class="icofont-search-2"></i> 검색</a></div>
+					</form>
+				</div>
+				<!-- 검색창 끝 -->
 					
-					<div class="sidebar-widget latest-post mb-3">
-						<h5>인기 게시글</h5>
-						<c:forEach var="gVo" items="${gVos}" varStatus="st">
-	        		<div class="py-2">
-		        		<span class="text-sm text-muted">${gVo.date_diff == 0 ? fn:substring(gVo.wDate,11,19) : fn:substring(gVo.wDate,0,10) }</span>
-		            <h6 class="my-2"><a href="RecruitBoardContent.do?idx=${gVo.idx}&pag=${pag}&pageSize=${pageSize}">${gVo.title}</a></h6>
-	        		</div>
-        		</c:forEach>
-					</div>
-
+				<div class="sidebar-widget category mb-3">
+					<h5 class="mb-4">분류</h5>
+					<ul class="list-unstyled">
+					  <li class="align-items-center">
+					    <a href="#">신입</a>
+					    <span>(14)</span>
+					  </li>
+					  <li class="align-items-center">
+					    <a href="#">경력</a>
+					    <span>(2)</span>
+					  </li>
+					  <li class="align-items-center">
+					    <a href="#">경력무관</a>
+					    <span>(10)</span>
+					  </li>
+					  <li class="align-items-center">
+					    <a href="#">인턴</a>
+					    <span>(5)</span>
+					  </li>
+					</ul>
+				</div>
+					 
+				<div class="sidebar-widget tags mb-3">
+					<h5 class="mb-4">Tags</h5>
+					<a href="#">정규직</a>
+					<a href="#">파견직</a>
+					<a href="#">위촉직</a>
+					<a href="#">계약직</a>
+					<a href="#">프리랜서</a>
+				</div>
 					
-					<div class="sidebar-widget category mb-3">
-						<h5 class="mb-4">분류</h5>
-						<ul class="list-unstyled">
-						  <li class="align-items-center">
-						    <a href="#">Medicine</a>
-						    <span>(14)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Equipments</a>
-						    <span>(2)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Heart</a>
-						    <span>(10)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Free counselling</a>
-						    <span>(5)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Lab test</a>
-						    <span>(5)</span>
-						  </li>
-						</ul>
-					</div>
-					<!-- 
-					<div class="sidebar-widget tags mb-3">
-						<h5 class="mb-4">Tags</h5>
-						<a href="#">Doctors</a>
-						<a href="#">agency</a>
-						<a href="#">company</a>
-						<a href="#">medicine</a>
-					</div>
-					-->
 				</div>
     	</div>   
     </div>

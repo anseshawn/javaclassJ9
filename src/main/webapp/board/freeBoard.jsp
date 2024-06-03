@@ -88,8 +88,8 @@
 				</div>
 				
 				<!-- 블록페이지 시작(목록 아래 딱 붙어 나오도록) -->	
-		    <div class="row mt-2 text-right">
-		      <div class="col-lg-8">
+		    <div class="row mt-2 text-center">
+		      <div class="col-lg-12">
 		        <nav class="pagination py-2 d-inline-block">
 		          <div class="nav-links">
 			          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/FreeBoard.do?pag=1&pageSize=${pageSize}"><i class="icofont-thin-double-left"></i></a></c:if>

@@ -40,6 +40,29 @@ desc questionBoard;
 drop table questionBoard;
 insert into questionBoard values (default,'admin','관리자','질문 게시판입니다.','많은 이용 부탁드립니다.','172.30.1.24',default,default,'기타',default,default);
 
+create table recruitBoard(
+	idx int not null auto_increment,	/* 게시글 고유번호 */
+	mid varchar(10) not null,					/* 작성자 아이디 */
+	nickName varchar(10) not null,		/* 작성자 닉네임 */
+	title varchar(50) not null,				/* 게시글 제목 */
+	content text not null,						/* 게시글 내용 */
+	hostIp varchar(40) not null,			/* 작성자 아이피 */
+	readNum int default 0,						/* 조회수 */
+	wDate datetime default now(),			/* 작성일 */
+	part varchar(10) not null,				/* 채용구분(신입,경력,경력무관,인턴) */
+	location varchar(100) not null,		/* 근무지역 */
+	startDate datetime not null default now(),	/* 채용시작일 */
+	endDate datetime not null,									/* 채용종료일 */
+	etcContent text,									/* 유의사항 */
+	rcfName varchar(200),							/* 첨부파일 (있을 경우) */
+	rcfSName varchar(200),						/* 서버에 저장되는 첨부파일 이름 */
+	good int default 0,								/* 좋아요 */
+	report int default 0,							/* 신고(5번 신고하면 리스트에서 블라인드) */
+	primary key(idx),
+	foreign key(mid) references member(mid)
+);
+desc recruitBoard;
+
 create table reply(
 	idx int not null auto_increment,	/* 댓글 고유번호 */
 	board varchar(20) not null,				/* 게시판 종류 */

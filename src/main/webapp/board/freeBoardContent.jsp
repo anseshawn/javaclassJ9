@@ -272,7 +272,6 @@
 		}
 		// 대댓글 수정창 토글
 		function reReplyEdit(reIdx){
-			$(".reReEditDemo").hide();
 			let reReplyEditDisplay = window.getComputedStyle(document.getElementById("reReEditDemo"+reIdx)).display;
 			if(reReplyEditDisplay=='none') {
 				$(".reReEditDemo").hide();
@@ -454,7 +453,7 @@
 											</c:if>
 											<!-- 대댓글 창 끝 -->
 											<!-- 대댓글 수정창 -->
-											<div class="reReEditDemo" id="reReEditDemo${rVo.idx}" style="display:none;">
+											<div class="reReEditDemo" id="reReEditDemo${rVo.reIdx}" style="display:none;">
 												<div class="col-lg-10">
 												<hr/>
 												<form class="comment-form" name="reReplyEditForm" >
@@ -537,8 +536,14 @@
 					</div>
 				</div>
 			</div>
-      <div class="col-lg-4">
+			
+			<div class="col-lg-4">
 				<div class="sidebar-wrap pl-lg-4 mt-5 mt-lg-0">
+				<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
+					<div class="sidebar-widget write mb-3 ">
+						<a href="FreeBoardInput.do" class="btn btn-main-2 btn-icon btn-round-full" style="width:300px; margin:8px;">글쓰기</a>
+					</div>
+				</c:if>	
 					<!-- 검색창 -->
 					<div class="sidebar-widget search mb-3 ">
 						<h5>게시판 검색</h5>
