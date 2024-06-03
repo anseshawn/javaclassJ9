@@ -7,17 +7,20 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>채용공고</title>
+  <title>검색결과 - 채용공고</title>
 	<jsp:include page="/include/bs4.jsp" />
-	<style>
-		.blog-item-content .title {
-			font-family: "Do Hyeon";
-		  font-weight: 700;
-		  font-size: 30px;
-		}
-	</style>
 	<script>
 		'use strict';
+		
+		function pageSizeCheck(){
+			let pageSize = $("#pageSize").val();
+			if('${search}'=='part') {
+				location.href = "RecruitBoardSearch.do?search=${search}&partSelect=${searchString}&pageSize="+pageSize;
+			}
+			else {
+				location.href = "RecruitBoardSearch.do?search=${search}&searchString=${searchString}&pageSize="+pageSize;
+			}
+		}
 		
 		function searchEnter(){
 			searchForm.submit();
@@ -32,7 +35,7 @@
 </header>
 <p><br/></p>
 <div class="container">
-	
+
 <section class="page-title bg-1">
   <div class="overlay"></div>
   <div class="container">
@@ -49,7 +52,28 @@
 
 <section class="section blog-wrap">
 	<div class="container">
+	
+		<div class="row mb-2">
+			<div class="col-lg-8 text-right">
+				<a href="RecruitBoard.do" class="btn btn-main btn-icon-sm btn-round">전체목록으로</a>
+			</div>
+		</div>
+		<div class="row mb-1">
+			<div class="col-lg-8 search text-right">
+				<select name="pageSize" id="pageSize" onchange="pageSizeCheck()">
+					<option value="5" ${pageSize==5 ? "selected" : ""}>5개 보기</option>
+					<option value="10" ${pageSize==10 ? "selected" : ""}>10개 보기</option>
+					<option value="20" ${pageSize==20 ? "selected" : ""}>20개 보기</option>
+				</select>
+			</div>
+		</div>
+		
 		<div class="row">
+			<div class="row">
+				<div class="col-lg-12"><h2>검색결과</h2></div>
+				<br/>
+				<div class="col-lg-12" style="font-size:1.2rem;"><p>${searchTitle}(으)로 '${searchString}'(을)를 검색한 결과 <b>${searchCount}</b> 건의 게시글이 검색되었습니다.</p></div>
+			</div>
  			<div class="col-lg-8">
 				<div class="row">
 				
@@ -71,7 +95,7 @@
 									</div>
 									<c:if test="${today <= fn:substring(vo.endDate,0,10)}">
 										<div class="title mt-3 mb-3">
-											<a href="RecruitBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a>
+											<a href="RecruitBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}">${vo.title}</a>
 										</div>
 									</c:if>
 									<c:if test="${today > fn:substring(vo.endDate,0,10)}">
@@ -91,14 +115,14 @@
 		      <div class="col-lg-12">
 		        <nav class="pagination py-2 d-inline-block">
 		          <div class="nav-links">
-			          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/RecruitBoard.do?pag=1&pageSize=${pageSize}"><i class="icofont-thin-double-left"></i></a></c:if>
-			          <c:if test="${curBlock > 0}"><a class="page-numbers" href="${ctp}/RecruitBoard.do?pag=${(curBlock-1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-left"></i></a></c:if>
+			          <c:if test="${pag > 1}"><a class="page-numbers" href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-double-left"></i></a></c:if>
+			          <c:if test="${curBlock > 0}"><a class="page-numbers" href="${ctp}/RecruitBoardSearch.do?pag=${(curBlock-1)*blockSize+1}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-left"></i></a></c:if>
 								<c:forEach var="i" begin="${(curBlock*blockSize+1)}" end="${(curBlock)*blockSize+blockSize}" varStatus="st">
 									<c:if test="${i <= totPage && i == pag}"><span aria-current="page" class="page-numbers current">${i}</span></c:if>
-									<c:if test="${i <= totPage && i != pag}"><a class="page-numbers" href="${ctp}/RecruitBoard.do?pag=${i}&pageSize=${pageSize}">${i}</a></c:if>
+									<c:if test="${i <= totPage && i != pag}"><a class="page-numbers" href="${ctp}/RecruitBoardSearch.do?pag=${i}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}">${i}</a></c:if>
 								</c:forEach>
-								<c:if test="${curBlock < lastBlock}"><a class="page-numbers" href="${ctp}/RecruitBoard.do?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}"><i class="icofont-thin-right"></i></a></c:if>
-								<c:if test="${pag < totPage}"><a class="page-numbers" href="${ctp}/RecruitBoard.do?pag=${totPage}&pageSize=${pageSize}"><i class="icofont-thin-double-right"></i></a></c:if>
+								<c:if test="${curBlock < lastBlock}"><a class="page-numbers" href="${ctp}/RecruitBoardSearch.do?pag=${(curBlock+1)*blockSize+1}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-right"></i></a></c:if>
+								<c:if test="${pag < totPage}"><a class="page-numbers" href="${ctp}/RecruitBoardSearch.do?pag=${totPage}&pageSize=${pageSize}&flag=search&search=${search}&searchString=${searchString}"><i class="icofont-thin-double-right"></i></a></c:if>
 		        	</div>
 		      	</nav>
 					</div>
@@ -169,7 +193,6 @@
     </div>
 	</div>
 </section>
-	
 </div>
 <p><br/></p>
 <jsp:include page="/include/footer.jsp" />

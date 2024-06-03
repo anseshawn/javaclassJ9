@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>질문게시판 - ${vo.title}</title>
+  <title>채용공고 - ${vo.title}</title>
 	<jsp:include page="/include/bs4.jsp" />
 	<style>
 		ul {
@@ -24,17 +24,6 @@
 	</style>
 	<script>
 		'use strict';
-
-		function searchValue(){
-			if($("#search").val()=='part') {
-				$("#searchSelect").show();
-				$("#searchString").hide();
-			}
-			else {
-				$("#searchSelect").hide();
-				$("#searchString").show();				
-			}
-		}
 		
 		function searchEnter(){
 			searchForm.submit();
@@ -43,11 +32,7 @@
 		function deleteCheck(){
 			let ans = confirm("현재 게시글을 삭제하시겠습니까?");
 			if(!ans) return false;
-			else if("${sLevel}"!=0 && ${vo.replyCnt} != 0) {
-				alert("답변이 달린 게시글은 삭제할 수 없습니다.");
-				return false;
-			}
-			else location.href="RecruitBoardDelete.bo?idx=${vo.idx}";
+			location.href="RecruitBoardDelete.bo?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt};
 		}
 		
 		// 좋아요 수 (중복 불허)
@@ -630,19 +615,23 @@
 					<h5 class="mb-4">분류</h5>
 					<ul class="list-unstyled">
 					  <li class="align-items-center">
-					    <a href="#">신입</a>
+					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=new">신입</a>
 					    <span>(14)</span>
 					  </li>
 					  <li class="align-items-center">
-					    <a href="#">경력</a>
+					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=expert">경력</a>
 					    <span>(2)</span>
 					  </li>
 					  <li class="align-items-center">
-					    <a href="#">경력무관</a>
+					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=both">경력무관</a>
 					    <span>(10)</span>
 					  </li>
 					  <li class="align-items-center">
-					    <a href="#">인턴</a>
+					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=intern">인턴</a>
+					    <span>(5)</span>
+					  </li>
+					  <li class="align-items-center">
+					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=etc">기타</a>
 					    <span>(5)</span>
 					  </li>
 					</ul>

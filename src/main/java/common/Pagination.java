@@ -18,18 +18,11 @@ public class Pagination {
 		FreeBoardDAO fBoardDao = new FreeBoardDAO();
 		QuestionBoardDAO qBoardDao = new QuestionBoardDAO();
 		RecruitBoardDAO rcBoardDao = new RecruitBoardDAO();
+		
 		// part - 검색: search/searchString의 값이 넘어올 경우(검색 분류 / 검색어)
 		String search = "", searchString = "";
 		if(searchKey != null && !searchKey.equals("")) {
-			if(board.equals("freeBoard")) {
-				search = searchKey.split("/")[0];
-				searchString = searchKey.split("/")[1];
-			}
-			else if(board.equals("questionBoard")) {
-				search = searchKey.split("/")[0];
-				searchString = searchKey.split("/")[1];
-			}
-			else if(board.equals("recruitBoard")) {
+			if(board.equals("freeBoard")|| board.equals("questionBoard") || board.equals("recruitBoard")) {
 				search = searchKey.split("/")[0];
 				searchString = searchKey.split("/")[1];
 			}
@@ -47,18 +40,18 @@ public class Pagination {
 		}
 		else if(board.equals("questionBoard")) {
 			if(searchKey==null || searchKey.equals("")) {
-				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,"",""); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK)
+				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,"","");
 			}
 			else {
-				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,search,searchString); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK/일반유저:아이디 구별)				
+				totRecCnt = qBoardDao.getTotRecCnt(contentsShow,search,searchString);				
 			}
 		}
 		else if(board.equals("recruitBoard")) {
 			if(searchKey==null || searchKey.equals("")) {
-				totRecCnt = rcBoardDao.getTotRecCnt(contentsShow,"",""); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK)
+				totRecCnt = rcBoardDao.getTotRecCnt(contentsShow,"",""); 
 			}
 			else {
-				totRecCnt = rcBoardDao.getTotRecCnt(contentsShow,search,searchString); // 게시판의 전체 레코드수 구하기(contentsShow - 관리자:adminOK/일반유저:아이디 구별)				
+				totRecCnt = rcBoardDao.getTotRecCnt(contentsShow,search,searchString);
 			}
 		}
 		
@@ -117,6 +110,7 @@ public class Pagination {
 		else if(search.equals("content")) searchTitle = "내용";
 		else if(search.equals("part")) searchTitle = "분류";
 		
+		/*
 		if(board.equals("freeBoard") && searchKey != null && !searchKey.equals("")) {
 			request.setAttribute("searchTitle", searchTitle);
 			request.setAttribute("search", search);
@@ -124,6 +118,19 @@ public class Pagination {
 			request.setAttribute("searchCount", totRecCnt);
 		}
 		else if(board.equals("questionBoard")) {
+			request.setAttribute("searchTitle", searchTitle);
+			request.setAttribute("search", search);
+			request.setAttribute("searchString", searchString);			
+			request.setAttribute("searchCount", totRecCnt);
+		}
+		else if(board.equals("recruitBoard")) {
+			request.setAttribute("searchTitle", searchTitle);
+			request.setAttribute("search", search);
+			request.setAttribute("searchString", searchString);			
+			request.setAttribute("searchCount", totRecCnt);
+		}
+	*/
+		if(searchKey != null && !searchKey.equals("")) {
 			request.setAttribute("searchTitle", searchTitle);
 			request.setAttribute("search", search);
 			request.setAttribute("searchString", searchString);			

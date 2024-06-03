@@ -43,10 +43,10 @@
 		<div class="col-md-4 col-md-offset-2">
 			<div class="form-group">
 				<select class="form-control" name="part" id="part" style="height:45px;">
-					<option>실험방법</option>
-					<option>실험장비</option>
-					<option>법규</option>
-					<option>기타</option>
+					<option ${vo.part=='실험방법'? 'selected' : '' }>실험방법</option>
+					<option ${vo.part=='실험장비'? 'selected' : '' }>실험장비</option>
+					<option ${vo.part=='법규'? 'selected' : '' }>법규</option>
+					<option ${vo.part=='기타'? 'selected' : '' }>기타</option>
 				</select>
 			</div>
 		</div>

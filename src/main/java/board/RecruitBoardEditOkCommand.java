@@ -12,7 +12,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import common.MainInterface;
 
-public class RecruitBoardInputOkCommand implements MainInterface {
+public class RecruitBoardEditOkCommand implements MainInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,6 +21,10 @@ public class RecruitBoardInputOkCommand implements MainInterface {
 		String encoding = "utf-8";
 		
 		MultipartRequest multipartRequest = new MultipartRequest(request, realPath, maxSize, encoding, new DefaultFileRenamePolicy());
+		
+		int idx = multipartRequest.getParameter("idx")==null ? 0 : Integer.parseInt(multipartRequest.getParameter("idx"));
+		int pag = multipartRequest.getParameter("pag")==null ? 1 : Integer.parseInt(multipartRequest.getParameter("pag"));
+		int pageSize = multipartRequest.getParameter("pageSize")==null ? 5 : Integer.parseInt(multipartRequest.getParameter("pageSize"));
 		
 		String mid = multipartRequest.getParameter("mid")==null ? "" : multipartRequest.getParameter("mid");
 		String nickName = multipartRequest.getParameter("nickName")==null ? "" : multipartRequest.getParameter("nickName");
@@ -67,19 +71,17 @@ public class RecruitBoardInputOkCommand implements MainInterface {
 		vo.setRcfName(rcfName);
 		vo.setRcfSName(rcfSName);
 		
-		
 		RecruitBoardDAO dao = new RecruitBoardDAO();
 		
-		int res = dao.setRecruitBoardInput(vo);
+		int res = dao.setRecruitBoardEdit(vo);
+		
 		if(res != 0) {
-			request.setAttribute("message", "채용 공고가 등록되었습니다.");
-			request.setAttribute("url", "RecruitBoard.do");
+			request.setAttribute("message", "게시글이 수정되었습니다.");
 		}
 		else {
-			request.setAttribute("message", "게시글 등록 실패.");
-			request.setAttribute("url", "RecruitBoardInput.do");
+			request.setAttribute("message", "게시글 수정 실패");
 		}
-		
+		request.setAttribute("url", "RecruitBoardContent.do?idx="+idx+"&pag="+pag+"&pageSize="+pageSize);		
 	}
 
 }

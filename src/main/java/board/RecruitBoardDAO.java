@@ -262,13 +262,21 @@ public class RecruitBoardDAO {
 	public int setRecruitBoardEdit(RecruitBoardVO vo) {
 		int res = 0;
 		try {
-			sql="update recruitBoard set title=?,content=?,hostIp=?,wDate=now(),part=? where idx=?";
+			sql="update recruitBoard set mid=?,nickName=?, title=?,content=?,hostIp=?,"
+					+ " wDate=now(),part=?,location=?,endDate=?,etcContent=?,rcfName=?,rcfSName=? where idx=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getTitle());
-			pstmt.setString(2, vo.getContent());
-			pstmt.setString(3, vo.getHostIp());
-			pstmt.setString(4, vo.getPart());
-			pstmt.setInt(5, vo.getIdx());
+			pstmt.setString(1, vo.getMid());
+			pstmt.setString(2, vo.getNickName());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getContent());
+			pstmt.setString(5, vo.getHostIp());
+			pstmt.setString(6, vo.getPart());
+			pstmt.setString(7, vo.getLocation());
+			pstmt.setString(8, vo.getEndDate());
+			pstmt.setString(9, vo.getEtcContent());
+			pstmt.setString(10, vo.getRcfName());
+			pstmt.setString(11, vo.getRcfSName());
+			pstmt.setInt(12, vo.getIdx());
 			
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -279,7 +287,7 @@ public class RecruitBoardDAO {
 		return res;
 	}
 
-	// 게시글 삭제(댓글 삭제안됨)
+	// 게시글 삭제(댓글 함께삭제)
 	public int setRecruitBoardDelete(int idx, String contentsShow) {
 		int res = 0;
 		try {

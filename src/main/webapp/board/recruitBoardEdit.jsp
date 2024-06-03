@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -129,7 +130,7 @@
 </header>
 <p><br/></p>
 <div class="container">
-<form name="myform" method="post" action="RecruitBoardInputOk.bo" enctype="multipart/form-data">
+<form name="myform" method="post" action="RecruitBoardEditOk.bo" enctype="multipart/form-data">
 	<div class="row justify-content-center mb-2">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="form-group">
@@ -145,11 +146,11 @@
 			<div class="form-group">
 				<select class="form-control" name="part" id="part" style="height:45px;">
 					<option>채용구분</option>
-					<option>신입</option>
-					<option>경력</option>
-					<option>경력무관</option>
-					<option>인턴</option>
-					<option>기타</option>
+					<option ${vo.part=='신입'? 'selected' : '' }>신입</option>
+					<option ${vo.part=='경력'? 'selected' : '' }>경력</option>
+					<option ${vo.part=='경력무관'? 'selected' : '' }>경력무관</option>
+					<option ${vo.part=='인턴'? 'selected' : '' }>인턴</option>
+					<option ${vo.part=='기타'? 'selected' : '' }>기타</option>
 				</select>
 			</div>
 		</div>
@@ -157,27 +158,27 @@
 	<div class="divider2 mx-auto my-4"></div>
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2"><h4 style="font-family:Gowun Dodum;">제목</h4>
-			<input type="text" name="title" id="title" class="form-control mt-2" placeholder="제목을 입력하세요" required/>
+			<input type="text" name="title" id="title" class="form-control mt-2" value="${vo.title}" required/>
 		</div>
 	</div>
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2"><h4 style="font-family:Gowun Dodum;">근무지역</h4>
-			<input type="text" name="location" id="location" class="form-control mt-2" placeholder="시/군/구 단위까지 입력하세요" required/>
+			<input type="text" name="location" id="location" class="form-control mt-2" value="${vo.location}" required/>
 		</div>
 	</div>
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2"><h4 style="font-family:Gowun Dodum;">채용마감일</h4>
-			<input type="text" id="datePicker" name="datePicker" class="form-control" value="<%=java.time.LocalDate.now() %>">
+			<input type="text" id="datePicker" name="datePicker" class="form-control" value="${fn:substring(vo.endDate,0,10)}">
 		</div>
 	</div>
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2"><h4 style="font-family:Gowun Dodum;">유의사항</h4>
-			<input type="text" name="etcContent" id="etcContent" class="form-control mt-2" placeholder="기타 사항을 입력하세요"/>
+			<input type="text" name="etcContent" id="etcContent" class="form-control mt-2" value="${vo.etcContent}"/>
 		</div>
 	</div>
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2"><h4 style="font-family:Gowun Dodum;">내용</h4>
-			<textarea name="content" id="content" rows="10" class="form-control"></textarea>
+			<textarea name="content" id="content" rows="10" class="form-control">${vo.content}</textarea>
 		</div>
 	</div>
 	<div class="row justify-content-center mb-3">
@@ -194,8 +195,11 @@
 			<input type="button" value="취소" onclick="location.href='QuestionBoard.do';" class="btn btn-main btn-icon btn-round-full" />
 		</div>
 	</div>
+	<input type="hidden" name="idx" value="${vo.idx}"/>
 	<input type="hidden" name="mid" value="${sMid}"/>
 	<input type="hidden" name="nickName" value="${sNickName}"/>
+	<input type="hidden" name="pag" value="${pag}"/>
+	<input type="hidden" name="pageSize" value="${pageSize}"/>
 	<input type="hidden" name="hostIp" value="${pageContext.request.remoteAddr}"/>
 </form>
 </div>
