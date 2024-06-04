@@ -72,8 +72,9 @@ public class Pagination {
 		List<RecruitBoardVO> rcBoardVos = null;
 		
 		ReplyDAO rDao = new ReplyDAO();
-		ArrayList<ReplyVO> replyVos = null;
+		ArrayList<ReplyVO> replyVos = new ArrayList<ReplyVO>();
 		int idx = 0;
+		int reCnt = 0;
 		if(board.equals("freeBoard")) {
 			if(searchKey==null || searchKey.equals("")) {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
@@ -81,12 +82,27 @@ public class Pagination {
 			else {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
 			}
+			/*
 			for(int i=0; i<fBoardVos.size(); i++) {
 				idx = fBoardVos.get(i).getIdx();
 				replyVos = rDao.getBoardReply(board, idx);
 			}
+			*/
+			/*
+			for(FreeBoardVO vo : fBoardVos) {
+				vo = new FreeBoardVO();
+				replyVos = rDao.getBoardReply(board, idx);
+				for(ReplyVO rVo : replyVos) {
+					reCnt = rVo.getReCnt();
+					vo.setReCnt(reCnt);
+					System.out.println("reCnt: "+reCnt);
+					System.out.println("vo: "+vo);
+				}
+				fBoardVos.add(vo);
+			}
+			*/
 			request.setAttribute("vos", fBoardVos);
-			request.setAttribute("replyVos", replyVos);
+			//request.setAttribute("replyVos", replyVos);
 		}
 		else if(board.equals("questionBoard")) {
 			if(searchKey==null || searchKey.equals("")) {

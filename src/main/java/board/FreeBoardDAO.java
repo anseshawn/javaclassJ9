@@ -116,7 +116,10 @@ public class FreeBoardDAO {
 			}
 			rs = pstmt.executeQuery();
 			
+			ReplyDAO rDao = new ReplyDAO();
+			ArrayList<ReplyVO> rVos = new ArrayList<ReplyVO>();
 			while(rs.next()) {
+				int imsiCnt = 0;
 				FreeBoardVO vo = new FreeBoardVO();
 				vo.setIdx(rs.getInt("idx"));
 				vo.setMid(rs.getString("mid"));
@@ -132,7 +135,13 @@ public class FreeBoardDAO {
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vo.setDate_diff(rs.getInt("date_diff"));
 				vo.setReplyCnt(rs.getInt("replyCnt"));
-				
+						
+				rVos = rDao.getBoardReply("freeBoard", rs.getInt("idx"));
+				for(int i=0; i<rVos.size(); i++) {
+					imsiCnt = rVos.get(i).getReCnt();
+					//System.out.println(i+". imsiCnt: "+imsiCnt);
+				}
+				vo.setReCnt(imsiCnt);
 				vos.add(vo);
 			}
 		} catch (SQLException e) {

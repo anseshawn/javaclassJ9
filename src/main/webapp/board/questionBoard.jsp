@@ -82,7 +82,7 @@
 				<c:forEach var="vo" items="${vos}" varStatus="st">
 					<tr>
 						<td>${curScrStartNo}</td>
-						<td class="text-left"><a href="QuestionBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a></td>
+						<td class="text-left"><a href="QuestionBoardContent.do?idx=${vo.idx}&pag=${pag}&pageSize=${pageSize}">${vo.title}</a> (${vo.replyCnt+vo.reCnt})</td>
 						<td>${vo.nickName}</td>
 						<td>${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10)}</td>
 						<td>${vo.readNum}</td>

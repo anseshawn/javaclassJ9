@@ -1,4 +1,4 @@
-package board;
+ package board;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,26 +33,6 @@ public class FreeBoardListCommand implements MainInterface {
 		ArrayList<FreeBoardVO> gVos = dao.getBestFreeBoard();
 		request.setAttribute("gVos", gVos);
 		
-		
-		// 댓글 - 대댓글 숫자 처리... 페이지에서?
-		ArrayList<ReplyVO> replyVos = new ArrayList<ReplyVO>();
-		ReplyDAO rDao = new ReplyDAO();
-		int reCnt = 0;
-		for(FreeBoardVO vo : gVos) {
-			replyVos = new ArrayList<ReplyVO>();
-			System.out.println("boardIdx: "+vo.getIdx());
-			replyVos = rDao.getBoardReply("freeBoard", vo.getIdx());
-			for(ReplyVO rVo : replyVos) {
-				reCnt = rVo.getReCnt();
-				vo.setReCnt(reCnt);
-				
-				System.out.println("reCnt: "+reCnt);
-			}
-			System.out.println("replyVos: "+replyVos);
-			vo.getReCnt();
-		}
-		
-		request.setAttribute("replyVos", replyVos);
 	}
 
 }

@@ -25,6 +25,7 @@ public class RecruitBoardVO {
 	
 	private int partCnt; // 분류별 게시글 개수 구하기
 	
+	private int reCnt;
 	
 	public int getIdx() {
 		return idx;
@@ -153,13 +154,21 @@ public class RecruitBoardVO {
 	public void setPartCnt(int partCnt) {
 		this.partCnt = partCnt;
 	}
+	
+	public int getReCnt() {
+		return reCnt;
+	}
+	public void setReCnt(int reCnt) {
+		this.reCnt = reCnt;
+	}
 	@Override
 	public String toString() {
 		return "RecruitBoardVO [idx=" + idx + ", mid=" + mid + ", nickName=" + nickName + ", title=" + title + ", content="
 				+ content + ", hostIp=" + hostIp + ", readNum=" + readNum + ", wDate=" + wDate + ", part=" + part
 				+ ", location=" + location + ", startDate=" + startDate + ", endDate=" + endDate + ", etcContent=" + etcContent
 				+ ", rcfName=" + rcfName + ", rcfSName=" + rcfSName + ", good=" + good + ", report=" + report + ", hour_diff="
-				+ hour_diff + ", date_diff=" + date_diff + ", replyCnt=" + replyCnt + ", partCnt=" + partCnt + "]";
+				+ hour_diff + ", date_diff=" + date_diff + ", replyCnt=" + replyCnt + ", partCnt=" + partCnt + ", reCnt="
+				+ reCnt + "]";
 	}
 	
 }

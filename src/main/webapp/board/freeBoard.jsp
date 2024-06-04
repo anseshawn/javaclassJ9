@@ -45,10 +45,6 @@
  			<div class="col-lg-8">
 				<div class="row">
 
-					<c:set var="reCnt" value="0"/>
-					<c:forEach var="rVo" items="${replyVos}" varStatus="st">
-						<c:set var="reCnt" value="${rVo.reCnt}"/>
-					</c:forEach>
 					<c:set var="curScrStartNo" value="${curScrStartNo}"/>
 					<c:forEach var="vo" items="${vos}" varStatus="st">
 						<div class="col-lg-12 col-md-12 mb-3">
@@ -56,7 +52,7 @@
 								<div class="blog-item-content">
 									<div class="blog-item-meta mb-3 mt-4">
 										<span class="text-muted text-capitalize mr-3"><i class="fa-solid fa-eye mr-2"></i>${vo.readNum}</span>
-										<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt+vo.reCnt} Comments</span>
+										<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt + vo.reCnt} Comments</span>
 										<span class="text-black text-capitalize mr-3">
 											<i class="icofont-calendar mr-2"></i> ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10) }
 										</span>
