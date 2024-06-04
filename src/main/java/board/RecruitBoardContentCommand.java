@@ -59,6 +59,9 @@ public class RecruitBoardContentCommand implements MainInterface {
 		ArrayList<ReplyVO> replyVos = rDao.getBoardReply("recruitBoard",idx);
 		request.setAttribute("replyVos", replyVos);
 		
+		ArrayList<RecruitBoardVO> rcVos = dao.getPartCount();
+		request.setAttribute("rcVos", rcVos);
+		
 	}
 
 }

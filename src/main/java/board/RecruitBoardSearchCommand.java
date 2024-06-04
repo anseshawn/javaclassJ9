@@ -2,6 +2,7 @@ package board;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +21,13 @@ public class RecruitBoardSearchCommand implements MainInterface {
 		String partSelect = request.getParameter("partSelect")==null ? "" : request.getParameter("partSelect");
 		
 		if(search.equals("part")) {
+			/*
 			if(partSelect.equals("new")) partSelect="신입";
 			else if(partSelect.equals("expert")) partSelect="경력";
 			else if(partSelect.equals("both")) partSelect="경력무관";
 			else if(partSelect.equals("intern")) partSelect="인턴";
 			else if(partSelect.equals("etc")) partSelect="기타";
+			*/
 			search += "/"+partSelect;	
 		}
 		else search += "/"+searchString;
@@ -42,6 +45,11 @@ public class RecruitBoardSearchCommand implements MainInterface {
 		
 		LocalDate today = LocalDate.now();
 		request.setAttribute("today", today);
+		
+		RecruitBoardDAO dao = new RecruitBoardDAO();
+		ArrayList<RecruitBoardVO> rcVos = dao.getPartCount();
+		request.setAttribute("rcVos", rcVos);
+		
 	}
 
 }

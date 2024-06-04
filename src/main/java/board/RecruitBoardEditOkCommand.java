@@ -1,5 +1,6 @@
 package board;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 
@@ -26,6 +27,9 @@ public class RecruitBoardEditOkCommand implements MainInterface {
 		int pag = multipartRequest.getParameter("pag")==null ? 1 : Integer.parseInt(multipartRequest.getParameter("pag"));
 		int pageSize = multipartRequest.getParameter("pageSize")==null ? 5 : Integer.parseInt(multipartRequest.getParameter("pageSize"));
 		
+		RecruitBoardDAO dao = new RecruitBoardDAO();
+		RecruitBoardVO vo = dao.getRecruitBoardContent(idx);
+		
 		String mid = multipartRequest.getParameter("mid")==null ? "" : multipartRequest.getParameter("mid");
 		String nickName = multipartRequest.getParameter("nickName")==null ? "" : multipartRequest.getParameter("nickName");
 		String hostIp = multipartRequest.getParameter("hostIp")==null ? "" : multipartRequest.getParameter("hostIp");
@@ -49,8 +53,16 @@ public class RecruitBoardEditOkCommand implements MainInterface {
 			file = (String)fileNames.nextElement();
 			
 			if(multipartRequest.getFilesystemName(file) != null) {
+				String[] rcfSNames = vo.getRcfSName().split("/");
+				for(String fSName : rcfSNames) {
+					new File(realPath +"/"+fSName).delete();
+				}
 				rcfName += multipartRequest.getOriginalFileName(file) + "/";
 				rcfSName += multipartRequest.getFilesystemName(file)+"/";				
+			}
+			else {
+				rcfName = vo.getRcfName();
+				rcfSName = vo.getRcfSName();
 			}
 		}
 		if(rcfName.lastIndexOf("/")!=-1 && rcfSName.lastIndexOf("/")!=-1) {
@@ -58,7 +70,8 @@ public class RecruitBoardEditOkCommand implements MainInterface {
 			rcfSName = rcfSName.substring(0, rcfSName	.lastIndexOf("/"));			
 		}
 		
-		RecruitBoardVO vo = new RecruitBoardVO();
+		vo = new RecruitBoardVO();
+		vo.setIdx(idx);
 		vo.setMid(mid);
 		vo.setNickName(nickName);
 		vo.setTitle(title);
@@ -71,10 +84,7 @@ public class RecruitBoardEditOkCommand implements MainInterface {
 		vo.setRcfName(rcfName);
 		vo.setRcfSName(rcfSName);
 		
-		RecruitBoardDAO dao = new RecruitBoardDAO();
-		
 		int res = dao.setRecruitBoardEdit(vo);
-		
 		if(res != 0) {
 			request.setAttribute("message", "게시글이 수정되었습니다.");
 		}

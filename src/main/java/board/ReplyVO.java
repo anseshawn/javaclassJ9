@@ -23,6 +23,10 @@ public class ReplyVO {
 	private String reHostIp;
 	private String reContent;
 	private int reReport;
+	private int reCnt;
+	
+	private int reHour_diff; // 업로드 24시간 경과유무 체크변수
+	private int reDate_diff; // 일자 경과유무 체크변수
 	
 	public int getIdx() {
 		return idx;
@@ -139,13 +143,32 @@ public class ReplyVO {
 	public void setReReport(int reReport) {
 		this.reReport = reReport;
 	}
+	public int getReCnt() {
+		return reCnt;
+	}
+	public void setReCnt(int reCnt) {
+		this.reCnt = reCnt;
+	}
+	
+	public int getReHour_diff() {
+		return reHour_diff;
+	}
+	public void setReHour_diff(int reHour_diff) {
+		this.reHour_diff = reHour_diff;
+	}
+	public int getReDate_diff() {
+		return reDate_diff;
+	}
+	public void setReDate_diff(int reDate_diff) {
+		this.reDate_diff = reDate_diff;
+	}
 	@Override
 	public String toString() {
 		return "ReplyVO [idx=" + idx + ", board=" + board + ", boardIdx=" + boardIdx + ", mid=" + mid + ", nickName="
 				+ nickName + ", rDate=" + rDate + ", hostIp=" + hostIp + ", content=" + content + ", report=" + report
 				+ ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", reIdx=" + reIdx + ", replyIdx=" + replyIdx
 				+ ", reMid=" + reMid + ", reNickName=" + reNickName + ", reDate=" + reDate + ", reHostIp=" + reHostIp
-				+ ", reContent=" + reContent + ", reReport=" + reReport + "]";
+				+ ", reContent=" + reContent + ", reReport=" + reReport + ", reCnt=" + reCnt + ", reHour_diff=" + reHour_diff
+				+ ", reDate_diff=" + reDate_diff + "]";
 	}
-	
 }

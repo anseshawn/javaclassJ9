@@ -161,67 +161,67 @@
 			}
 		}
   
- // 닉네임 중복체크
-	function nickCheck() {
-		let nickName = document.getElementById("nickName").value.trim();
-		let regNickName = /^[a-zA-Z0-9가-힣]{2,10}$/;
-		if(nickName.trim() == "") {
-			alert("닉네임을 입력하세요.");
-			myform.nickName.focus();
-			return false;
-		}
-		else if(nickName == "${sNickName}") {
-			nickCheckSw = 1;
-			$("#nickNameBtn").attr("disabled",true);
-			return false;
-		}
-		else if(!regNickName.test(nickName)){
-			alert("닉네임은 영문과 한글, 숫자만 사용하여 2~10자까지 가능합니다.");
-			document.getElementById("nickName").focus();
-			return false;
-		}
-		else {
-			nickCheckSw = 1;
-			$.ajax({
-				url: "${ctp}/MemberNickCheck.mem",
-				type: "get",
-				data: {nickName:nickName, mid:""},
-				success: function(res) {
-					if(res != 0) {
-						alert("이미 사용중인 닉네임 입니다. 다시 입력하세요.");
-						nickCheckSw = 0;
-						myform.nickName.focus();
+	 // 닉네임 중복체크
+		function nickCheck() {
+			let nickName = document.getElementById("nickName").value.trim();
+			let regNickName = /^[a-zA-Z0-9가-힣]{2,10}$/;
+			if(nickName.trim() == "") {
+				alert("닉네임을 입력하세요.");
+				myform.nickName.focus();
+				return false;
+			}
+			else if(nickName == "${sNickName}") {
+				nickCheckSw = 1;
+				$("#nickNameBtn").attr("disabled",true);
+				return false;
+			}
+			else if(!regNickName.test(nickName)){
+				alert("닉네임은 영문과 한글, 숫자만 사용하여 2~10자까지 가능합니다.");
+				document.getElementById("nickName").focus();
+				return false;
+			}
+			else {
+				nickCheckSw = 1;
+				$.ajax({
+					url: "${ctp}/MemberNickCheck.mem",
+					type: "get",
+					data: {nickName:nickName, mid:""},
+					success: function(res) {
+						if(res != 0) {
+							alert("이미 사용중인 닉네임 입니다. 다시 입력하세요.");
+							nickCheckSw = 0;
+							myform.nickName.focus();
+						}
+						else {
+							alert("사용 가능한 닉네임 입니다.");
+							$("#nickNameBtn").attr("disabled",true);
+						}
+					},
+					error : function() {
+						alert("전송 오류");
 					}
-					else {
-						alert("사용 가능한 닉네임 입니다.");
-						$("#nickNameBtn").attr("disabled",true);
-					}
-				},
-				error : function() {
-					alert("전송 오류");
-				}
+				});
+			}
+		}
+	  
+		// 입력창 누르면 스위치 리셋...?
+		window.onload = function(){
+			nickName.addEventListener('click',function(){
+				nickCheckSw = 0;
+				$("#nickNameBtn").removeAttr("disabled");
 			});
 		}
-	}
-  
-	// 입력창 누르면 스위치 리셋...?
-	window.onload = function(){
-		nickName.addEventListener('click',function(){
-			nickCheckSw = 0;
-			$("#nickNameBtn").removeAttr("disabled");
-		});
-	}
 	</script>
 </head>
 <body id="top">
 <header>
-	<jsp:include page="/include/header.jsp" />
-	<jsp:include page="/include/nav.jsp" />
+	<%-- <jsp:include page="/include/header.jsp" /> --%>
+	<%-- <jsp:include page="/include/nav.jsp" /> --%>
 </header>
 <p><br/></p>
 <div class="container">
 <div class="row justify-content-center">
-<div class="col-xl-6 col-lg-8">
+<div class="col-xl-8 col-lg-8">
 	<form name="myform" method="post" action="${ctp}/MemberUpdateOk.mem" class="was-validated">
     <h2 class="text-center">회원정보 수정</h2>
     <br/>
@@ -398,12 +398,13 @@
     <input type="hidden" name="cTel" />
     <input type="hidden" name="cAddress" />
   </form>
+  <br/><br/>
   <div class="text-muted text-right mt-3"><a href="MemberDelete.do">탈퇴하기</a></div>
 </div>
 </div>
 </div>
 <p><br/></p>
-<jsp:include page="/include/footer.jsp" />
+<%-- <jsp:include page="/include/footer.jsp" /> --%>
 <jsp:include page="/include/scripts.jsp" />
 </body>
 </html>

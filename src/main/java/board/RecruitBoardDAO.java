@@ -277,7 +277,6 @@ public class RecruitBoardDAO {
 			pstmt.setString(10, vo.getRcfName());
 			pstmt.setString(11, vo.getRcfSName());
 			pstmt.setInt(12, vo.getIdx());
-			
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			System.out.println("SQL 오류 : "+e.getMessage());
@@ -389,6 +388,27 @@ public class RecruitBoardDAO {
 				vo.setDate_diff(rs.getInt("date_diff"));
 				vo.setHour_diff(rs.getInt("hour_diff"));
 				vo.setReplyCnt(rs.getInt("replyCnt"));
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : "+e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
+
+	// 분류별 게시판 글 수 구하기
+	public ArrayList<RecruitBoardVO> getPartCount() {
+		ArrayList<RecruitBoardVO> vos = new ArrayList<RecruitBoardVO>();
+		try {
+			sql="select part, count(*) as partCnt from recruitBoard group by part order by wDate";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new RecruitBoardVO();
+				vo.setPart(rs.getString("part"));
+				vo.setPartCnt(rs.getInt("partCnt"));
 				vos.add(vo);
 			}
 		} catch (SQLException e) {

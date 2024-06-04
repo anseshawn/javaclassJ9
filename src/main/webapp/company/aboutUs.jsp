@@ -45,7 +45,7 @@
 		</div>
 	</div>
 </section>
-
+<!-- 
 <section class="fetaure-page ">
 	<div class="container">
 		<div class="row">
@@ -124,13 +124,13 @@
 		</div>
 	</div>
 </section>
-
+ -->
 <section class="section testimonial">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 offset-lg-6">
 				<div class="section-title">
-					<h2 class="mb-4">What they say about us</h2>
+					<h2 class="mb-4">분석시스템의 개발과 보급을 위해</h2>
 					<div class="divider  my-4"></div>
 				</div>
 			</div>
@@ -139,7 +139,7 @@
 			<div class="col-lg-6 testimonial-wrap offset-lg-6">
 				<div class="testimonial-block">
 					<div class="client-info ">
-						<h4>Amazing service!</h4>
+						<h4>최고의 품질</h4>
 						<span>John Partho</span>
 					</div>
 					<p>
@@ -151,7 +151,7 @@
 
 				<div class="testimonial-block">
 					<div class="client-info">
-						<h4>Expert doctors!</h4>
+						<h4>경쟁력 있는 가격</h4>
 						<span>Mullar Sarth</span>
 					</div>
 					<p>
@@ -162,7 +162,7 @@
 
 				<div class="testimonial-block">
 					<div class="client-info">
-						<h4>Good Support!</h4>
+						<h4>신속한 납기</h4>
 						<span>Kolis Mullar</span>
 					</div>
 					<p>
@@ -173,7 +173,7 @@
 
 				<div class="testimonial-block">
 					<div class="client-info">
-						<h4>Nice Environment!</h4>
+						<h4>맞춤형 고객서비스</h4>
 						<span>Partho Sarothi</span>
 					</div>
 					<p>
@@ -182,16 +182,6 @@
 					<i class="icofont-quote-right"></i>
 				</div>
 
-				<div class="testimonial-block">
-					<div class="client-info">
-						<h4>Modern Service!</h4>
-						<span>Kolis Mullar</span>
-					</div>
-					<p>
-						They provide great service facilty consectetur adipisicing elit. Itaque rem, praesentium, iure, ipsum magnam deleniti a vel eos adipisci suscipit fugit placeat. Quibusdam laboriosam eveniet nostrum nemo commodi numquam quod.
-					</p>
-					<i class="icofont-quote-right"></i>
-				</div>
 			</div>
 		</div>
 	</div>

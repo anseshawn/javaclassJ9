@@ -47,7 +47,7 @@
 						<span>실험실 기초장비</span>
 						<h4 class="mb-3">중고기기 확인하기</h4>
 						<p class="mb-4">분석에 도움이 되어드리겠습니다. 실험에 필요한 장비들을 합리적인 가격에 제공합니다.</p>
-						<a href="#" class="btn btn-main btn-round-full">장비리스트 보기</a>
+						<a href="Product.do" class="btn btn-main btn-round-full">장비리스트 보기</a>
 					</div>
 				
 					<div class="feature-item mb-5 mb-lg-0">
@@ -265,7 +265,7 @@
 	            	<div class="col-lg-6">
 	              	<div class="form-group">
 	                	<select class="form-control" id="exampleFormControlSelect2">
-	                    <option>Select Doctors</option>
+	                    <option>상세 카테고리</option>
 	                    <option>Software Design</option>
 	                    <option>Development cycle</option>
 	                    <option>Software Development</option>
@@ -279,29 +279,18 @@
 	
 								<div class="col-lg-6">
 									<div class="form-group">
-										<input name="date" id="date" type="text" class="form-control" placeholder="dd/mm/yyyy">
+										<input name="name" id="name" type="text" class="form-control" placeholder="이름을 입력하세요">
 									</div>
 								</div>
 	
 								<div class="col-lg-6">
 									<div class="form-group">
-										<input name="time" id="time" type="text" class="form-control" placeholder="Time">
-									</div>
-								</div>
-								<div class="col-lg-6">
-									<div class="form-group">
-										<input name="name" id="name" type="text" class="form-control" placeholder="Full Name">
-									</div>
-								</div>
-	
-								<div class="col-lg-6">
-									<div class="form-group">
-										<input name="phone" id="phone" type="Number" class="form-control" placeholder="Phone Number">
+										<input name="email" id="email" type="text" class="form-control" placeholder="이메일을 입력하세요">
 									</div>
 								</div>
 							</div>
 							<div class="form-group-2 mb-4">
-								<textarea name="message" id="message" class="form-control" rows="6" placeholder="Your Message"></textarea>
+								<textarea name="message" id="message" class="form-control" rows="6" placeholder="상세 내용"></textarea>
 							</div>
 			
 			    	<a class="btn btn-main btn-round-full" href="#" >문의하기 <i class="icofont-simple-right ml-2  "></i></a>

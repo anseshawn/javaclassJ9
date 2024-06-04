@@ -32,7 +32,7 @@
 		function deleteCheck(){
 			let ans = confirm("현재 게시글을 삭제하시겠습니까?");
 			if(!ans) return false;
-			location.href="RecruitBoardDelete.bo?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt};
+			location.href="RecruitBoardDelete.bo?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt}+"&rcfSName=${vo.rcfSName}";
 		}
 		
 		// 좋아요 수 (중복 불허)
@@ -341,7 +341,10 @@
 
 <c:set var="rcfNames" value="${fn:split(vo.rcfName,'/')}"/>
 <c:set var="rcfSNames" value="${fn:split(vo.rcfSName,'/')}"/>
-
+<c:set var="reCnt" value="0"/>
+<c:forEach var="rVo" items="${replyVos}" varStatus="st">
+	<c:set var="reCnt" value="${rVo.reCnt}"/>
+</c:forEach>
 <section class="section blog-wrap">
 	<div class="container">
 		<div class="row">
@@ -357,7 +360,7 @@
 								</div>
 								<div class="blog-item-meta mb-3">
 									<span class="text-muted text-capitalize mr-3"><i class="fa-solid fa-eye mr-2"></i>${vo.readNum}</span>
-									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt} Comments</span>
+									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt+reCnt} Comments</span>
 									<span class="text-black text-capitalize mr-3"><i class="icofont-calendar mr-2"></i> ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10) }</span>
 								</div>
 												
@@ -374,9 +377,9 @@
 								<br/>
 								<div class="mb-3">
 									<ul class="w-hours list-unstyled ">
-									  <li class="d-flex justify-content-between mb-2">채용일정 : <span>${fn:substring(vo.startDate,0,10)} - ${fn:substring(vo.endDate,0,10)}</span></li>
-									  <li class="d-flex justify-content-between mb-2">근무지역 : <span>${vo.location}</span></li>
-									  <li class="d-flex justify-content-between mb-2">유의사항 : <span>${vo.etcContent}</span></li>
+									  <li class="text-black d-flex justify-content-between mb-2">채용일정 : <span>${fn:substring(vo.startDate,0,10)} - ${fn:substring(vo.endDate,0,10)}</span></li>
+									  <li class="text-black d-flex justify-content-between mb-2">근무지역 : <span>${vo.location}</span></li>
+									  <li class="text-black d-flex justify-content-between mb-2">유의사항 : <span>${vo.etcContent}</span></li>
 									</ul>
 								</div>
 								<br/>
@@ -425,7 +428,7 @@
 								<ul style="list-style-type: none;">
 									<li>첨부파일 목록</li>								
 								</ul>
-								<ul>
+								<ul class="files">
 									<c:forEach var="rcfName" items="${rcfNames}" varStatus="st">
 										<li>
 											<a href="${ctp}/images/board/${rcfNames[st.index]}" download="${rcfName}"> ${rcfName} </a>
@@ -438,7 +441,7 @@
 
 					<div class="col-lg-12">
 						<div class="comment-area mt-4 mb-5">
-							<h4 class="mb-5">${vo.replyCnt} 개의 댓글</h4>
+							<h4 class="mb-5">${vo.replyCnt+reCnt} 개의 댓글</h4>
 							<ul class="comment-tree list-unstyled">
 								<c:set var="imsiIdx" value="0"/>
 								<c:forEach var="rVo" items="${replyVos}" varStatus="st">
@@ -491,7 +494,7 @@
 												<div class="comment-info">
 													<h5 class="mb-1">${rVo.reNickName}(${rVo.reMid})</h5>
 													<span>${rVo.reHostIp}</span>
-													<span class="date-comm mr-2">| ${rVo.date_diff == 0 ? fn:substring(rVo.reDate,11,19) : fn:substring(rVo.reDate,0,10) }</span>
+													<span class="date-comm mr-2">| ${rVo.reDate_diff == 0 ? fn:substring(rVo.reDate,11,19) : fn:substring(rVo.reDate,0,10) }</span>
 													<c:if test="${sLevel==0 || sMid == rVo.reMid}">
 													 <span class="comment-meta mr-2"><a href="javascript:reReplyEdit(${rVo.reIdx})"><i class="icofont-edit mr-2 text-muted"></i>수정</a></span>
 													 <span class="comment-meta"><a href="javascript:reReplyDelete(${rVo.reIdx})"><i class="icofont-ui-delete mr-2 text-muted"></i>삭제</a></span>
@@ -614,26 +617,12 @@
 				<div class="sidebar-widget category mb-3">
 					<h5 class="mb-4">분류</h5>
 					<ul class="list-unstyled">
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=new">신입</a>
-					    <span>(14)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=expert">경력</a>
-					    <span>(2)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=both">경력무관</a>
-					    <span>(10)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=intern">인턴</a>
-					    <span>(5)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=etc">기타</a>
-					    <span>(5)</span>
-					  </li>
+						<c:forEach var="rcVo" items="${rcVos}" varStatus="st">
+							<li class="align-items-center">
+						    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=${rcVo.part}">${rcVo.part}</a>
+						    <span>(${rcVo.partCnt})</span>
+						  </li>
+						</c:forEach>
 					</ul>
 				</div>
 				

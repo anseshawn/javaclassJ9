@@ -1,5 +1,6 @@
 package board;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -15,11 +16,19 @@ public class RecruitBoardDeleteCommand implements MainInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idx = request.getParameter("idx")==null ? 0 : Integer.parseInt(request.getParameter("idx"));
 		int replyCnt = request.getParameter("replyCnt")==null ? 0 : Integer.parseInt(request.getParameter("replyCnt"));
+		String[] fSNames = request.getParameter("rcfSName").split("/");
 		HttpSession session = request.getSession();
 		String contentsShow = "";
 		if(session.getAttribute("sMid") != null) {
 			int level = (int)session.getAttribute("sLevel");
 			if(level==0) contentsShow = "adminOK";
+		}
+		
+		// 서버에 존재하는 파일을 삭제한다
+		String realPath = request.getServletContext().getRealPath("/images/board/"); // 파일 지워야하기 때문에 슬래시 붙여서
+		for(String fSName : fSNames) {
+			// 실제 존재하는 파일은 파일객체를 생성하여 처리한다
+			new File(realPath + fSName).delete();
 		}
 		
 		RecruitBoardDAO dao = new RecruitBoardDAO();

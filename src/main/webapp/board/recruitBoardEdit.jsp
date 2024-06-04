@@ -117,7 +117,6 @@
 	  			alert("업로드 가능한 파일은 '그림파일(jpg/gif/png) 및 pdf/zip/hwp/doc' 입니다.");
 	  		}
   		}
-			
 			myform.submit();
 		}
 		

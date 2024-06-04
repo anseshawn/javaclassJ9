@@ -15,8 +15,11 @@ public class ReplyDAO {
 	private Connection conn = GetConn.getConn();
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
+	private PreparedStatement pstmt2 = null;
+	private ResultSet rs2 = null;
 	
 	private String sql = "";
+	private String sql2 = "";
 	private ReplyVO vo = null;
 	
 	public void pstmtClose() {
@@ -37,12 +40,34 @@ public class ReplyDAO {
 			}
 		}
 	}
+	public void pstmt2Close() {
+		if(pstmt2 != null) {
+			try {
+				pstmt2.close();
+			} catch (SQLException e) {}
+		}
+	}
+	
+	public void rs2Close() {
+		if(rs2 != null) {
+			try {
+				rs2.close();
+			} catch (SQLException e) {}
+			finally {
+				pstmt2Close();
+			}
+		}
+	}
 
 	public ArrayList<ReplyVO> getBoardReply(String board, int boardIdx) {
 		ArrayList<ReplyVO> vos = new ArrayList<ReplyVO>();
+		int imsiCnt = 0;
+		int sw = 0;
 		try {
 			sql = "select *, datediff(rDate, now()) as date_diff,"
-					+ " timestampdiff(hour, rDate, now()) as hour_diff"
+					+ " timestampdiff(hour, rDate, now()) as hour_diff,"
+					+ " datediff(reDate,now()) as reDate_diff,"
+					+ " timestampdiff(hour, reDate, now()) as reHour_diff"
 					+ " from (select * from reply where board='"+board+"' and boardIdx=?) as r"
 					+ " left join reReply p on r.idx=p.replyIdx order by r.idx, p.replyIdx";
 			pstmt = conn.prepareStatement(sql);
@@ -72,6 +97,20 @@ public class ReplyDAO {
 				vo.setReContent(rs.getString("reContent"));
 				vo.setReReport(rs.getInt("reReport"));
 				
+				vo.setReDate_diff(rs.getInt("reDate_diff"));
+				vo.setReHour_diff(rs.getInt("reHour_diff"));
+				
+				if(sw != rs.getInt("idx")) {
+					sql2 = "select count(*) as reCnt from reReply p, reply r where r.idx=p.replyIdx and r.idx="+rs.getInt("idx")+" group by r.idx";
+					pstmt2 = conn.prepareStatement(sql2);
+					rs2 = pstmt2.executeQuery();
+					if(rs2.next()) {
+						imsiCnt += rs2.getInt("reCnt");
+						sw = rs.getInt("idx");
+					}
+					rs2Close();
+				}
+				vo.setReCnt(imsiCnt);
 				vos.add(vo);
 			}
 		} catch (SQLException e) {

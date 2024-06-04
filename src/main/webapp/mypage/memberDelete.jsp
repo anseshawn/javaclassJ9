@@ -111,7 +111,7 @@
 				<h4>현재 비밀번호</h4>
 				<input type="password" class="form-control" name="pwd" id="pwd" placeholder="비밀번호" required/>
 				<div class="text-right" style="font-size:12px;"><a href="PwdSearch.do">비밀번호를 잊으셨습니까?</a></div>
-				<a href="MemberUpdate.do" class="btn btn-main btn-icon-sm float-left mt-5">뒤로</a>
+				<a href="MyPage.do" class="btn btn-main btn-icon-sm float-left mt-5">뒤로</a>
 				<a href="javascript:MemberDeleteOk()" class="btn btn-main-2 btn-icon-sm float-right mt-5">탈퇴하기</a>
 		</div>
 	</div>

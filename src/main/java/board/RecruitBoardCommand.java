@@ -2,6 +2,7 @@ package board;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +32,11 @@ public class RecruitBoardCommand implements MainInterface {
 		LocalDate today = LocalDate.now();
 		request.setAttribute("today", today);
 		
-		/*
-		RecruitBoardDAO rDao = new RecruitBoardDAO();
-		ArrayList<QuestionBoardVO> rVos = rDao.getRecentQuestionBoard();
-		request.setAttribute("rVos", rVos);
-		*/
+		
+		RecruitBoardDAO dao = new RecruitBoardDAO();
+		ArrayList<RecruitBoardVO> rcVos = dao.getPartCount();
+		request.setAttribute("rcVos", rcVos);
+		
 	}
 
 }

@@ -15,6 +15,9 @@ public class FreeBoardVO {
 	private int hour_diff; // 게시글 업로드 24시간 경과유무 체크변수
 	private int date_diff; // 게시글 일자 경과유무 체크변수	
 	private int replyCnt; // 부모글의 댓글 수 저장하는 변수
+	
+	private int reCnt;
+	
 	public int getIdx() {
 		return idx;
 	}
@@ -93,11 +96,20 @@ public class FreeBoardVO {
 	public void setReplyCnt(int replyCnt) {
 		this.replyCnt = replyCnt;
 	}
+	
+	public int getReCnt() {
+		return reCnt;
+	}
+	public void setReCnt(int reCnt) {
+		this.reCnt = reCnt;
+	}
 	@Override
 	public String toString() {
 		return "FreeBoardVO [idx=" + idx + ", mid=" + mid + ", nickName=" + nickName + ", title=" + title + ", content="
 				+ content + ", hostIp=" + hostIp + ", readNum=" + readNum + ", wDate=" + wDate + ", good=" + good + ", report="
-				+ report + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", replyCnt=" + replyCnt + "]";
+				+ report + ", hour_diff=" + hour_diff + ", date_diff=" + date_diff + ", replyCnt=" + replyCnt + ", reCnt="
+				+ reCnt + "]";
 	}
+	
 	
 }

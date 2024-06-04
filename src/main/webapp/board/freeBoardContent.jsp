@@ -152,8 +152,7 @@
 		}
 		// 댓글 수정창 토글
 		function replyEdit(idx){
-			$(".reReplyDemo").hide();
-			let replyDisplay = window.getComputedStyle(document.getElementById("#reEditDemo"+idx)).display;
+			let replyDisplay = window.getComputedStyle(document.getElementById("reEditDemo"+idx)).display;
 			if(replyDisplay=='none') {
 				$(".reEditDemo").hide();
 				$("#reEditDemo"+idx).show();
@@ -191,7 +190,7 @@
 		// 대댓글 입력창 토글
 		function reReplyForm(idx){
 			$(".reEditDemo").hide();
-			let reReplyDisplay = window.getComputedStyle(document.getElementById("#reReplyDemo"+idx)).display;
+			let reReplyDisplay = window.getComputedStyle(document.getElementById("reReplyDemo"+idx)).display;
 			if(reReplyDisplay=='none') {
 				$(".reReplyDemo").hide();
 				$("#reReplyDemo"+idx).show();
@@ -210,7 +209,7 @@
 			let reContent = $("#reContent"+idx).val();
 			if('${sLevel}'=='') {
 				reMid = "guest";
-				reNickName = reReplyForm.reNickName.value;
+				reNickName = $("#guestNickName").val();
 				if(reNickName.trim()=="") {
 					alert("작성자를 입력해주세요.");
 					return false;
@@ -327,7 +326,10 @@
     </div>
   </div>
 </section>
-
+<c:set var="reCnt" value="0"/>
+<c:forEach var="rVo" items="${replyVos}" varStatus="st">
+	<c:set var="reCnt" value="${rVo.reCnt}"/>
+</c:forEach>
 <section class="section blog-wrap">
 	<div class="container">
 		<div class="row">
@@ -338,7 +340,7 @@
 							<div class="blog-item-content mt-2">
 								<div class="blog-item-meta mb-3">
 									<span class="text-muted text-capitalize mr-3"><i class="fa-solid fa-eye mr-2"></i>${vo.readNum}</span>
-									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt} Comments</span>
+									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt+reCnt} Comments</span>
 									<span class="text-black text-capitalize mr-3"><i class="icofont-calendar mr-2"></i> ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10) }</span>
 								</div>
 												
@@ -384,9 +386,7 @@
 
 					<div class="col-lg-12">
 						<div class="comment-area mt-4 mb-5">
-							<c:set var="rVo" value="${replyVos}"/>
-							<c:set var="cnt" value="${vo.replyCnt}"></c:set>
-							<h4 class="mb-5">${vo.replyCnt} 개의 댓글</h4>
+							<h4 class="mb-5">${vo.replyCnt+reCnt} 개의 댓글</h4>
 							<ul class="comment-tree list-unstyled">
 							
 								<c:set var="imsiIdx" value="0"/>
@@ -440,7 +440,7 @@
 												<div class="comment-info">
 													<h5 class="mb-1">${rVo.reNickName}(${rVo.reMid})</h5>
 													<span>${rVo.reHostIp}</span>
-													<span class="date-comm mr-2">| ${rVo.date_diff == 0 ? fn:substring(rVo.reDate,11,19) : fn:substring(rVo.reDate,0,10) }</span>
+													<span class="date-comm mr-2">| ${rVo.reDate_diff == 0 ? fn:substring(rVo.reDate,11,19) : fn:substring(rVo.reDate,0,10) }</span>
 													<c:if test="${sLevel==0 || sMid == rVo.reMid}">
 													 <span class="comment-meta mr-2"><a href="javascript:reReplyEdit(${rVo.reIdx})"><i class="icofont-edit mr-2 text-muted"></i>수정</a></span>
 													 <span class="comment-meta"><a href="javascript:reReplyDelete(${rVo.reIdx})"><i class="icofont-ui-delete mr-2 text-muted"></i>삭제</a></span>
@@ -484,8 +484,8 @@
 																<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
 																	<input class="form-control" type="text" name="reNickName" value="${sNickName}(${sMid})" readonly>
 																</c:if>
-																<c:if test="${sLevel==''}">
-																	<input class="form-control" type="text" name="reNickName" placeholder="Name:">
+																<c:if test="${sLevel!=0 && sLevel!=1 && sLevel!=2}">
+																	<input class="form-control" type="text" name="reNickName" id="guestNickName" placeholder="Name:">
 																</c:if>
 															</div>
 														</div>
@@ -573,13 +573,6 @@
         		</c:forEach>
 					</div>
 	
-					<div class="sidebar-widget tags mb-3">
-						<h5 class="mb-4">Tags</h5>
-						<a href="#">Doctors</a>
-						<a href="#">agency</a>
-						<a href="#">company</a>
-						<a href="#">medicine</a>
-					</div>
 				</div>
     	</div>   
 		</div>

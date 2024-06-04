@@ -1,5 +1,6 @@
 package common;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,8 @@ import board.QuestionBoardDAO;
 import board.QuestionBoardVO;
 import board.RecruitBoardDAO;
 import board.RecruitBoardVO;
+import board.ReplyDAO;
+import board.ReplyVO;
 
 public class Pagination {
 
@@ -67,6 +70,10 @@ public class Pagination {
 		List<FreeBoardVO> fBoardVos = null;
 		List<QuestionBoardVO> qBoardVos = null;
 		List<RecruitBoardVO> rcBoardVos = null;
+		
+		ReplyDAO rDao = new ReplyDAO();
+		ArrayList<ReplyVO> replyVos = null;
+		int idx = 0;
 		if(board.equals("freeBoard")) {
 			if(searchKey==null || searchKey.equals("")) {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
@@ -74,7 +81,12 @@ public class Pagination {
 			else {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
 			}
+			for(int i=0; i<fBoardVos.size(); i++) {
+				idx = fBoardVos.get(i).getIdx();
+				replyVos = rDao.getBoardReply(board, idx);
+			}
 			request.setAttribute("vos", fBoardVos);
+			request.setAttribute("replyVos", replyVos);
 		}
 		else if(board.equals("questionBoard")) {
 			if(searchKey==null || searchKey.equals("")) {

@@ -119,3 +119,12 @@ select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now())
 select b.*, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,
 	(select count(*) from reply where board='freeBoard' and boardIdx = b.idx) as replyCnt,
 	r.rDate from freeBoard b, reply r where b.idx=r.boardIdx order by r.rDate desc;
+	
+select *,(select count(*) from reReply p, reply r where r.idx=p.replyIdx group by r.idx having count(*)>0) as reCnt from
+	(select * from reply where board='questionBoard' and boardIdx=12) as r
+	left join reReply p on r.idx=p.replyIdx order by r.idx, p.replyIdx;
+	
+select count(*) as reCnt from reReply p, reply r where r.idx=p.replyIdx and r.idx=32 group by r.idx;
+
+select part, count(*) as partCnt from recruitBoard group by part;
+select count(*) as partCnt from recruitBoard group by part;

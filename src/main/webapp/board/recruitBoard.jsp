@@ -132,26 +132,12 @@
 				<div class="sidebar-widget category mb-3">
 					<h5 class="mb-4">분류</h5>
 					<ul class="list-unstyled">
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=new">신입</a>
-					    <span>(14)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=expert">경력</a>
-					    <span>(2)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=both">경력무관</a>
-					    <span>(10)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=intern">인턴</a>
-					    <span>(5)</span>
-					  </li>
-					  <li class="align-items-center">
-					    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=etc">기타</a>
-					    <span>(5)</span>
-					  </li>
+						<c:forEach var="rcVo" items="${rcVos}" varStatus="st">
+							<li class="align-items-center">
+						    <a href="${ctp}/RecruitBoardSearch.do?pag=1&pageSize=${pageSize}&flag=search&search=part&partSelect=${rcVo.part}">${rcVo.part}</a>
+						    <span>(${rcVo.partCnt})</span>
+						  </li>
+						</c:forEach>
 					</ul>
 				</div>
 					 

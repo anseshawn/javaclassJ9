@@ -67,7 +67,7 @@
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">마이페이지<i class="icofont-thin-down"></i></a>
 							<ul class="dropdown-menu" aria-labelledby="dropdown04">
-								<li><a class="dropdown-item" href="MemberUpdate.do">내정보 관리</a></li>
+								<li><a class="dropdown-item" href="MyPage.do">내정보 관리</a></li>
 								<li><a class="dropdown-item" href="PwdChange.do">비밀번호 변경</a></li>
 							</ul>
 					</li>

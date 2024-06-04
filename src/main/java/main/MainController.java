@@ -142,6 +142,9 @@ public class MainController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/board/questionBoardEdit.jsp";
 		}
+		else if(com.equals("/MyPage")) {
+			viewPage += "/mypage/myPage.jsp";
+		}
 		else if(com.equals("/PwdChange")) {
 			viewPage += "/mypage/pwdChange.jsp";
 		}

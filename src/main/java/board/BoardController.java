@@ -58,6 +58,11 @@ public class BoardController extends HttpServlet {
 			command.execute(request, response);
 			return;
 		}
+		else if(com.equals("/BoardGoodCheck")) {
+			command = new BoardGoodCheckCommand();
+			command.execute(request, response);
+			return;
+		}
 		else if(level > 2 || level < 0) {
 			request.setAttribute("message", "로그인 후 사용해 주세요.");
 			request.setAttribute("url", request.getContextPath()+"/MemberLogin.do");
@@ -77,11 +82,6 @@ public class BoardController extends HttpServlet {
 			command = new FreeBoardDeleteCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
-		}
-		else if(com.equals("/BoardGoodCheck")) {
-			command = new BoardGoodCheckCommand();
-			command.execute(request, response);
-			return;
 		}
 		else if(com.equals("/BoardReportOk")) {
 			command = new BoardReportOkCommand();

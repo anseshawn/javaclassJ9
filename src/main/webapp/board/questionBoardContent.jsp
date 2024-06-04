@@ -352,6 +352,11 @@
   </div>
 </section>
 
+<c:set var="reCnt" value="0"/>
+<c:forEach var="rVo" items="${replyVos}" varStatus="st">
+	<c:set var="reCnt" value="${rVo.reCnt}"/>
+</c:forEach>
+
 <section class="section blog-wrap">
 	<div class="container">
 		<div class="row">
@@ -367,8 +372,8 @@
 								</div>
 								<div class="blog-item-meta mb-3">
 									<span class="text-muted text-capitalize mr-3"><i class="fa-solid fa-eye mr-2"></i>${vo.readNum}</span>
-									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt} Comments</span>
-									<span class="text-black text-capitalize mr-3"><i class="icofont-calendar mr-2"></i> ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10) }</span>
+									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt+reCnt} Comments</span>
+									<span class="text-muted text-capitalize mr-3"><i class="icofont-calendar mr-2"></i> ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10) }</span>
 								</div>
 												
 								<h2 class="mb-2 text-md"><a href="#">${vo.title}</a></h2>
@@ -413,8 +418,9 @@
 
 					<div class="col-lg-12">
 						<div class="comment-area mt-4 mb-5">
-							<h4 class="mb-5">${vo.replyCnt} 개의 댓글</h4>
+							<h4 class="mb-5">${vo.replyCnt+reCnt} 개의 댓글</h4>
 							<ul class="comment-tree list-unstyled">
+							
 								<c:set var="imsiIdx" value="0"/>
 								<c:forEach var="rVo" items="${replyVos}" varStatus="st">
 									<li class="mb-5">
@@ -466,7 +472,7 @@
 												<div class="comment-info">
 													<h5 class="mb-1">${rVo.reNickName}(${rVo.reMid})</h5>
 													<span>${rVo.reHostIp}</span>
-													<span class="date-comm mr-2">| ${rVo.date_diff == 0 ? fn:substring(rVo.reDate,11,19) : fn:substring(rVo.reDate,0,10) }</span>
+													<span class="date-comm mr-2">| ${rVo.reDate_diff == 0 ? fn:substring(rVo.reDate,11,19) : fn:substring(rVo.reDate,0,10) }</span>
 													<c:if test="${sLevel==0 || sMid == rVo.reMid}">
 													 <span class="comment-meta mr-2"><a href="javascript:reReplyEdit(${rVo.reIdx})"><i class="icofont-edit mr-2 text-muted"></i>수정</a></span>
 													 <span class="comment-meta"><a href="javascript:reReplyDelete(${rVo.reIdx})"><i class="icofont-ui-delete mr-2 text-muted"></i>삭제</a></span>

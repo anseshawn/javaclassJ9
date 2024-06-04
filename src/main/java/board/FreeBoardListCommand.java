@@ -28,9 +28,30 @@ public class FreeBoardListCommand implements MainInterface {
 		
 		Pagination.pageChange(request, pag, pageSize, contentsShow, "freeBoard", "");
 		
+		// 인기 게시글
 		FreeBoardDAO dao = new FreeBoardDAO();
 		ArrayList<FreeBoardVO> gVos = dao.getBestFreeBoard();
 		request.setAttribute("gVos", gVos);
+		
+		
+		ArrayList<ReplyVO> replyVos = new ArrayList<ReplyVO>();
+		ReplyDAO rDao = new ReplyDAO();
+		int reCnt = 0;
+		for(FreeBoardVO vo : gVos) {
+			replyVos = new ArrayList<ReplyVO>();
+			System.out.println("boardIdx: "+vo.getIdx());
+			replyVos = rDao.getBoardReply("freeBoard", vo.getIdx());
+			for(ReplyVO rVo : replyVos) {
+				reCnt = rVo.getReCnt();
+				vo.setReCnt(reCnt);
+				
+				System.out.println("reCnt: "+reCnt);
+			}
+			System.out.println("replyVos: "+replyVos);
+			vo.getReCnt();
+		}
+		
+		request.setAttribute("replyVos", replyVos);
 	}
 
 }

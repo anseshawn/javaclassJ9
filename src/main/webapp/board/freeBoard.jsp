@@ -44,23 +44,11 @@
 		<div class="row">
  			<div class="col-lg-8">
 				<div class="row">
-				
-					<div class="col-lg-12 col-md-12 mb-3">
-						<div class="blog-item">
-							<div class="blog-item-content">
-								<div class="blog-item-meta mb-3 mt-4">
-									<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>5 Comments</span>
-									<span class="text-black text-capitalize mr-3"><i class="icofont-calendar mr-1"></i> 28th January</span>
-								</div> 
-								<h2 class="mt-3 mb-3"><a href="#">작업중...</a></h2>
-								<!-- <p class="mb-4">[에너지데일리 조남준 기자] 환경부 소속 국립환경과학원(원장 김동진)은 대기오염물질 배출시설의 시료채취 및 분석방법 등 최신 기술동향을 반영해 제·개정한 대기오염공정시험기준을 국립환경과학원 누리집(nier.go.kr)에 4일 공개한다.</p>
-								<a href="blog-single.html" target="_blank" class="btn btn-main btn-icon btn-round-full">게시글 보기<i class="icofont-simple-right ml-2  "></i></a> -->
-							</div>
-						</div>
-						<hr/>
-					</div>
-					<hr/>
 
+					<c:set var="reCnt" value="0"/>
+					<c:forEach var="rVo" items="${replyVos}" varStatus="st">
+						<c:set var="reCnt" value="${rVo.reCnt}"/>
+					</c:forEach>
 					<c:set var="curScrStartNo" value="${curScrStartNo}"/>
 					<c:forEach var="vo" items="${vos}" varStatus="st">
 						<div class="col-lg-12 col-md-12 mb-3">
@@ -68,7 +56,7 @@
 								<div class="blog-item-content">
 									<div class="blog-item-meta mb-3 mt-4">
 										<span class="text-muted text-capitalize mr-3"><i class="fa-solid fa-eye mr-2"></i>${vo.readNum}</span>
-										<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt} Comments</span>
+										<span class="text-muted text-capitalize mr-3"><i class="icofont-comment mr-2"></i>${vo.replyCnt+vo.reCnt} Comments</span>
 										<span class="text-black text-capitalize mr-3">
 											<i class="icofont-calendar mr-2"></i> ${vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,10) }
 										</span>
@@ -142,41 +130,6 @@
 		            <h6 class="my-2"><a href="FreeBoardContent.do?idx=${gVo.idx}&pag=${pag}&pageSize=${pageSize}">${gVo.title}</a></h6>
 	        		</div>
         		</c:forEach>
-					</div>
-
-					<!-- 
-					<div class="sidebar-widget category mb-3">
-						<h5 class="mb-4">분류</h5>
-						<ul class="list-unstyled">
-						  <li class="align-items-center">
-						    <a href="#">Medicine</a>
-						    <span>(14)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Equipments</a>
-						    <span>(2)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Heart</a>
-						    <span>(10)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Free counselling</a>
-						    <span>(5)</span>
-						  </li>
-						  <li class="align-items-center">
-						    <a href="#">Lab test</a>
-						    <span>(5)</span>
-						  </li>
-						</ul>
-					</div>
-					-->
-					<div class="sidebar-widget tags mb-3">
-						<h5 class="mb-4">Tags</h5>
-						<a href="#">Doctors</a>
-						<a href="#">agency</a>
-						<a href="#">company</a>
-						<a href="#">medicine</a>
 					</div>
 
 				</div>

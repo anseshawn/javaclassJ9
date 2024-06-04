@@ -101,7 +101,7 @@ public class MemberUpdateOkCommand implements MainInterface {
 		}
 		else {
 			request.setAttribute("message", "회원정보 수정 실패");
-			request.setAttribute("url", "MemberUpdate.do");
+			request.setAttribute("url", "MyPage.do");
 		}
 	}
 
