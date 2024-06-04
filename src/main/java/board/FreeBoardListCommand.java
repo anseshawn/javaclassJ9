@@ -34,6 +34,7 @@ public class FreeBoardListCommand implements MainInterface {
 		request.setAttribute("gVos", gVos);
 		
 		
+		// 댓글 - 대댓글 숫자 처리... 페이지에서?
 		ArrayList<ReplyVO> replyVos = new ArrayList<ReplyVO>();
 		ReplyDAO rDao = new ReplyDAO();
 		int reCnt = 0;
