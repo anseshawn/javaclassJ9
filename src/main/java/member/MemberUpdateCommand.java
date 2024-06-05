@@ -54,7 +54,6 @@ public class MemberUpdateCommand implements MainInterface {
 		request.setAttribute("cRoadAddress", cAddress[1]);
 		request.setAttribute("cDetailAddress", cAddress[2]);
 		request.setAttribute("cExtraAddress", cAddress[3]);
-		
 		request.setAttribute("purpose", vo.getPurpose());
 		request.setAttribute("vo", vo);
 	}

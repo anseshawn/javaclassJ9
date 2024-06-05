@@ -159,10 +159,6 @@
 		function replyDelete(reIdx) {
 			let ans = confirm("현재 댓글을 삭제하시겠습니까?");
 			if(!ans) return false;
-			if(${!empty replyVos}) {
-				alert("답글이 달린 댓글은 삭제할 수 없습니다.");
-				return false;
-			}
 			$.ajax({
 				url: "ReplyDelete.do",
 				type: "post",

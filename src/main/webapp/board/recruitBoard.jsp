@@ -110,7 +110,7 @@
 				<div class="sidebar-wrap pl-lg-4 mt-5 mt-lg-0">
 				<c:if test="${sLevel==0 || sLevel==2}">
 					<div class="sidebar-widget write mb-3 ">
-						<a href="RecruitBoardInput.do" class="btn btn-main-2 btn-icon btn-round-full" style="width:300px; margin:8px;">글쓰기</a>
+						<a href="RecruitBoardInput.do" class="btn btn-main-2 btn-icon btn-round-full" style="width:80%; margin:8px;">글쓰기</a>
 					</div>
 				</c:if>	
 				<!-- 검색창 -->

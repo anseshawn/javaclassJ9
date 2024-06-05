@@ -133,10 +133,6 @@
 		function replyDelete(idx) {
 			let ans = confirm("현재 댓글을 삭제하시겠습니까?");
 			if(!ans) return false;
-			if(${!empty replyVos}) {
-				alert("답글이 달린 댓글은 삭제할 수 없습니다.");
-				return false;
-			}
 			$.ajax({
 				url: "ReplyDelete.do",
 				type: "post",
@@ -544,13 +540,13 @@
 				<div class="sidebar-wrap pl-lg-4 mt-5 mt-lg-0">
 				<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
 					<div class="sidebar-widget write mb-3 ">
-						<a href="FreeBoardInput.do" class="btn btn-main-2 btn-icon btn-round-full" style="width:300px; margin:8px;">글쓰기</a>
+						<a href="FreeBoardInput.do" class="btn btn-main-2 btn-icon btn-round-full" style="width:80%; margin:8px;">글쓰기</a>
 					</div>
 				</c:if>	
 					<!-- 검색창 -->
 					<div class="sidebar-widget search mb-3 ">
 						<h5>게시판 검색</h5>
-						<form name="search-form" method="post" action="BoardSearchList.do">
+						<form name="search-form" method="post" action="FreeBoardSearch.do">
 							<select name="search" id="search" class="form-control">
 								<option value="title">제목</option>
 								<option value="nickName">작성자</option>

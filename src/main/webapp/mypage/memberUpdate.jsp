@@ -214,10 +214,10 @@
 	</script>
 </head>
 <body id="top">
-<header>
-	<%-- <jsp:include page="/include/header.jsp" /> --%>
-	<%-- <jsp:include page="/include/nav.jsp" /> --%>
-</header>
+<%-- <header>
+	<jsp:include page="/include/header.jsp" />
+	<jsp:include page="/include/nav.jsp" />
+</header> --%>
 <p><br/></p>
 <div class="container">
 <div class="row justify-content-center">

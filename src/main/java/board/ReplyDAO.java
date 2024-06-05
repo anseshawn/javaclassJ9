@@ -181,10 +181,20 @@ public class ReplyDAO {
 	public int setReplyDelete(int idx) {
 		int res = 0;
 		try {
-			sql = "delete from reply where idx=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, idx);
-			res = pstmt.executeUpdate();
+			sql2 = "select * from reReply where replyIdx = ?";
+			pstmt2 = conn.prepareStatement(sql2);
+			pstmt2.setInt(1, idx);
+			rs2 = pstmt2.executeQuery();
+			if(rs2.next()) {
+				res = 0;
+			}
+			else {
+				sql = "delete from reply where idx=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, idx);
+				res = pstmt.executeUpdate();				
+			}
+			rs2Close();
 		} catch (SQLException e) {
 			System.out.println("SQL오류 : "+e.getMessage());
 		} finally {
