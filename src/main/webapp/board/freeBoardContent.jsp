@@ -20,13 +20,13 @@
 				ans = confirm("현재 게시글을 삭제하면 다른 회원의 댓글까지 모두 삭제됩니다.\n정말 삭제하시겠습니까?");
 				if(!ans) return false;
 			}
-			location.href="FreeBoardDelete.bo?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt};
+			location.href="FreeBoardDelete.do?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt};
 		}
 		
 		// 좋아요 수 (중복 불허)
 		function goodCheck(){
 			$.ajax({
-				url: "BoardGoodCheck.bo",
+				url: "BoardGoodCheck.do",
 				type: "post",
 				data: {
 					board:"freeBoard",
@@ -66,7 +66,7 @@
 			}
 			
 			$.ajax({
-				url: "BoardReportOk.bo",
+				url: "BoardReportOk.do",
 				type: "post",
 				data: query,
 				success: function(res){
@@ -112,7 +112,7 @@
 					content: content
 			}
 			$.ajax({
-				url: "ReplyInputOk.bo",
+				url: "ReplyInputOk.do",
 				type: "post",
 				data: query,
 				success: function(res){
@@ -133,9 +133,12 @@
 		function replyDelete(idx) {
 			let ans = confirm("현재 댓글을 삭제하시겠습니까?");
 			if(!ans) return false;
-			
+			if(${!empty replyVos}) {
+				alert("답글이 달린 댓글은 삭제할 수 없습니다.");
+				return false;
+			}
 			$.ajax({
-				url: "ReplyDelete.bo",
+				url: "ReplyDelete.do",
 				type: "post",
 				data: {idx : idx},
 				success: function(res){
@@ -169,7 +172,7 @@
 			let content = $("#content"+idx).val();
 			
 			$.ajax({
-				url: "ReplyEditOk.bo",
+				url: "ReplyEditOk.do",
 				type: "post",
 				data: {
 					idx:idx,
@@ -231,7 +234,7 @@
 					content: reContent
 			}
 			$.ajax({
-				url: "ReReplyInputOk.bo",
+				url: "ReReplyInputOk.do",
 				type: "post",
 				data: query,
 				success: function(res){
@@ -254,7 +257,7 @@
 			if(!ans) return false;
 			
 			$.ajax({
-				url: "ReReplyDelete.bo",
+				url: "ReReplyDelete.do",
 				type: "post",
 				data: {reIdx : reIdx},
 				success: function(res){
@@ -288,7 +291,7 @@
 			let reContent = $("#reContent"+reIdx).val();
 			
 			$.ajax({
-				url: "ReReplyEditOk.bo",
+				url: "ReReplyEditOk.do",
 				type: "post",
 				data: {
 					reIdx:reIdx,
@@ -547,7 +550,7 @@
 					<!-- 검색창 -->
 					<div class="sidebar-widget search mb-3 ">
 						<h5>게시판 검색</h5>
-						<form name="search-form" method="post" action="BoardSearchList.bo">
+						<form name="search-form" method="post" action="BoardSearchList.do">
 							<select name="search" id="search" class="form-control">
 								<option value="title">제목</option>
 								<option value="nickName">작성자</option>

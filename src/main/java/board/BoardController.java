@@ -14,7 +14,7 @@ import board.FreeBoardInputOkCommand;
 import board.FreeBoardListCommand;
 import common.MainInterface;
 
-@WebServlet("*.bo")
+//@WebServlet("*.bo")
 public class BoardController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

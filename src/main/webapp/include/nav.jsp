@@ -9,7 +9,7 @@
 <nav class="navbar navbar-expand-lg navigation" id="navbar">
 	<div class="container">
 	 	 <a class="navbar-brand mr-auto" href="Main.do">
-		  	<img src="images/logo.png" alt="" class="img-fluid">
+		  	<img src="images/logo.jpg" alt="" class="img-fluid">
 		  </a>
 
 	  	<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarmain" aria-controls="navbarmain" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@
 				<li class="nav-item"><a class="nav-link" href="MemberJoin.do">회원가입</a></li>
 			</c:if>
 			<c:if test="${level==0 || level==1 || level==2}">
-				<li class="nav-item"><a class="nav-link" href="MemberLogout.mem">로그아웃</a></li>
+				<li class="nav-item"><a class="nav-link" href="MemberLogout.do">로그아웃</a></li>
 				<c:if test="${level==1 || level==2}">
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">마이페이지<i class="icofont-thin-down"></i></a>

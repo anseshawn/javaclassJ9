@@ -10,23 +10,48 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import board.BoardGoodCheckCommand;
+import board.BoardReportOkCommand;
 import board.FreeBoardContentCommand;
+import board.FreeBoardDeleteCommand;
 import board.FreeBoardEditCommand;
+import board.FreeBoardEditOkCommand;
 import board.FreeBoardInputOkCommand;
 import board.FreeBoardListCommand;
 import board.FreeBoardSearchCommand;
 import board.QuestionBoardCommand;
 import board.QuestionBoardContentCommand;
+import board.QuestionBoardDeleteCommand;
 import board.QuestionBoardEditCommand;
+import board.QuestionBoardEditOkCommand;
 import board.QuestionBoardInputCommand;
+import board.QuestionBoardInputOkCommand;
 import board.QuestionBoardSearchCommand;
+import board.ReReplyDeleteCommand;
+import board.ReReplyEditOkCommand;
+import board.ReReplyInputOkCommand;
 import board.RecruitBoardCommand;
 import board.RecruitBoardContentCommand;
+import board.RecruitBoardDeleteCommand;
 import board.RecruitBoardEditCommand;
+import board.RecruitBoardEditOkCommand;
+import board.RecruitBoardInputOkCommand;
 import board.RecruitBoardSearchCommand;
+import board.ReplyDeleteCommand;
+import board.ReplyEditOkCommand;
+import board.ReplyInputOkCommand;
 import common.MainInterface;
+import member.CheckBoardCommand;
+import member.MemberDeleteOkCommand;
+import member.MemberIdCheckCommand;
+import member.MemberJoinOkCommand;
+import member.MemberLoginOkCommand;
+import member.MemberLogoutCommand;
+import member.MemberNickCheckCommand;
 import member.MemberUpdateCommand;
+import member.MemberUpdateOkCommand;
 import member.MidSearchResultCommand;
+import member.PwdChangeOkCommand;
 
 @WebServlet("*.do")
 public class MainController extends HttpServlet {
@@ -48,8 +73,33 @@ public class MainController extends HttpServlet {
 		else if(com.equals("/MemberJoin")) {
 			viewPage += "/member/memberJoin.jsp";
 		}
+		else if(com.equals("/MemberIdCheck")) {
+			command = new MemberIdCheckCommand();
+			command.execute(request, response);
+			return;
+		}
 		else if(com.equals("/MemberLogin")) {
 			viewPage += "/member/memberLogin.jsp";
+		}
+		else if(com.equals("/MemberNickCheck")) {
+			command = new MemberNickCheckCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/MemberLoginOk")) {
+			command = new MemberLoginOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberLogout")) {
+			command = new MemberLogoutCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/MemberJoinOk")) {
+			command = new MemberJoinOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/PwdSearch")) {
 			viewPage += "/member/pwdSearch.jsp";
@@ -107,6 +157,41 @@ public class MainController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/board/recruitBoardSearch.jsp";
 		}
+		else if(com.equals("/ReplyInputOk")) {
+			command = new ReplyInputOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ReplyDelete")) {
+			command = new ReplyDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ReReplyDelete")) {
+			command = new ReReplyDeleteCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ReplyEditOk")) {
+			command = new ReplyEditOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ReReplyEditOk")) {
+			command = new ReReplyEditOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/ReReplyInputOk")) {
+			command = new ReReplyInputOkCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/BoardGoodCheck")) {
+			command = new BoardGoodCheckCommand();
+			command.execute(request, response);
+			return;
+		}
 		else if(com.equals("/AboutUs")) {
 			viewPage += "/company/aboutUs.jsp";
 		}
@@ -127,20 +212,55 @@ public class MainController extends HttpServlet {
 		else if(com.equals("/FreeBoardInput")) {
 			viewPage += "/board/freeBoardInput.jsp";
 		}
+		else if(com.equals("/FreeBoardInputOk")) {
+			command = new FreeBoardInputOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/FreeBoardEdit")) {
 			command = new FreeBoardEditCommand();
 			command.execute(request, response);
 			viewPage += "/board/freeBoardEdit.jsp";
+		}
+		else if(com.equals("/FreeBoardEditOk")) {
+			command = new FreeBoardEditOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/FreeBoardDelete")) {
+			command = new FreeBoardDeleteCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/QuestionBoardInput")) {
 			command = new QuestionBoardInputCommand();
 			command.execute(request, response);
 			viewPage += "/board/questionBoardInput.jsp";
 		}
+		else if(com.equals("/QuestionBoardInputOk")) {
+			command = new QuestionBoardInputOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/QuestionBoardEdit")) {
 			command = new QuestionBoardEditCommand();
 			command.execute(request, response);
 			viewPage += "/board/questionBoardEdit.jsp";
+		}
+		else if(com.equals("/QuestionBoardEditOk")) {
+			command = new QuestionBoardEditOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/QuestionBoardDelete")) {
+			command = new QuestionBoardDeleteCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/BoardReportOk")) {
+			command = new BoardReportOkCommand();
+			command.execute(request, response);
+			return;
 		}
 		else if(com.equals("/MyPage")) {
 			viewPage += "/mypage/myPage.jsp";
@@ -148,21 +268,62 @@ public class MainController extends HttpServlet {
 		else if(com.equals("/PwdChange")) {
 			viewPage += "/mypage/pwdChange.jsp";
 		}
+		else if(com.equals("/PwdChangeOk")) {
+			command = new PwdChangeOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/MemberUpdate")) {
 			command = new MemberUpdateCommand();
 			command.execute(request, response);
 			viewPage += "/mypage/memberUpdate.jsp";
 		}
+		else if(com.equals("/MemberUpdateOk")) {
+			command = new MemberUpdateOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/CheckBoard")) {
+			command = new CheckBoardCommand();
+			command.execute(request, response);
+			viewPage += "/mypage/checkBoard.jsp";
+		}
 		else if(com.equals("/MemberDelete")) {
 			viewPage += "/mypage/memberDelete.jsp";
 		}
+		else if(com.equals("/MemberDeleteOk")) {
+			command = new MemberDeleteOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		
+		else if(level != 0 && level != 2) {
+			request.setAttribute("message", "개인 회원은 이용할 수 없는 기능입니다.");
+			request.setAttribute("url", request.getContextPath()+"/Main.do");
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/RecruitBoardInput")) {
 			viewPage += "/board/recruitBoardInput.jsp";
+		}
+		else if(com.equals("/RecruitBoardInputOk")) {
+			command = new RecruitBoardInputOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/RecruitBoardEdit")) {
 			command = new RecruitBoardEditCommand();
 			command.execute(request, response);
 			viewPage += "/board/recruitBoardEdit.jsp";
+		}
+		else if(com.equals("/RecruitBoardEditOk")) {
+			command = new RecruitBoardEditOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/RecruitBoardDelete")) {
+			command = new RecruitBoardDeleteCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

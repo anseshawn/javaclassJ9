@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import common.MainInterface;
 
-@WebServlet("*.mem")
+//@WebServlet("*.mem")
 public class MemberController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

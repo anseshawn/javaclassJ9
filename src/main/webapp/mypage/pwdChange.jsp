@@ -23,7 +23,7 @@
 				$("#pwd").focus();
 				return false;
 			}
-			if(pwdNew.trim()=="" || pwdNewRe.trim()=="") {
+			else if(pwdNew.trim()=="" || pwdNewRe.trim()=="") {
 				alert("변경할 비밀번호를 입력하세요.");
 				$("#pwdNew").focus();
 				return false;
@@ -33,13 +33,12 @@
 				$("#pwdNewRe").focus();
 				return false;
 			}
-			/* 
-			else if(!regPwd.test(pwd)) {
+			else if(!regPwd.test(pwdNew)) {
    		 alert("비밀번호는 영문 대/소문자와 숫자, 특수문자를 포함하여 4~20자까지 가능합니다. 특수문자를 꼭 1개 이상 포함해주세요.");
-   		 document.getElementById("pwd").focus();
+   		 document.getElementById("pwdNew").focus();
    		 return false;
-   	 }
-   	 */
+   		}
+   	 
 			else {
 				myform.submit();
 			}
@@ -58,7 +57,7 @@
 	<div class="account-login section">
 	<div class="row">
 	  <div class="col-lg-6 offset-lg-3">
-	   <form name="myform" class="inner-content" method="post" action="${ctp}/PwdChangeOk.mem">
+	   <form name="myform" class="inner-content" method="post" action="${ctp}/PwdChangeOk.do">
 	     <div class="card-body">
 	       <div class="title">
 	         <h3>비밀번호 변경</h3>

@@ -46,7 +46,7 @@ public class RecruitBoardInputOkCommand implements MainInterface {
 			
 			if(multipartRequest.getFilesystemName(file) != null) {
 				rcfName += multipartRequest.getOriginalFileName(file) + "/";
-				rcfSName += multipartRequest.getFilesystemName(file)+"/";				
+				rcfSName += multipartRequest.getFilesystemName(file)+"/";			
 			}
 		}
 		if(rcfName.lastIndexOf("/")!=-1 && rcfSName.lastIndexOf("/")!=-1) {

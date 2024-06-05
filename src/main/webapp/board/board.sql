@@ -38,6 +38,7 @@ create table questionBoard(
 );
 desc questionBoard;
 drop table questionBoard;
+select * from questionBoard;
 insert into questionBoard values (default,'admin','관리자','질문 게시판입니다.','많은 이용 부탁드립니다.','172.30.1.24',default,default,'기타',default,default);
 
 create table recruitBoard(
@@ -62,6 +63,7 @@ create table recruitBoard(
 	foreign key(mid) references member(mid)
 );
 desc recruitBoard;
+select * from recruitBoard;
 
 create table reply(
 	idx int not null auto_increment,	/* 댓글 고유번호 */

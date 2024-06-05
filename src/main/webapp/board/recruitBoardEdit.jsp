@@ -129,7 +129,7 @@
 </header>
 <p><br/></p>
 <div class="container">
-<form name="myform" method="post" action="RecruitBoardEditOk.bo" enctype="multipart/form-data">
+<form name="myform" method="post" action="RecruitBoardEditOk.do" enctype="multipart/form-data">
 	<div class="row justify-content-center mb-2">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="form-group">
@@ -191,7 +191,7 @@
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2 text-right">
 			<input type="button" value="등록하기" onclick="fCheck()" class="btn btn-main-2 btn-icon btn-round-full" />
-			<input type="button" value="취소" onclick="location.href='QuestionBoard.do';" class="btn btn-main btn-icon btn-round-full" />
+			<input type="button" value="취소" onclick="location.href='RecruitBoard.do';" class="btn btn-main btn-icon btn-round-full" />
 		</div>
 	</div>
 	<input type="hidden" name="idx" value="${vo.idx}"/>

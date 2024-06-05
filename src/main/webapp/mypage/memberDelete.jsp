@@ -75,7 +75,7 @@
 			</ul>
 		</div>
 	</div>
-<form name="myform" method="post" action="MemberDeleteOk.mem">
+<form name="myform" method="post" action="MemberDeleteOk.do">
 	<div class="row justify-content-center mb-5">
 		<div class="col-lg-8 col-lg-offset-2">
 				<p>탈퇴하는 이유를 말씀해주세요. 사이트 개선에 중요 자료로 활용하겠습니다.</p>

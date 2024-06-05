@@ -33,7 +33,7 @@
 </header>
 <p><br/></p>
 <div class="container">
-<form name="myform" method="post" action="FreeBoardInputOk.bo">
+<form name="myform" method="post" action="FreeBoardInputOk.do">
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2">
 			<input type="text" name="board" id="board" class="form-control mt-2" value="자유게시판" readonly />
@@ -55,7 +55,7 @@
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2 text-right">
 			<input type="button" value="등록하기" onclick="fCheck()" class="btn btn-main-2 btn-icon btn-round-full" />
-			<input type="button" value="취소" onclick="location.href='FreeBoardList.do';" class="btn btn-main btn-icon btn-round-full" />
+			<input type="button" value="취소" onclick="location.href='FreeBoard.do';" class="btn btn-main btn-icon btn-round-full" />
 		</div>
 	</div>
 	<input type="hidden" name="mid" value="${sMid}"/>

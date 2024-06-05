@@ -57,6 +57,13 @@ public class Pagination {
 				totRecCnt = rcBoardDao.getTotRecCnt(contentsShow,search,searchString);
 			}
 		}
+		else if(board.equals("checkBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
+				totRecCnt += fBoardDao.getMyTotRecCnt(contentsShow,"","");
+				totRecCnt += qBoardDao.getMyTotRecCnt(contentsShow,"","");
+				totRecCnt += rcBoardDao.getMyTotRecCnt(contentsShow,"",""); 
+			}
+		}
 		
 		int totPage = (totRecCnt % pageSize)==0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize)+1;
 		if(pag > totPage) pag = 1;
@@ -71,10 +78,6 @@ public class Pagination {
 		List<QuestionBoardVO> qBoardVos = null;
 		List<RecruitBoardVO> rcBoardVos = null;
 		
-		ReplyDAO rDao = new ReplyDAO();
-		ArrayList<ReplyVO> replyVos = new ArrayList<ReplyVO>();
-		int idx = 0;
-		int reCnt = 0;
 		if(board.equals("freeBoard")) {
 			if(searchKey==null || searchKey.equals("")) {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, "", ""); // 게시판의 전체 자료 가져오기				
@@ -82,27 +85,7 @@ public class Pagination {
 			else {
 				fBoardVos = fBoardDao.getFreeBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
 			}
-			/*
-			for(int i=0; i<fBoardVos.size(); i++) {
-				idx = fBoardVos.get(i).getIdx();
-				replyVos = rDao.getBoardReply(board, idx);
-			}
-			*/
-			/*
-			for(FreeBoardVO vo : fBoardVos) {
-				vo = new FreeBoardVO();
-				replyVos = rDao.getBoardReply(board, idx);
-				for(ReplyVO rVo : replyVos) {
-					reCnt = rVo.getReCnt();
-					vo.setReCnt(reCnt);
-					System.out.println("reCnt: "+reCnt);
-					System.out.println("vo: "+vo);
-				}
-				fBoardVos.add(vo);
-			}
-			*/
 			request.setAttribute("vos", fBoardVos);
-			//request.setAttribute("replyVos", replyVos);
 		}
 		else if(board.equals("questionBoard")) {
 			if(searchKey==null || searchKey.equals("")) {
@@ -121,6 +104,19 @@ public class Pagination {
 				rcBoardVos = rcBoardDao.getRecruitBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
 			}
 			request.setAttribute("vos", rcBoardVos);
+		}
+		else if(board.equals("checkBoard")) {
+			if(searchKey==null || searchKey.equals("")) {
+				fBoardVos = fBoardDao.getMyFreeBoardList(startIndexNo, pageSize, contentsShow, "", "");
+				rcBoardVos = rcBoardDao.getMyRecruitBoardList(startIndexNo, pageSize, contentsShow, "", "");
+				qBoardVos = qBoardDao.getMyQuestionBoardList(startIndexNo, pageSize, contentsShow, "", "");
+			}
+			else {
+				rcBoardVos = rcBoardDao.getMyRecruitBoardList(startIndexNo, pageSize, contentsShow, search, searchString);
+			}
+			request.setAttribute("fVos", fBoardVos);
+			request.setAttribute("qVos", qBoardVos);
+			request.setAttribute("rcVos", rcBoardVos);
 		}
 		
 		request.setAttribute("pag", pag);

@@ -92,14 +92,17 @@
 			}
 			else if(title.trim()=="") {
 				alert("제목을 입력하세요.");
+				myform.title.focus();
 				return false;
 			}
 			else if(location.trim()=="") {
 				alert("근무지역을 입력하세요.");
+				myform.location.focus();
 				return false;
 			}
 			else if(content.trim()==""){
 				alert("내용을 입력하세요.");
+				myform.content.focus();
 				return false;
 			}
 			
@@ -129,7 +132,7 @@
 </header>
 <p><br/></p>
 <div class="container">
-<form name="myform" method="post" action="RecruitBoardInputOk.bo" enctype="multipart/form-data">
+<form name="myform" method="post" action="RecruitBoardInputOk.do" enctype="multipart/form-data">
 	<div class="row justify-content-center mb-2">
 		<div class="col-md-8 col-md-offset-2">
 			<div class="form-group">

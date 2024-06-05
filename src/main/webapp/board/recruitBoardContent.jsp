@@ -32,13 +32,13 @@
 		function deleteCheck(){
 			let ans = confirm("현재 게시글을 삭제하시겠습니까?");
 			if(!ans) return false;
-			location.href="RecruitBoardDelete.bo?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt}+"&rcfSName=${vo.rcfSName}";
+			location.href="RecruitBoardDelete.do?idx="+${vo.idx}+"&replyCnt="+${vo.replyCnt}+"&rcfSName=${vo.rcfSName}";
 		}
 		
 		// 좋아요 수 (중복 불허)
 		function goodCheck(){
 			$.ajax({
-				url: "BoardGoodCheck.bo",
+				url: "BoardGoodCheck.do",
 				type: "post",
 				data: {
 					board:"recruitBoard",
@@ -78,7 +78,7 @@
 			}
 			
 			$.ajax({
-				url: "BoardReportOk.bo",
+				url: "BoardReportOk.do",
 				type: "post",
 				data: query,
 				success: function(res){
@@ -124,7 +124,7 @@
 					content: reContent
 			}
 			$.ajax({
-				url: "ReplyInputOk.bo",
+				url: "ReplyInputOk.do",
 				type: "post",
 				data: query,
 				success: function(res){
@@ -146,8 +146,12 @@
 		function replyDelete(reIdx) {
 			let ans = confirm("현재 댓글을 삭제하시겠습니까?");
 			if(!ans) return false;
+			if(${!empty replyVos}) {
+				alert("답글이 달린 댓글은 삭제할 수 없습니다.");
+				return false;
+			}
 			$.ajax({
-				url: "ReplyDelete.bo",
+				url: "ReplyDelete.do",
 				type: "post",
 				data: {idx : reIdx},
 				success: function(res){
@@ -178,7 +182,7 @@
 			let content = $("#content"+idx).val();
 			
 			$.ajax({
-				url: "ReplyEditOk.bo",
+				url: "ReplyEditOk.do",
 				type: "post",
 				data: {
 					idx:idx,
@@ -243,7 +247,7 @@
 					content: reContent
 			}
 			$.ajax({
-				url: "ReReplyInputOk.bo",
+				url: "ReReplyInputOk.do",
 				type: "post",
 				data: query,
 				success: function(res){
@@ -266,7 +270,7 @@
 			if(!ans) return false;
 			
 			$.ajax({
-				url: "ReReplyDelete.bo",
+				url: "ReReplyDelete.do",
 				type: "post",
 				data: {reIdx : reIdx},
 				success: function(res){
@@ -300,7 +304,7 @@
 			let reContent = $("#reContent"+reIdx).val();
 			
 			$.ajax({
-				url: "ReReplyEditOk.bo",
+				url: "ReReplyEditOk.do",
 				type: "post",
 				data: {
 					reIdx:reIdx,
@@ -590,7 +594,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-3">
 				<div class="sidebar-wrap pl-lg-4 mt-5 mt-lg-0">
 				<c:if test="${sLevel==0 || sLevel==1 || sLevel==2}">
 					<div class="sidebar-widget write mb-3 ">

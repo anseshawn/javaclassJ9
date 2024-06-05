@@ -429,6 +429,114 @@ public class RecruitBoardDAO {
 		}
 		return vos;
 	}
+
+	// 개인이 쓴 글 총 건수(마이페이지)
+	public int getMyTotRecCnt(String contentsShow, String search, String searchString) {
+		int totRecCnt=0;
+		try {
+			if(search==null || search.equals("")) {
+				sql = "select count(*) as cnt from recruitBoard where mid=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, contentsShow);
+			}
+			else if(search.equals("part")){
+				sql = "select count(*) as cnt from recruitBoard where "+search+" = '"+searchString+"' and mid=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, contentsShow);
+			}
+			else {
+				sql = "select count(*) as cnt from recruitBoard where "+search+" like ? and mid=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchString+"%");
+				pstmt.setString(2, contentsShow);
+			}
+			rs = pstmt.executeQuery();
+			rs.next();
+			totRecCnt = rs.getInt("cnt");
+		} catch (SQLException e) {
+			System.out.println("SQL오류: "+e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return totRecCnt;
+	}
 	
-	
+	// 개인이 쓴 글만
+	//게시판 전체 리스트 (검색어의 경우 포함)
+	public List<RecruitBoardVO> getMyRecruitBoardList(int startIndexNo, int pageSize, String contentsShow, String search,	String searchString) {
+		List<RecruitBoardVO> vos = new ArrayList<RecruitBoardVO>();
+		try {
+			if(search  == null || search.equals("")) {		// 검색어가 들어오지 않았을 때(전체 리스트)
+				sql = "select *, datediff(wDate, now()) as date_diff,"
+						+ " timestampdiff(hour, wDate, now()) as hour_diff,"
+						+ " (select count(*) from reply where board='recruitBoard' and boardIdx = b.idx) as replyCnt"
+						+ " from recruitBoard b where mid=? order by idx desc";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, contentsShow);
+				//pstmt.setInt(2, startIndexNo);
+				//pstmt.setInt(3, pageSize);
+			}
+			else if(search.equals("part")){		// 검색을 분류로 했을 때
+				sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
+						+ " (select count(*) from reply where board='recruitBoard' and boardIdx = b.idx) as replyCnt"
+						+ " from recruitBoard b where part='"+searchString+"' and mid=? order by idx desc limit ?,?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, contentsShow);
+				pstmt.setInt(2, startIndexNo);
+				pstmt.setInt(3, pageSize);
+			}
+			else {		// 검색어가 들어왔을 때
+				sql = "select *, datediff(wDate, now()) as date_diff, timestampdiff(hour, wDate, now()) as hour_diff,"
+						+ " (select count(*) from reply where board='recruitBoard' and boardIdx = b.idx) as replyCnt"
+						+ " from recruitBoard b where "+search+" like ? and mid=? order by idx desc limit ?,?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchString+"%");
+				pstmt.setString(2, contentsShow);
+				pstmt.setInt(3, startIndexNo);
+				pstmt.setInt(4, pageSize);
+			}
+			rs = pstmt.executeQuery();
+			
+			ReplyDAO rDao = new ReplyDAO();
+			ArrayList<ReplyVO> rVos = new ArrayList<ReplyVO>();
+			while(rs.next()) {
+				int imsiCnt = 0;
+				vo = new RecruitBoardVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				vo.setHostIp(rs.getString("hostIp"));
+				vo.setReadNum(rs.getInt("readNum"));
+				vo.setwDate(rs.getString("wDate"));
+				vo.setPart(rs.getString("part"));
+				vo.setLocation(rs.getString("location"));
+				vo.setStartDate(rs.getString("startDate"));
+				vo.setEndDate(rs.getString("endDate"));
+				vo.setEtcContent(rs.getString("etcContent"));
+				vo.setRcfName(rs.getString("rcfName"));
+				vo.setRcfSName(rs.getString("rcfSName"));
+				vo.setGood(rs.getInt("good"));
+				vo.setReport(rs.getInt("report"));
+				
+				vo.setHour_diff(rs.getInt("hour_diff"));
+				vo.setDate_diff(rs.getInt("date_diff"));
+				vo.setReplyCnt(rs.getInt("replyCnt"));
+				
+				rVos = rDao.getBoardReply("recruitBoard", rs.getInt("idx"));
+				for(int i=0; i<rVos.size(); i++) {
+					imsiCnt = rVos.get(i).getReCnt();
+				}
+				vo.setReCnt(imsiCnt);
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL오류: "+e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
 }

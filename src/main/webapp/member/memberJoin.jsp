@@ -37,7 +37,12 @@
    	 let email1 = myform.email1.value.trim();
    	
    	
-   	 if(mid == "") {
+   	 if(name == "") {
+   		 alert("이름을 입력하세요");
+   		 myform.name.focus();
+   		 return false;
+   	 }
+   	 else if(mid == "") {
    		 alert("아이디를 입력하세요");
    		 myform.mid.focus();
    		 return false;
@@ -52,11 +57,6 @@
    		 myform.nickName.focus();
    		 return false;
    	 }
-   	 else if(name == "") {
-   		 alert("이름을 입력하세요");
-   		 myform.name.focus();
-   		 return false;
-   	 }
    	 else if(email1 == "") {
    		 alert("이메일을 입력하세요");
    		 myform.email1.focus();
@@ -69,13 +69,13 @@
    	 let regName = /^[a-zA-Z가-힣]{2,10}$/; 
    	 let regEmail = /^[a-zA-Z0-9]([-_]?[a-zA-Z0-9])*$/i;
    	 let regTel = /\d{2,3}-\d{3,4}-\d{4}$/;
-		 /* 
+		 
    	 if(!regPwd.test(pwd)) {
    		 alert("비밀번호는 영문 대/소문자와 숫자, 특수문자를 포함하여 4~20자까지 가능합니다. 특수문자를 꼭 1개 이상 포함해주세요.");
    		 document.getElementById("pwd").focus();
    		 return false;
    	 }
-   	 */
+   	 
    	 if(!regName.test(name)) {
    		 alert("이름은 영문과 한글만 사용하여 2~10자까지 가능합니다.");
    		 document.getElementById("name").focus();
@@ -191,7 +191,7 @@
    	 else {
    		 idCheckSw = 1;
    		 $.ajax({
-   			 url: "${ctp}/MemberIdCheck.mem",
+   			 url: "${ctp}/MemberIdCheck.do",
    			 type: "get",
    			 data: {mid:mid},
    			 success: function(res) {
@@ -227,7 +227,7 @@
    	 else {
    		 nickCheckSw = 1;
    		 $.ajax({
-   			 url: "${ctp}/MemberNickCheck.mem",
+   			 url: "${ctp}/MemberNickCheck.do",
    			 type: "get",
    			 data: {nickName:nickName, mid:""},
    			 success: function(res) {
@@ -270,7 +270,7 @@
 <div class="container">
 <div class="row justify-content-center">
 <div class="col-xl-6 col-lg-8">
-	<form name="myform" method="post" action="${ctp}/MemberJoinOk.mem" class="was-validated">
+	<form name="myform" method="post" action="${ctp}/MemberJoinOk.do" class="was-validated">
     <h2 class="text-center">회 원 가 입</h2>
     <br/>
     <div class="form-group">

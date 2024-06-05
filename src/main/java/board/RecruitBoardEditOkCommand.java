@@ -55,19 +55,20 @@ public class RecruitBoardEditOkCommand implements MainInterface {
 			if(multipartRequest.getFilesystemName(file) != null) {
 				String[] rcfSNames = vo.getRcfSName().split("/");
 				for(String fSName : rcfSNames) {
-					new File(realPath +"/"+fSName).delete();
+					realPath = request.getServletContext().getRealPath("/images/board/");
+					new File(realPath+fSName).delete();
 				}
 				rcfName += multipartRequest.getOriginalFileName(file) + "/";
 				rcfSName += multipartRequest.getFilesystemName(file)+"/";				
 			}
 			else {
-				rcfName = vo.getRcfName();
-				rcfSName = vo.getRcfSName();
+				rcfName = vo.getRcfName()+"/";
+				rcfSName = vo.getRcfSName()+"/";
 			}
 		}
 		if(rcfName.lastIndexOf("/")!=-1 && rcfSName.lastIndexOf("/")!=-1) {
 			rcfName = rcfName.substring(0, rcfName.lastIndexOf("/"));
-			rcfSName = rcfSName.substring(0, rcfSName	.lastIndexOf("/"));			
+			rcfSName = rcfSName.substring(0, rcfSName	.lastIndexOf("/"));
 		}
 		
 		vo = new RecruitBoardVO();

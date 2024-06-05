@@ -33,7 +33,7 @@
 </header>
 <p><br/></p>
 <div class="container">
-<form name="myform" method="post" action="QuestionBoardInputOk.bo">
+<form name="myform" method="post" action="QuestionBoardInputOk.do">
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-4 col-md-offset-2">
 			<div class="form-group">

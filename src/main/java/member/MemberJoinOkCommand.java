@@ -73,13 +73,13 @@ public class MemberJoinOkCommand implements MainInterface {
 		MemberVO vo = dao.getMemberIdCheck(mid);
 		if(vo.getMid() != null) {
 			request.setAttribute("message", "이미 사용중인 아이디입니다.");
-			request.setAttribute("url", "/MemberJoin.mem");
+			request.setAttribute("url", "/MemberJoin.do");
 			return;
 		}
 		vo = dao.getMemberNickCheck(nickName);
 		if(vo.getNickName() != null) {
 			request.setAttribute("message", "이미 사용중인 닉네임입니다.");
-			request.setAttribute("url", "/MemberJoin.mem");
+			request.setAttribute("url", "/MemberJoin.do");
 			return;
 		}
 		

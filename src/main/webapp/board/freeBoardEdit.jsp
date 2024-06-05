@@ -35,7 +35,7 @@
 </header>
 <p><br/></p>
 <div class="container">
-<form name="myform" method="post" action="FreeBoardEditOk.bo">
+<form name="myform" method="post" action="FreeBoardEditOk.do">
 	<div class="row justify-content-center mb-3">
 		<div class="col-md-8 col-md-offset-2">
 			<input type="text" name="board" id="board" class="form-control mt-2" value="자유게시판" readonly />

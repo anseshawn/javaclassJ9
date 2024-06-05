@@ -101,7 +101,8 @@ public class ReplyDAO {
 				vo.setReHour_diff(rs.getInt("reHour_diff"));
 				
 				if(sw != rs.getInt("idx")) {
-					sql2 = "select count(*) as reCnt from reReply p, reply r where r.idx=p.replyIdx and r.idx="+rs.getInt("idx")+" group by r.idx";
+					sql2 = "select count(*) as reCnt from reReply p, reply r"
+							+ " where r.idx=p.replyIdx and r.idx="+rs.getInt("idx")+" group by r.idx";
 					pstmt2 = conn.prepareStatement(sql2);
 					rs2 = pstmt2.executeQuery();
 					if(rs2.next()) {
@@ -146,12 +147,30 @@ public class ReplyDAO {
 	public int setBoardDeleteAll(String board, int boardIdx) {
 		int res = 0;
 		try {
+			conn.setAutoCommit(false);
+			sql = "select idx from reply where board='"+board+"' and boardIdx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardIdx);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				sql2 = "delete from reReply where replyIdx = ?";
+				pstmt2 = conn.prepareStatement(sql2);
+				pstmt2.setInt(1, rs.getInt("idx"));
+				pstmt2.executeUpdate();
+			}
+			pstmt2Close();
+			rsClose();
+			
 			sql = "delete from reply where board='"+board+"' and boardIdx=?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardIdx);
 			res = pstmt.executeUpdate();
+			conn.commit();
 		} catch (SQLException e) {
 			System.out.println("SQL오류 : "+e.getMessage());
+			try {
+				if(conn != null) conn.rollback();
+			} catch (Exception e2) {}
 		} finally {
 			pstmtClose();
 		}

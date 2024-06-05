@@ -27,7 +27,7 @@ public class FreeBoardInputOkCommand implements MainInterface {
 		vo.setTitle(title);
 		vo.setContent(content);
 		vo.setHostIp(hostIp);
-		
+		System.out.println("vo : " + vo);
 		FreeBoardDAO dao = new FreeBoardDAO();
 		
 		int res = dao.setFreeBoardInput(vo);

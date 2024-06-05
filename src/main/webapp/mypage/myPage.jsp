@@ -23,6 +23,7 @@
   	}
   </style>
   <script>
+  	'use strict';
   	function mypage(str){
   		let page = str+".do";
   		$.ajax({
@@ -50,6 +51,7 @@
 			<div class="sidebar-widget search mb-3 ">
 					<h2 class="text-center">My Page</h2>
 					<div class="divider" style="width:100%;"></div>
+					<div class="text-right">아이디: ${sMid}</div>
 					<br/>
 				<div class="row">
 					<div class="col">
@@ -70,7 +72,7 @@
 				</div>
 				<div class="divider2 mx-auto my-2"></div>
 				<div class="row">
-					<div class="col"><a href="#">게시글 확인</a></div>
+					<div class="col"><a href="javascript:mypage('CheckBoard')">게시글 확인</a></div>
 				</div>
 				<div class="row">
 					<div class="col"><a href="#">받은 메세지</a></div>

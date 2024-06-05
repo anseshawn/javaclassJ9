@@ -183,7 +183,7 @@
 			else {
 				nickCheckSw = 1;
 				$.ajax({
-					url: "${ctp}/MemberNickCheck.mem",
+					url: "${ctp}/MemberNickCheck.do",
 					type: "get",
 					data: {nickName:nickName, mid:""},
 					success: function(res) {
@@ -222,7 +222,7 @@
 <div class="container">
 <div class="row justify-content-center">
 <div class="col-xl-8 col-lg-8">
-	<form name="myform" method="post" action="${ctp}/MemberUpdateOk.mem" class="was-validated">
+	<form name="myform" method="post" action="${ctp}/MemberUpdateOk.do" class="was-validated">
     <h2 class="text-center">회원정보 수정</h2>
     <br/>
     <div class="form-group">
