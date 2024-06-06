@@ -51,6 +51,7 @@ import member.MemberNickCheckCommand;
 import member.MemberUpdateCommand;
 import member.MemberUpdateOkCommand;
 import member.MidSearchResultCommand;
+import member.MyPageMenuCommand;
 import member.PwdChangeOkCommand;
 
 @WebServlet("*.do")
@@ -263,7 +264,16 @@ public class MainController extends HttpServlet {
 			return;
 		}
 		else if(com.equals("/MyPage")) {
+			command = new MemberUpdateCommand();
+			command.execute(request, response);
+			command = new CheckBoardCommand();
+			command.execute(request, response);
 			viewPage += "/mypage/myPage.jsp";
+		}
+		else if(com.equals("/MyPageMenu")) {
+			command = new MyPageMenuCommand();
+			command.execute(request, response);
+			return;
 		}
 		else if(com.equals("/PwdChange")) {
 			viewPage += "/mypage/pwdChange.jsp";

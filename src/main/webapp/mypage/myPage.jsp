@@ -24,14 +24,15 @@
   </style>
   <script>
   	'use strict';
-  	function mypage(str){
-  		let page = str+".do";
+  	function mypage(part){
+  		// 선택값에 따라서 display:none 을 보였다 안보였다하는..?
   		$.ajax({
-  			type : "GET",
-				url : page,
-				dataType : "text",
+				url : "MyPageMenu.do",
+  			type : "post",
+				data: {part:part},
 				success : function(data) {
-					$('#context').html(data);
+					$(".context").hide();
+					$('#context'+data).show();
 				},
 				error : function() {
 					alert('전송오류');
@@ -60,7 +61,7 @@
 				</div>
 				<div class="divider2 mx-auto my-2"></div>
 				<div class="row">
-					<div class="col"><a href="javascript:mypage('MemberUpdate')"> 정보 수정</a></div>
+					<div class="col"><a href="javascript:mypage(1)"> 정보 수정</a></div>
 				</div>
 				<div class="row">
 					<div class="col"><a href="#">문의내역</a></div>
@@ -72,7 +73,7 @@
 				</div>
 				<div class="divider2 mx-auto my-2"></div>
 				<div class="row">
-					<div class="col"><a href="javascript:mypage('CheckBoard')">게시글 확인</a></div>
+					<div class="col"><a href="javascript:mypage(2)">게시글 확인</a></div>
 				</div>
 				<div class="row">
 					<div class="col"><a href="#">받은 메세지</a></div>
@@ -81,7 +82,12 @@
 			</div>
 	</div>
 	<div class="col-lg-9">
-		<div id="context"></div>
+		<div class="context" id="context1" style="display:none;">
+			<jsp:include page='/mypage/memberUpdate.jsp' />
+		</div>
+		<div class="context" id="context2" style="display:none;">
+			<jsp:include page='/mypage/checkBoard.jsp' />
+		</div>
 	</div>
 </div>
 </div>

@@ -9,30 +9,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>내가 쓴 글 보기</title>
   <jsp:include page="/include/bs4.jsp" />
-  <script>
-	'use strict';
-	function mypage(str){
-		let page = str;
-		let query={
-			fVos:fVos,
-			qVos:qVos,
-			rcVos:rcVos,
-			pag:pag,
-			pageSize:pageSize
-		}
-		$.ajax({
-			type : "GET",
-			url : page,
-			dataType : "text",
-			success : function(data) {
-				$('#context').html(data);
-			},
-			error : function() {
-				alert('전송오류');
-			}
-		});
-	}
-</script>
 </head>
 <body>
 <%-- <jsp:include page="/include/header.jsp" />
